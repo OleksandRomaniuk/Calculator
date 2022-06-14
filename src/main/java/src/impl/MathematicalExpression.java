@@ -3,6 +3,9 @@ package src.impl;
 import com.google.common.base.Preconditions;
 
 import java.util.regex.Pattern;
+/**
+ * Class for generalizations input
+ */
 
 public class MathematicalExpression {
 

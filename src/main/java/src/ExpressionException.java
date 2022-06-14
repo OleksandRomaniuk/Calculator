@@ -2,6 +2,13 @@ package src;
 
 import com.google.common.base.Preconditions;
 
+
+/**
+ * Custom exception for handling wrong symbol's
+ * position in evaluated expression
+ */
+
+
 public class ExpressionException extends Exception {
 
     private final int errorPosition;

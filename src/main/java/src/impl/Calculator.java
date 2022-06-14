@@ -10,12 +10,15 @@ import src.impl.fsm.util.ShuntingYardStack;
 import src.impl.math.MathElementResolverFactory;
 
 import java.util.function.DoubleBinaryOperator;
+/**
+ * Implementation of {@link CalculatorAPI} interface
+ */
 
 public class Calculator implements CalculatorAPI {
     public Result calculate(MathematicalExpression expression) throws ExpressionException {
         Preconditions.checkNotNull(expression);
 
-        MathElementResolverFactory factory = new MathElementResolverFactoryImpl();
+        MathElementResolverFactory factory = new ResolverFactoryImpl();
 
         CalculatorMachine numberStateMachine = CalculatorMachine.create(factory);
 

@@ -9,6 +9,12 @@ import src.impl.math.MathElementResolver;
 
 import java.util.Optional;
 
+/**
+ *
+ *
+ */
+
+
 public class ShuntingYardTransducer implements Transducer<ShuntingYardStack> {
 
     private final MathElementResolver resolver;

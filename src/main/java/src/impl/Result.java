@@ -2,6 +2,10 @@ package src.impl;
 
 import com.google.common.base.Preconditions;
 
+/**
+ * Class for calculated result
+ */
+
 public class Result {
 
     private final double result;
