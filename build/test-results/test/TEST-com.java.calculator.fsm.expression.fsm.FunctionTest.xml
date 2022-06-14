@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.java.calculator.fsm.expression.fsm.FunctionTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2022-06-14T21:56:27" hostname="DESKTOP-0EHAQCV" time="0.04">
+  <properties/>
+  <testcase name="[1] min(6,2,4), 2.0, Simple minimum function test has failed" classname="com.java.calculator.fsm.expression.fsm.FunctionTest" time="0.002"/>
+  <testcase name="[2] min(3*2,2,4), 2.0, Expression inside function test has failed" classname="com.java.calculator.fsm.expression.fsm.FunctionTest" time="0.003"/>
+  <testcase name="[3] min(min(6,9),max(1,2),4), 2.0, Nested functions test has failed" classname="com.java.calculator.fsm.expression.fsm.FunctionTest" time="0.001"/>
+  <testcase name="[4] min(2, 7 ,1), 1, Evaluation of min function failed.." classname="com.java.calculator.fsm.expression.fsm.FunctionTest" time="0.004"/>
+  <testcase name="[5] max(4, 10, 3), 10.0, Evaluation of max function failed.." classname="com.java.calculator.fsm.expression.fsm.FunctionTest" time="0.001"/>
+  <testcase name="[6] max(1,2), 2.0, Simple maximum function test has failed" classname="com.java.calculator.fsm.expression.fsm.FunctionTest" time="0.005"/>
+  <testcase name="[7] avg(1,2), 1.5, Simple average function test has failed" classname="com.java.calculator.fsm.expression.fsm.FunctionTest" time="0.003"/>
+  <testcase name="[1] min3,6), 3, Not opened bracket test has not throw exception" classname="com.java.calculator.fsm.expression.fsm.FunctionTest" time="0.002"/>
+  <testcase name="[2] min(5, 5, Evaluation of min without closing brackets function failed" classname="com.java.calculator.fsm.expression.fsm.FunctionTest" time="0.002"/>
+  <testcase name="[3] min(3,6, 7, Not closed bracket test has not throw exception" classname="com.java.calculator.fsm.expression.fsm.FunctionTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

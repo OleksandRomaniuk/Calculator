@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.java.calculator.fsm.expression.fsm.NumberParcingTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2022-06-14T21:56:27" hostname="DESKTOP-0EHAQCV" time="0.111">
+  <properties/>
+  <testcase name="[1] 1, 1.0, Evaluation of single digit failed." classname="com.java.calculator.fsm.expression.fsm.NumberParcingTest" time="0.001"/>
+  <testcase name="[2] 12345, 12345.0, Evaluation of integer failed." classname="com.java.calculator.fsm.expression.fsm.NumberParcingTest" time="0.001"/>
+  <testcase name="[3] -563, -563.0, Evaluation of negative integer failed." classname="com.java.calculator.fsm.expression.fsm.NumberParcingTest" time="0.001"/>
+  <testcase name="[4] 1253.23, 1253.23, Evaluation of double failed." classname="com.java.calculator.fsm.expression.fsm.NumberParcingTest" time="0.001"/>
+  <testcase name="[5] -9876.24, -9876.24, Evaluation of negative double failed." classname="com.java.calculator.fsm.expression.fsm.NumberParcingTest" time="0.002"/>
+  <testcase name="[1] --1441, 1, Evaluation of number with doubled minus did not failed." classname="com.java.calculator.fsm.expression.fsm.NumberParcingTest" time="0.004"/>
+  <testcase name="[2] 12.34.5, 5, Evaluation of number with doubled dot did not failed." classname="com.java.calculator.fsm.expression.fsm.NumberParcingTest" time="0.063"/>
+  <testcase name="[3] 12., 3, Evaluation of number without numbers after dot did not failed." classname="com.java.calculator.fsm.expression.fsm.NumberParcingTest" time="0.009"/>
+  <testcase name="[4] --1, 1, Extra negative sign has not failed the test" classname="com.java.calculator.fsm.expression.fsm.NumberParcingTest" time="0.002"/>
+  <testcase name="[5] -1.2.3, 4, Second dot has not failed the test" classname="com.java.calculator.fsm.expression.fsm.NumberParcingTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
