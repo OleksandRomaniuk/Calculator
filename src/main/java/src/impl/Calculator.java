@@ -10,6 +10,7 @@ import src.impl.fsm.util.ShuntingYardStack;
 import src.impl.math.MathElementResolverFactory;
 
 import java.util.function.DoubleBinaryOperator;
+
 /**
  * Implementation of {@link CalculatorAPI} interface
  */
