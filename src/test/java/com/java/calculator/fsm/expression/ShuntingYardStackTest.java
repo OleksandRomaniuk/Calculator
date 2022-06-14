@@ -20,6 +20,7 @@ class ShuntingYardStackTest {
             "6, /, 3, 2, 6/3 failed",
             "2, *, 3, 6, 2*3 failed"
     })
+
     void testPushOperand(int first, char operand, int second, int expected, String msg){
         shuntingYardStack.pushOperand(first);
         operator = factory.create(operand);
