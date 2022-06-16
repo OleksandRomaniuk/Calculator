@@ -9,6 +9,11 @@ import src.impl.fsm.util.ShuntingYardStack;
 
 import java.util.Optional;
 
+/**
+ *Implementation of {@link Transducer} , which create {@link PrioritizedOperator}
+ *
+ *
+ */
 class BinaryOperatorTransducer implements Transducer<ShuntingYardStack> {
 
     private final BinaryOperatorFactory factory = new BinaryOperatorFactory();

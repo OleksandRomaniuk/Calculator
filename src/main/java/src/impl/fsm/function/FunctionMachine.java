@@ -9,6 +9,14 @@ import src.impl.math.MathElementResolverFactory;
 
 import static src.impl.fsm.function.FunctionStates.*;
 
+/**
+ *
+ *   FunctionMachine is a realisation of {@link FiniteStateMachine}
+ *   that implements a list of all possible transitions and actions when reading an funktion
+ *
+ *
+ */
+
 public final class FunctionMachine extends FiniteStateMachine<FunctionStates, FunctionHolder> {
 
     public static FunctionMachine create(MathElementResolverFactory factory){

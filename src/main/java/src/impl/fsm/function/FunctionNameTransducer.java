@@ -6,7 +6,11 @@ import src.impl.fsm.util.Input;
 import src.impl.fsm.util.FunctionHolder;
 import src.impl.fsm.util.ResolvingException;
 
-
+/**
+ *
+ * Implementation of {@link Transducer} for {@link StringBuilder} output.
+ *
+ */
 
 class FunctionNameTransducer implements Transducer<FunctionHolder> {
 

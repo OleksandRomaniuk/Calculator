@@ -10,7 +10,11 @@ import src.impl.math.MathElement;
 import src.impl.math.MathElementResolverFactory;
 
 import static src.impl.fsm.operand.OperandStates.*;
-
+/**
+ * NumberStateMachine is a realisation of {@link FiniteStateMachine}
+ * that implements a list of all possible transitions and actions in a certain state when reading operand
+ *
+ */
 
 public final class OperandMachine extends FiniteStateMachine<OperandStates, ShuntingYardStack> {
 

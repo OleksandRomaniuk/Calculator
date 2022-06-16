@@ -4,11 +4,19 @@ import src.impl.ShuntingYardTransducer;
 import src.impl.fsm.FiniteStateMachine;
 import src.impl.fsm.Transducer;
 import src.impl.fsm.TransitionMatrix;
+import src.impl.fsm.brackets.BracketsMachine;
 import src.impl.fsm.util.ShuntingYardStack;
 import src.impl.math.MathElement;
 import src.impl.math.MathElementResolverFactory;
 
 import static src.impl.fsm.calculator.CalculatorState.*;
+
+/**
+ * CalculatorMachine is a realisation of {@link FiniteStateMachine}
+ * that implements a list of all possible transitions and actions in a certain state
+ *
+ */
+
 
 public final class CalculatorMachine extends FiniteStateMachine<CalculatorState, ShuntingYardStack> {
 

@@ -10,6 +10,15 @@ import src.impl.math.MathElementResolverFactory;
 
 import static src.impl.fsm.expression.ExpressionStates.*;
 
+/**
+ *
+ *   ExpressionMachine is a realisation of {@link FiniteStateMachine}
+ *   that implements a list of all possible transitions and actions when reading an expression
+ *
+ *
+ */
+
+
 public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates, ShuntingYardStack> {
 
     public static ExpressionMachine create(MathElementResolverFactory factory) {

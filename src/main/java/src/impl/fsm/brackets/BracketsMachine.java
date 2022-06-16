@@ -10,6 +10,13 @@ import src.impl.math.MathElementResolverFactory;
 
 import static src.impl.fsm.brackets.BracketsStates.*;
 
+/**
+ * BracketsMachine is a realisation of {@link FiniteStateMachine}
+ * that implements a list of all possible transitions and actions in a certain state
+ *
+ */
+
+
 public final class BracketsMachine extends FiniteStateMachine<BracketsStates, ShuntingYardStack> {
 
     public static BracketsMachine create(MathElementResolverFactory factory) {

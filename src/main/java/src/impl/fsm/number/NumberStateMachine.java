@@ -6,6 +6,11 @@ import src.impl.fsm.Transducer;
 import src.impl.fsm.TransitionMatrix;
 
 import static src.impl.fsm.number.NumberState.*;
+/**
+ * NumberStateMachine is a realisation of {@link FiniteStateMachine}
+ * that implements a list of all possible transitions and actions in a certain state when reading a number
+ *
+ */
 
 public final class NumberStateMachine extends FiniteStateMachine<NumberState, StringBuilder> {
 

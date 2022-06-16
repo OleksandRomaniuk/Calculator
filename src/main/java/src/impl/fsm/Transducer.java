@@ -3,6 +3,10 @@ package src.impl.fsm;
 import src.impl.fsm.util.Input;
 import src.impl.fsm.util.ResolvingException;
 
+/**
+ * Basic interface for navigating the program
+ * @param <O>
+ */
 @FunctionalInterface
 public interface Transducer<O> {
 

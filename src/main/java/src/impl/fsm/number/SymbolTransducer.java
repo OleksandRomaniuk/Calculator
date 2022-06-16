@@ -6,6 +6,15 @@ import src.impl.fsm.util.Input;
 
 import java.util.function.Predicate;
 
+/**
+ *
+ * Implementation of {@link Transducer} for {@link StringBuilder} output.
+ *
+ */
+
+
+
+
 public class SymbolTransducer implements Transducer<StringBuilder> {
 
     private final Predicate<Character> condition;

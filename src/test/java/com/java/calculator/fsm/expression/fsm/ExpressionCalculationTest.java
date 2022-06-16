@@ -1,6 +1,6 @@
 package com.java.calculator.fsm.expression.fsm;
 
-import com.java.calculator.fsm.expression.AbstractCalculatorTest;
+import com.java.calculator.fsm.expression.AbstractCalculatorAPIimplTest;
 import org.junit.jupiter.params.provider.Arguments;
 
 
@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.params.provider.Arguments.of;
 
-class ExpressionCalculationTest extends AbstractCalculatorTest {
+class ExpressionCalculationTest extends AbstractCalculatorAPIimplTest {
 
     static Stream<Arguments> positiveCases(){
         return Stream.of(

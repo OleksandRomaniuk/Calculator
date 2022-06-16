@@ -8,6 +8,11 @@ import src.impl.fsm.util.ShuntingYardStack;
 import src.impl.math.MathElementResolver;
 
 import java.util.Optional;
+/**
+ *
+ * Implementation of {@link Transducer} for {@link StringBuilder} output.
+ *
+ */
 
 public class FunctionTransducer implements Transducer<ShuntingYardStack> {
 

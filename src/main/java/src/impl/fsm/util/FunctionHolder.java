@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ *Storage of the function name and its argument list
+ *
+ */
+
 public class FunctionHolder {
 
     private String functionName;

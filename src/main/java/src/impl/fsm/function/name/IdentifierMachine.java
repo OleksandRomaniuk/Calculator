@@ -6,7 +6,11 @@ import src.impl.fsm.TransitionMatrix;
 import src.impl.fsm.number.SymbolTransducer;
 
 import static src.impl.fsm.function.name.IdentifierState.*;
-
+/**
+ *
+ * IdentifierMachine is a realisation of {@link FiniteStateMachine}
+ *     that implements a list of all possible transitions and actions when reading a name of function
+ */
 
 public final class IdentifierMachine extends FiniteStateMachine<IdentifierState, StringBuilder> {
 

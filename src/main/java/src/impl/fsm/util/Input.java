@@ -4,6 +4,11 @@ import com.google.common.base.Preconditions;
 
 import java.util.Arrays;
 
+
+/**
+ *
+ * The class that implements the input data
+ */
 public final class Input {
 
     private final char[] source;

@@ -9,6 +9,11 @@ import java.util.Optional;
 
 import static src.impl.fsm.util.PrioritizedOperator.Priority;
 
+/**
+ *
+ *  {@code BinaryOperatorFactory create an instance of {@link PrioritizedOperator} by symbol.
+ */
+
 public class BinaryOperatorFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(BinaryOperatorFactory.class);

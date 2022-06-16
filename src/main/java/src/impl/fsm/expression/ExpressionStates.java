@@ -1,5 +1,12 @@
 package src.impl.fsm.expression;
 
+
+
+/**
+ *
+ * List of all possible states in {@link ExpressionMachine}
+ */
+
 public enum ExpressionStates {
 
     START,

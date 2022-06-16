@@ -5,6 +5,10 @@ import src.impl.fsm.Function;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ *
+ * A factory that calculates values, depending on the function
+ */
 public class FunctionFactory {
 
     private final Map<String, Function> functions = new TreeMap<>();

@@ -11,6 +11,24 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+
+/**
+ * Abstract implementation of the concept of
+ * <a href="https://en.wikipedia.org/wiki/Finite-state_machine">Finite State Machine</a>.
+ *
+ * <p>Requires {@link TransitionMatrix} as a definition of assigned directed graph.
+ * Realizes traversal algorithm from a so-called start state to so-called finish state
+ * that are defined by a transition matrix also.
+ *
+ * <p>Uses {@link Transducer} to determine a possibility of transition
+ * to a particular state.
+ *
+ * <p>Optionally, may skip whitespaces between elements in Input.
+ *
+ * @param <S> possible states of the machine
+ * @param <O> output chain of the machine
+ */
+
 public class FiniteStateMachine<S, O> {
 
     private static final Logger logger = LoggerFactory.getLogger(FiniteStateMachine.class);
