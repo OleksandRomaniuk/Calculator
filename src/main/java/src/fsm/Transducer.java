@@ -1,4 +1,4 @@
-package src.calculator.impl.fsm;
+package src.fsm;
 
 import src.calculator.impl.fsm.util.Input;
 import src.calculator.impl.fsm.util.ResolvingException;

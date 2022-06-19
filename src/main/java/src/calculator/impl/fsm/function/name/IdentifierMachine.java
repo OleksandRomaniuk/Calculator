@@ -1,8 +1,8 @@
 package src.calculator.impl.fsm.function.name;
 
-import src.calculator.impl.fsm.FiniteStateMachine;
-import src.calculator.impl.fsm.Transducer;
-import src.calculator.impl.fsm.TransitionMatrix;
+import src.fsm.FiniteStateMachine;
+import src.fsm.Transducer;
+import src.fsm.TransitionMatrix;
 import src.calculator.impl.fsm.number.SymbolTransducer;
 
 import static src.calculator.impl.fsm.function.name.IdentifierState.*;

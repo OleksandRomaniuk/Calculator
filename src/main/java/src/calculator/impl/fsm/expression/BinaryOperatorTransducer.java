@@ -1,7 +1,7 @@
 package src.calculator.impl.fsm.expression;
 
 import com.google.common.base.Preconditions;
-import src.calculator.impl.fsm.Transducer;
+import src.fsm.Transducer;
 import src.calculator.impl.fsm.util.BinaryOperatorFactory;
 import src.calculator.impl.fsm.util.Input;
 import src.calculator.impl.fsm.util.PrioritizedOperator;

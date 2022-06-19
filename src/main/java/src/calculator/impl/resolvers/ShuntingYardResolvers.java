@@ -1,7 +1,7 @@
 package src.calculator.impl.resolvers;
 
 import com.google.common.base.Preconditions;
-import src.calculator.impl.fsm.FiniteStateMachine;
+import src.fsm.FiniteStateMachine;
 import src.calculator.impl.fsm.util.Input;
 import src.calculator.impl.fsm.util.ResolvingException;
 import src.calculator.impl.fsm.util.ShuntingYardStack;

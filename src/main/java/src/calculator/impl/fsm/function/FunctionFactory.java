@@ -1,6 +1,6 @@
 package src.calculator.impl.fsm.function;
 
-import src.calculator.impl.fsm.Function;
+import src.fsm.Function;
 
 import java.util.Map;
 import java.util.TreeMap;

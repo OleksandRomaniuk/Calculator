@@ -1,9 +1,9 @@
 package src.calculator.impl.fsm.number;
 
 import com.google.common.base.Preconditions;
-import src.calculator.impl.fsm.FiniteStateMachine;
-import src.calculator.impl.fsm.Transducer;
-import src.calculator.impl.fsm.TransitionMatrix;
+import src.fsm.FiniteStateMachine;
+import src.fsm.Transducer;
+import src.fsm.TransitionMatrix;
 
 /**
  * NumberStateMachine is a realisation of {@link FiniteStateMachine}

@@ -1,7 +1,9 @@
 package src.calculator.impl.fsm.function;
 
 import com.google.common.base.Preconditions;
-import src.calculator.impl.fsm.Transducer;
+import src.calculator.impl.fsm.function.name.IdentifierMachine;
+import src.calculator.impl.fsm.util.FunctionHolder;
+import src.fsm.Transducer;
 import src.calculator.impl.fsm.util.Input;
 import src.calculator.impl.fsm.util.ResolvingException;
 import src.calculator.impl.fsm.util.ShuntingYardStack;
@@ -34,3 +36,7 @@ public class FunctionTransducer implements Transducer<ShuntingYardStack> {
         return false;
     }
 }
+
+
+
+

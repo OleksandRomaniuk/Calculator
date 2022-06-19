@@ -1,4 +1,4 @@
-package src.calculator.impl.fsm;
+package src.fsm;
 
 import com.google.common.base.Preconditions;
 

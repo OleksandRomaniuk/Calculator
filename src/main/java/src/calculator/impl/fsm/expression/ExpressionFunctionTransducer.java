@@ -1,7 +1,7 @@
-package src.calculator.impl.fsm.function;
+package src.calculator.impl.fsm.expression;
 
 import com.google.common.base.Preconditions;
-import src.calculator.impl.fsm.Transducer;
+import src.fsm.Transducer;
 import src.calculator.impl.fsm.util.Input;
 import src.calculator.impl.fsm.util.FunctionHolder;
 import src.calculator.impl.fsm.util.ResolvingException;
@@ -13,7 +13,7 @@ public class ExpressionFunctionTransducer implements Transducer<FunctionHolder> 
 
     private final MathElementResolver resolver;
 
-    ExpressionFunctionTransducer(MathElementResolver resolver) {
+    public ExpressionFunctionTransducer(MathElementResolver resolver) {
 
         this.resolver = Preconditions.checkNotNull(resolver);
     }

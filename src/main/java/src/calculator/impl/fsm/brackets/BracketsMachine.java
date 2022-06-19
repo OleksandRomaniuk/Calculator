@@ -1,9 +1,9 @@
 package src.calculator.impl.fsm.brackets;
 
 import src.calculator.impl.ShuntingYardTransducer;
-import src.calculator.impl.fsm.FiniteStateMachine;
-import src.calculator.impl.fsm.Transducer;
-import src.calculator.impl.fsm.TransitionMatrix;
+import src.fsm.FiniteStateMachine;
+import src.fsm.Transducer;
+import src.fsm.TransitionMatrix;
 
 import src.calculator.impl.fsm.util.ShuntingYardStack;
 import src.calculator.impl.math.MathElement;

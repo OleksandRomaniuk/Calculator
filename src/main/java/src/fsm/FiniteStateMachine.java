@@ -1,4 +1,4 @@
-package src.calculator.impl.fsm;
+package src.fsm;
 
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
@@ -69,6 +69,7 @@ public class FiniteStateMachine<S, O> {
 
                     return false;
                 }
+
 
                 throw new ResolvingException("");
             }

@@ -1,14 +1,14 @@
 package src.program;
 
 /**
- * {@code DevchicProgram} is made for input code of program
+ * {@code TahitiProgram} is made for input code of program
  *
  */
-public class DevchicProgram {
+public class TahitiProgram {
 
         private final String value;
 
-        public DevchicProgram(String value) {
+        public TahitiProgram(String value) {
             this.value = value;
         }
 
