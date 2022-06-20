@@ -3,13 +3,9 @@ package src.fsm;
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import src.calculator.impl.fsm.util.Input;
 import src.calculator.impl.fsm.util.ResolvingException;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -30,6 +26,44 @@ import java.util.Set;
  */
 
 public class FiniteStateMachine<S, O> {
+
+
+
+    @SafeVarargs
+    protected static <O> FiniteStateMachine<Object, O> oneOfMachine(Transducer<O>... transducers) {
+
+        Map <Object, Transducer<O>> registers =  new LinkedHashMap<>() ;
+
+        Object startState = new Object();
+        Object finishState = new Object();
+
+        TransitionMatrix.MatrixBuilder<Object> builder = new TransitionMatrix.MatrixBuilder<>();
+
+        builder.withStartState(startState).withFinishState(finishState);
+
+        for (Transducer<O> transducer: transducers){
+
+            Object transducerState = new Object();
+
+            builder.allowTransition(startState, transducerState)
+                    .allowTransition(transducerState, finishState);
+
+            registers.put(transducerState, transducer);
+        }
+
+        FiniteStateMachine<Object, O> machine = new FiniteStateMachine<>(builder.build());
+
+        for (Map.Entry<Object, Transducer<O>> entry : registers.entrySet()){
+
+            machine.registerTransducer(entry.getKey(), entry.getValue());
+        }
+
+        machine.registerTransducer(startState, Transducer.illegalTransition());
+
+        machine.registerTransducer(finishState, Transducer.autoTransition());
+
+        return machine;
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(FiniteStateMachine.class);
 
@@ -52,6 +86,8 @@ public class FiniteStateMachine<S, O> {
 
     public boolean run(Input inputChain, O outputChain) throws ResolvingException {
 
+        inputChain.savePosition();
+
         if (logger.isInfoEnabled()) {
 
             logger.info("Start of machine: {} for {}", getClass().getSimpleName(), inputChain.toString());
@@ -69,9 +105,14 @@ public class FiniteStateMachine<S, O> {
 
                     return false;
                 }
+                if (matrix.isTemporaryState(currentState)){
 
+                    inputChain.restorePosition();
 
-                throw new ResolvingException("");
+                    return false;
+                }
+
+                throw new ResolvingException("Deadlock at state: " + currentState);
             }
 
             currentState = nextState.get();

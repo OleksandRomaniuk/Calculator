@@ -53,7 +53,6 @@ public class ShuntingYardStack {
 
         if (logger.isInfoEnabled()) {
             logger.info("Result -> {}", operandStack.peek());
-            logger.info("------------------------------------------------------------------------------");
         }
 
         assert operandStack.peek() != null;

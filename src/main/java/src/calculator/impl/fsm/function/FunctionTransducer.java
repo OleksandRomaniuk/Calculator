@@ -1,10 +1,8 @@
 package src.calculator.impl.fsm.function;
 
 import com.google.common.base.Preconditions;
-import src.calculator.impl.fsm.function.name.IdentifierMachine;
-import src.calculator.impl.fsm.util.FunctionHolder;
 import src.fsm.Transducer;
-import src.calculator.impl.fsm.util.Input;
+import src.fsm.Input;
 import src.calculator.impl.fsm.util.ResolvingException;
 import src.calculator.impl.fsm.util.ShuntingYardStack;
 import src.calculator.impl.math.MathElementResolver;

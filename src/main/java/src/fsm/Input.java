@@ -1,4 +1,4 @@
-package src.calculator.impl.fsm.util;
+package src.fsm;
 
 import com.google.common.base.Preconditions;
 
@@ -14,6 +14,8 @@ public final class Input {
     private final char[] source;
 
     private int readingPosition;
+
+    private int savedPosition = -1;
 
     public Input(String source) {
         this.source = Preconditions.checkNotNull(source).toCharArray();
@@ -48,5 +50,16 @@ public final class Input {
 
                 incrementPosition();
         }
+    }
+    void savePosition() {
+
+        savedPosition = readingPosition;
+    }
+
+    void restorePosition() {
+
+        readingPosition = savedPosition;
+
+        savedPosition = -1;
     }
 }

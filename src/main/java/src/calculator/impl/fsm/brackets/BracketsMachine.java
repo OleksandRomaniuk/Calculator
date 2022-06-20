@@ -9,6 +9,8 @@ import src.calculator.impl.fsm.util.ShuntingYardStack;
 import src.calculator.impl.math.MathElement;
 import src.calculator.impl.math.MathElementResolverFactory;
 
+import java.util.function.BiConsumer;
+
 import static src.calculator.impl.fsm.brackets.BracketsStates.*;
 
 /**
@@ -18,7 +20,7 @@ import static src.calculator.impl.fsm.brackets.BracketsStates.*;
  */
 
 
-public final class BracketsMachine extends FiniteStateMachine<src.calculator.impl.fsm.brackets.BracketsStates, ShuntingYardStack> {
+public final class BracketsMachine extends FiniteStateMachine<BracketsStates, ShuntingYardStack> {
 
     public static BracketsMachine create(MathElementResolverFactory factory) {
 
@@ -37,9 +39,11 @@ public final class BracketsMachine extends FiniteStateMachine<src.calculator.imp
     private BracketsMachine(TransitionMatrix<BracketsStates> matrix, MathElementResolverFactory factory) {
         super(matrix, true);
 
+        BiConsumer<ShuntingYardStack, Double> consumer = ShuntingYardStack::pushOperand;
+
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('(') );
-        registerTransducer(EXPRESSION, new ShuntingYardTransducer(factory.create(MathElement.EXPRESSION)));
+        registerTransducer(EXPRESSION, new ShuntingYardTransducer(factory.create(MathElement.EXPRESSION),consumer));
         registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
         registerTransducer(FINISH, Transducer.autoTransition());
     }

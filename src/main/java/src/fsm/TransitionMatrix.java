@@ -1,6 +1,8 @@
 package src.fsm;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.MultimapBuilder;
 
 import java.util.*;
 
@@ -16,12 +18,15 @@ public interface TransitionMatrix<S> {
         return new MatrixBuilder<>();
     }
 
+    boolean isTemporaryState(S currentState);
+
     class MatrixBuilder<S> {
 
         private S startState;
         private S finishState;
+        private final Collection<S> temporaryStates = new HashSet<>();
 
-        private final Map<S, Set<S>> transitions = new TreeMap<>();
+        private final Multimap<S, S> transitions = MultimapBuilder.hashKeys().arrayListValues().build();
 
         public MatrixBuilder<S> withStartState(S startState) {
 
@@ -44,7 +49,18 @@ public interface TransitionMatrix<S> {
         @SafeVarargs
         public final MatrixBuilder<S> allowTransition(S currentState, S... states) {
 
-            transitions.put(currentState, new TreeSet<>(List.of(states)));
+            for (S state : states) {
+
+                transitions.put(currentState, state);
+            }
+
+            return this;
+        }
+
+        @SafeVarargs
+        public final MatrixBuilder<S> withTemporaryState(S... states) {
+
+            temporaryStates.addAll(Arrays.asList(states));
 
             return this;
         }
@@ -63,7 +79,12 @@ public interface TransitionMatrix<S> {
 
                 @Override
                 public Set<S> getPossibleTransitions(S state) {
-                    return transitions.get(state);
+                    return new LinkedHashSet<>(transitions.get(state));
+                }
+
+                @Override
+                public boolean isTemporaryState(S currentState) {
+                    return temporaryStates.contains(currentState);
                 }
             };
         }

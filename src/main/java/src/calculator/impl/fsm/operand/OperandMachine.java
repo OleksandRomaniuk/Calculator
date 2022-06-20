@@ -9,6 +9,8 @@ import src.calculator.impl.fsm.util.ShuntingYardStack;
 import src.calculator.impl.math.MathElement;
 import src.calculator.impl.math.MathElementResolverFactory;
 
+import java.util.function.BiConsumer;
+
 import static src.calculator.impl.fsm.operand.OperandStates.*;
 /**
  * NumberStateMachine is a realisation of {@link FiniteStateMachine}
@@ -16,29 +18,18 @@ import static src.calculator.impl.fsm.operand.OperandStates.*;
  *
  */
 
-public final class OperandMachine extends FiniteStateMachine<OperandStates, ShuntingYardStack> {
+public final class OperandMachine extends FiniteStateMachine<Object, ShuntingYardStack> {
 
-    public static OperandMachine create(MathElementResolverFactory factory) {
+    public static FiniteStateMachine<Object, ShuntingYardStack> create(MathElementResolverFactory factory) {
 
-        TransitionMatrix<OperandStates> matrix = TransitionMatrix.<OperandStates>builder()
-                .withStartState(START)
-                .withFinishState(FINISH)
-                .allowTransition(START, NUMBER, BRACKETS, FUNCTION)
-                .allowTransition(NUMBER, FINISH)
-                .allowTransition(FUNCTION, FINISH)
-                .allowTransition(BRACKETS, FINISH)
-                .build();
+        BiConsumer<ShuntingYardStack, Double> consumer = ShuntingYardStack::pushOperand;
 
-        return new OperandMachine(matrix, factory);
+        return FiniteStateMachine.oneOfMachine(new NumberTransducer(factory.create(MathElement.NUMBER)),
+                new ShuntingYardTransducer<>(factory.create(MathElement.BRACKETS), consumer),
+                new FunctionTransducer(factory.create(MathElement.FUNCTION)));
     }
 
-    private OperandMachine(TransitionMatrix<OperandStates> matrix, MathElementResolverFactory factory) {
+    private OperandMachine(TransitionMatrix<Object> matrix, MathElementResolverFactory factory) {
         super(matrix, true);
-
-        registerTransducer(START, Transducer.illegalTransition());
-        registerTransducer(NUMBER, new NumberTransducer(factory.create(MathElement.NUMBER)));
-        registerTransducer(BRACKETS, new ShuntingYardTransducer(factory.create(MathElement.BRACKETS)));
-        registerTransducer(FUNCTION, new FunctionTransducer(factory.create(MathElement.FUNCTION)));
-        registerTransducer(FINISH, Transducer.autoTransition());
     }
 }
