@@ -2,7 +2,7 @@ package src.calculator.impl.resolvers;
 
 import src.calculator.impl.fsm.function.FunctionFactory;
 import src.calculator.impl.fsm.function.FunctionMachine;
-import src.calculator.impl.fsm.util.Input;
+import src.fsm.Input;
 import src.calculator.impl.fsm.util.FunctionHolder;
 import src.calculator.impl.fsm.util.ResolvingException;
 import src.calculator.impl.math.MathElementResolver;

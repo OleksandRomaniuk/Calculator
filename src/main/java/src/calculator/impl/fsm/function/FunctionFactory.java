@@ -71,7 +71,10 @@ public class FunctionFactory {
             return sum;
         });
     }
+    public boolean hasFunction(String name){
 
+        return functions.containsKey(name);
+    }
 
     public Function create(String functionName){
 

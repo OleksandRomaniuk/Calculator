@@ -8,6 +8,8 @@ import src.calculator.impl.fsm.util.ShuntingYardStack;
 import src.calculator.impl.math.MathElement;
 import src.calculator.impl.math.MathElementResolverFactory;
 
+import java.util.function.BiConsumer;
+
 /**
  *
  *   ExpressionMachine is a realisation of {@link FiniteStateMachine}
@@ -36,8 +38,10 @@ public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates
     private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix, MathElementResolverFactory factory) {
         super(matrix, true);
 
+        BiConsumer<ShuntingYardStack, Double> consumer = ShuntingYardStack::pushOperand;
+
         registerTransducer(ExpressionStates.START, Transducer.illegalTransition());
-        registerTransducer(ExpressionStates.OPERAND, new ShuntingYardTransducer(factory.create(MathElement.OPERAND)));
+        registerTransducer(ExpressionStates.OPERAND, new ShuntingYardTransducer(factory.create(MathElement.OPERAND),consumer));
         registerTransducer(ExpressionStates.BINARY_OPERATOR, new BinaryOperatorTransducer());
         registerTransducer(ExpressionStates.FINISH, Transducer.autoTransition());
     }

@@ -1,6 +1,6 @@
 package src.calculator.impl.math;
 
-import src.calculator.impl.fsm.util.Input;
+import src.fsm.Input;
 import src.calculator.impl.fsm.util.ResolvingException;
 
 import java.util.Optional;

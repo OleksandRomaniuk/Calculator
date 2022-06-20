@@ -1,6 +1,5 @@
 package src.fsm;
 
-import src.calculator.impl.fsm.util.Input;
 import src.calculator.impl.fsm.util.ResolvingException;
 
 /**
@@ -32,6 +31,16 @@ public interface Transducer<O> {
                 inputChain.incrementPosition();
                 return true;
             }
+            return false;
+        };
+    }
+    default Transducer<O> and (Transducer<O> transducer){
+        return (inputChain, outputChain) -> {
+
+            if (doTransition(inputChain, outputChain)) {
+                return transducer.doTransition(inputChain, outputChain);
+            }
+
             return false;
         };
     }

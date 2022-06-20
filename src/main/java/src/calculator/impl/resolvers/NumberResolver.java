@@ -1,7 +1,7 @@
 package src.calculator.impl.resolvers;
 
 import src.calculator.impl.fsm.number.NumberStateMachine;
-import src.calculator.impl.fsm.util.Input;
+import src.fsm.Input;
 import src.calculator.impl.fsm.util.ResolvingException;
 import src.calculator.impl.math.MathElementResolver;
 
