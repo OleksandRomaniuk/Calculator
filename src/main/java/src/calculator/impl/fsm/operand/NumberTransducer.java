@@ -4,12 +4,12 @@ import com.google.common.base.Preconditions;
 import src.fsm.Transducer;
 import src.fsm.Input;
 import src.calculator.impl.fsm.util.ResolvingException;
-import src.calculator.impl.fsm.util.ShuntingYardStack;
+import src.calculator.impl.fsm.util.ShuntingYard;
 import src.calculator.impl.math.MathElementResolver;
 
 import java.util.Optional;
 
-public class NumberTransducer implements Transducer<ShuntingYardStack> {
+public class NumberTransducer implements Transducer<ShuntingYard> {
 
     private final MathElementResolver resolver;
 
@@ -18,7 +18,7 @@ public class NumberTransducer implements Transducer<ShuntingYardStack> {
     }
 
     @Override
-    public boolean doTransition(Input inputChain, ShuntingYardStack outputChain) throws ResolvingException {
+    public boolean doTransition(Input inputChain, ShuntingYard outputChain) throws ResolvingException {
 
         Optional<Double> resolve = resolver.resolve(inputChain);
         if (resolve.isPresent()){

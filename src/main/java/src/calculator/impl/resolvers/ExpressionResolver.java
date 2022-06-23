@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import src.calculator.impl.fsm.expression.ExpressionMachine;
 import src.fsm.Input;
 import src.calculator.impl.fsm.util.ResolvingException;
-import src.calculator.impl.fsm.util.ShuntingYardStack;
+import src.calculator.impl.fsm.util.ShuntingYard;
 import src.calculator.impl.math.MathElementResolver;
 import src.calculator.impl.math.MathElementResolverFactory;
 
@@ -23,13 +23,13 @@ public class ExpressionResolver implements MathElementResolver {
 
     @Override
     public Optional<Double> resolve(Input inputChain) throws ResolvingException {
-        ShuntingYardStack nestingShuntingYardStack = new ShuntingYardStack();
+        ShuntingYard nestingShuntingYard = new ShuntingYard();
 
         ExpressionMachine expressionMachine = ExpressionMachine.create(factory);
 
-        if (expressionMachine.run(inputChain, nestingShuntingYardStack)) {
+        if (expressionMachine.run(inputChain, nestingShuntingYard)) {
 
-            return Optional.of(nestingShuntingYardStack.peekResult());
+            return Optional.of(nestingShuntingYard.peekResult());
         }
 
         return Optional.empty();

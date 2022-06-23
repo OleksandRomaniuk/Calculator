@@ -12,9 +12,9 @@ import java.util.function.DoubleBinaryOperator;
  * ShuntingYardStack is a data storing class
  *
  */
-public class ShuntingYardStack {
+public class ShuntingYard {
 
-    private static final Logger logger = LoggerFactory.getLogger(ShuntingYardStack.class);
+    private static final Logger logger = LoggerFactory.getLogger(ShuntingYard.class);
 
     private final Deque<Double> operandStack = new ArrayDeque<>();
 

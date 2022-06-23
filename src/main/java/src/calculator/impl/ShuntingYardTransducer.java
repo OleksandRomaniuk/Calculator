@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import src.fsm.Transducer;
 import src.fsm.Input;
 import src.calculator.impl.fsm.util.ResolvingException;
-import src.calculator.impl.fsm.util.ShuntingYardStack;
 import src.calculator.impl.math.MathElementResolver;
 
 import java.util.Optional;
