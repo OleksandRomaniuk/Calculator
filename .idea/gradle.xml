@@ -12,6 +12,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/calculator" />
+            <option value="$PROJECT_DIR$/fsm" />
+            <option value="$PROJECT_DIR$/tahiti" />
           </set>
         </option>
       </GradleProjectSettings>
