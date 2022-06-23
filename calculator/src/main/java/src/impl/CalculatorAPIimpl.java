@@ -40,7 +40,7 @@ import java.util.function.DoubleBinaryOperator;
 
 public class CalculatorAPIimpl implements CalculatorAPI {
 
-    public Result calculate(MathematicalExpression expression) throws ExpressionException, ResolvingException {
+    public Result calculate(MathematicalExpression expression) throws ExpressionException {
         Preconditions.checkNotNull(expression);
 
         MathElementResolverFactory factory = new ResolverFactoryImpl();

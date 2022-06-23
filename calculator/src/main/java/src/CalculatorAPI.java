@@ -10,7 +10,7 @@ import src.impl.fsm.util.ResolvingException;
  */
 public interface CalculatorAPI {
 
-    Result calculate(MathematicalExpression expression) throws ExpressionException, ResolvingException;
+    Result calculate(MathematicalExpression expression) throws ExpressionException;
 }
 
 
