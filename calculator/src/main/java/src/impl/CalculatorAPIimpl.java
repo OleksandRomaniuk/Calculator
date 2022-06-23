@@ -50,8 +50,12 @@ public class CalculatorAPIimpl implements CalculatorAPI {
         Input inputChain = new Input(expression.getExpression());
         ShuntingYard outputChain = new ShuntingYard();
 
-        if (!numberStateMachine.run(inputChain, outputChain) || outputChain.peekResult() == infinity()) {
+        try {
+            if (!numberStateMachine.run(inputChain, outputChain) || outputChain.peekResult() == infinity()) {
 
+                raiseException(inputChain);
+            }
+        } catch (ResolvingException e) {
             raiseException(inputChain);
         }
 
