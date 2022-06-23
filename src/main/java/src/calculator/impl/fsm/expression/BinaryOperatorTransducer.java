@@ -5,7 +5,7 @@ import src.fsm.Transducer;
 import src.calculator.impl.fsm.util.BinaryOperatorFactory;
 import src.fsm.Input;
 import src.calculator.impl.fsm.util.PrioritizedOperator;
-import src.calculator.impl.fsm.util.ShuntingYardStack;
+import src.calculator.impl.fsm.util.ShuntingYard;
 
 import java.util.Optional;
 
@@ -14,12 +14,12 @@ import java.util.Optional;
  *
  *
  */
-class BinaryOperatorTransducer implements Transducer<ShuntingYardStack> {
+class BinaryOperatorTransducer implements Transducer<ShuntingYard> {
 
     private final BinaryOperatorFactory factory = new BinaryOperatorFactory();
 
     @Override
-    public boolean doTransition(Input inputChain, ShuntingYardStack outputChain) {
+    public boolean doTransition(Input inputChain, ShuntingYard outputChain) {
 
         Preconditions.checkNotNull(inputChain, outputChain);
 

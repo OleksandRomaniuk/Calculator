@@ -6,7 +6,7 @@ import src.calculator.ExpressionException;
 import src.calculator.impl.fsm.calculator.CalculatorMachine;
 import src.fsm.Input;
 import src.calculator.impl.fsm.util.ResolvingException;
-import src.calculator.impl.fsm.util.ShuntingYardStack;
+import src.calculator.impl.fsm.util.ShuntingYard;
 import src.calculator.impl.math.MathElementResolverFactory;
 
 import java.util.function.DoubleBinaryOperator;
@@ -46,7 +46,7 @@ public class CalculatorAPIimpl implements CalculatorAPI {
         CalculatorMachine numberStateMachine = CalculatorMachine.create(factory);
 
         Input inputChain = new Input(expression.getExpression());
-        ShuntingYardStack outputChain = new ShuntingYardStack();
+        ShuntingYard outputChain = new ShuntingYard();
 
         try {
             if (!numberStateMachine.run(inputChain, outputChain) || outputChain.peekResult() == infinity()) {

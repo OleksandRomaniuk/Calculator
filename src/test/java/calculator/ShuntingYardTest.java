@@ -4,13 +4,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import src.calculator.impl.fsm.util.BinaryOperatorFactory;
 import src.calculator.impl.fsm.util.PrioritizedOperator;
-import src.calculator.impl.fsm.util.ShuntingYardStack;
+import src.calculator.impl.fsm.util.ShuntingYard;
 
 import java.util.Optional;
 
 
-class ShuntingYardStackTest {
-    ShuntingYardStack shuntingYardStack = new ShuntingYardStack();;
+class ShuntingYardTest {
+    ShuntingYard shuntingYard = new ShuntingYard();;
     Optional<PrioritizedOperator> operator;
     private final BinaryOperatorFactory factory = new BinaryOperatorFactory();
 
@@ -22,11 +22,11 @@ class ShuntingYardStackTest {
     })
 
     void testPushOperand(int first, char operand, int second, int expected, String msg){
-        shuntingYardStack.pushOperand(first);
+        shuntingYard.pushOperand(first);
         operator = factory.create(operand);
-        shuntingYardStack.pushOperator(operator.get());
-        shuntingYardStack.pushOperand(second);
-        double result = shuntingYardStack.peekResult();
+        shuntingYard.pushOperator(operator.get());
+        shuntingYard.pushOperand(second);
+        double result = shuntingYard.peekResult();
         Assertions.assertEquals(expected, result, msg);
     }
 }

@@ -4,16 +4,16 @@ import com.google.common.base.Preconditions;
 import src.fsm.FiniteStateMachine;
 import src.fsm.Input;
 import src.calculator.impl.fsm.util.ResolvingException;
-import src.calculator.impl.fsm.util.ShuntingYardStack;
+import src.calculator.impl.fsm.util.ShuntingYard;
 import src.calculator.impl.math.MathElementResolver;
 
 import java.util.Optional;
 
 public class ShuntingYardResolvers<I> implements MathElementResolver {
 
-    private final FiniteStateMachine<I, ShuntingYardStack> machine;
+    private final FiniteStateMachine<I, ShuntingYard> machine;
 
-    public ShuntingYardResolvers(FiniteStateMachine<I, ShuntingYardStack> machine) {
+    public ShuntingYardResolvers(FiniteStateMachine<I, ShuntingYard> machine) {
         this.machine = Preconditions.checkNotNull(machine);
     }
 
@@ -21,11 +21,11 @@ public class ShuntingYardResolvers<I> implements MathElementResolver {
     @Override
     public Optional<Double> resolve(Input inputChain) throws ResolvingException {
 
-        ShuntingYardStack nestingShuntingYardStack = new ShuntingYardStack();
+        ShuntingYard nestingShuntingYard = new ShuntingYard();
 
-        if (machine.run(inputChain, nestingShuntingYardStack)) {
+        if (machine.run(inputChain, nestingShuntingYard)) {
 
-            return Optional.of(nestingShuntingYardStack.peekResult());
+            return Optional.of(nestingShuntingYard.peekResult());
         }
 
         return Optional.empty();

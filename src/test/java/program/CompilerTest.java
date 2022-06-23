@@ -1,24 +1,32 @@
-/*
+
 package program;
 
 import org.junit.jupiter.api.Test;
-import src.program.CompilerMachine;
-import src.program.TahitiProgram;
-import src.program.ProgramResult;
+import org.junit.jupiter.params.provider.Arguments;
+import src.tahiti.Tahiti;
+
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.of;
 
-public class CompilerTest {
+public class CompilerTest extends AbstractProgramTest {
 
-    @Test
-    public void initializeVariableTest() {
 
-        TahitiProgram program = new TahitiProgram("a=5;b=a*2;println(a,b)");
+        static Stream<Arguments> positiveCases () {
+            return Stream.of(
+                    of("a=2; println(a);", "2", "Simple interpreter  test has failed"),
+                    of("a=2; b=a+2; println(b);", "4", "Simple interpreter  test has failed"),
+                    of("a=2; b=a+2+a; println(b);", "6", "Simple interpreter  test has failed")
+            );
+        }
 
-        CompilerMachine compilerMachine = new CompilerMachine();
+        static Stream<Arguments> negativeCases () {
+            return Stream.of(
 
-        ProgramResult programResult = new ProgramResult();
-
-        assertEquals("2", programResult.getValue());
+            );
+        }
     }
-}*/
+
+

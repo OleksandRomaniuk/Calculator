@@ -5,7 +5,7 @@ import src.fsm.FiniteStateMachine;
 import src.fsm.Transducer;
 import src.fsm.TransitionMatrix;
 
-import src.calculator.impl.fsm.util.ShuntingYardStack;
+import src.calculator.impl.fsm.util.ShuntingYard;
 import src.calculator.impl.math.MathElement;
 import src.calculator.impl.math.MathElementResolverFactory;
 
@@ -20,7 +20,7 @@ import static src.calculator.impl.fsm.brackets.BracketsStates.*;
  */
 
 
-public final class BracketsMachine extends FiniteStateMachine<BracketsStates, ShuntingYardStack> {
+public final class BracketsMachine extends FiniteStateMachine<BracketsStates, ShuntingYard> {
 
     public static BracketsMachine create(MathElementResolverFactory factory) {
 
@@ -39,7 +39,7 @@ public final class BracketsMachine extends FiniteStateMachine<BracketsStates, Sh
     private BracketsMachine(TransitionMatrix<BracketsStates> matrix, MathElementResolverFactory factory) {
         super(matrix, true);
 
-        BiConsumer<ShuntingYardStack, Double> consumer = ShuntingYardStack::pushOperand;
+        BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('(') );

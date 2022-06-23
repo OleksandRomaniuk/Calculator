@@ -2,8 +2,12 @@ package src.calculator.impl.fsm.number;
 
 import com.google.common.base.Preconditions;
 import src.fsm.FiniteStateMachine;
+import src.fsm.Input;
 import src.fsm.Transducer;
 import src.fsm.TransitionMatrix;
+
+import java.lang.constant.Constable;
+import java.util.function.Consumer;
 
 /**
  * NumberStateMachine is a realisation of {@link FiniteStateMachine}
@@ -12,6 +16,7 @@ import src.fsm.TransitionMatrix;
  */
 
 public final class NumberStateMachine extends FiniteStateMachine<NumberState, StringBuilder> {
+
 
     public static NumberStateMachine create() {
         TransitionMatrix<NumberState> matrix = TransitionMatrix.<NumberState>builder().

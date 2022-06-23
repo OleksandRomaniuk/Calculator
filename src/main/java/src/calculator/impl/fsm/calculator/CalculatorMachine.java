@@ -4,7 +4,7 @@ import src.calculator.impl.ShuntingYardTransducer;
 import src.fsm.FiniteStateMachine;
 import src.fsm.Transducer;
 import src.fsm.TransitionMatrix;
-import src.calculator.impl.fsm.util.ShuntingYardStack;
+import src.calculator.impl.fsm.util.ShuntingYard;
 import src.calculator.impl.math.MathElement;
 import src.calculator.impl.math.MathElementResolverFactory;
 
@@ -17,7 +17,7 @@ import java.util.function.BiConsumer;
  */
 
 
-public final class CalculatorMachine extends FiniteStateMachine<CalculatorState, ShuntingYardStack> {
+public final class CalculatorMachine extends FiniteStateMachine<CalculatorState, ShuntingYard> {
 
     public static CalculatorMachine create(MathElementResolverFactory factory) {
         TransitionMatrix<CalculatorState> matrix =
@@ -32,7 +32,7 @@ public final class CalculatorMachine extends FiniteStateMachine<CalculatorState,
 
     private CalculatorMachine(TransitionMatrix<CalculatorState> matrix, MathElementResolverFactory factory) {
         super(matrix, true);
-        BiConsumer<ShuntingYardStack, Double> consumer = ShuntingYardStack::pushOperand;
+        BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
 
         registerTransducer(CalculatorState.START, Transducer.illegalTransition());
         registerTransducer(CalculatorState.EXPRESSION, new ShuntingYardTransducer(factory.create(MathElement.EXPRESSION),consumer));
