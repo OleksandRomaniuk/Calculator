@@ -17,7 +17,7 @@ public abstract class AbstractCalculatorAPIimplTest {
 
     @ParameterizedTest
     @MethodSource("positiveCases")
-    void positiveCase(String mathExpression, double resultExpected, String errorMessage) throws ExpressionException, ResolvingException {
+    void positiveCase(String mathExpression, double resultExpected, String errorMessage) throws ExpressionException {
 
         Result result = calculator.calculate(new MathematicalExpression(mathExpression));
 
