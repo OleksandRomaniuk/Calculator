@@ -1,8 +1,6 @@
 package src;
 
-/**
- * {@code BazaScriptProgram} is a tiny type which is used to store code for BazaScript program.
- */
+
 
 public class ProgramInput {
 
