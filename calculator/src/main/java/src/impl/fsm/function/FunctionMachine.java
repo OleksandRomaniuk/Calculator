@@ -1,63 +1,54 @@
 package src.impl.fsm.function;
 
 
-import src.fsm.FiniteStateMachine;
-import src.fsm.Transducer;
-import src.fsm.TransitionMatrix;
-import src.impl.fsm.expression.ExpressionFunctionTransducer;
-import src.impl.fsm.util.FunctionHolder;
-import src.impl.fsm.util.ResolvingException;
-import src.impl.math.MathElement;
-import src.impl.math.MathElementResolverFactory;
+
+import fsm.FiniteStateMachine;
+import fsm.Transducer;
+import fsm.TransitionMatrix;
+
+import java.util.function.BiConsumer;
+
+import static src.impl.fsm.function.FunctionStates.*;
 
 
 /**
- *
- *   FunctionMachine is a realisation of {@link FiniteStateMachine}
- *   that implements a list of all possible transitions and actions when reading an funktion
- *
- *
+ * {@code FunctionMachine} is a realisation of {@link FiniteStateMachine}
+ * for parsing a function.
  */
 
-public final class FunctionMachine extends FiniteStateMachine<FunctionStates, FunctionHolder> {
+public final class FunctionMachine<O> extends FiniteStateMachine<FunctionStates, O> {
 
-    FunctionFactory functionFactory = new FunctionFactory();
+    private final FunctionFactory functionFactory = new FunctionFactory();
 
-    public static FunctionMachine create(MathElementResolverFactory factory){
+    public static <O> FunctionMachine<O> create(Transducer<O> expressionFunctionTransducer, BiConsumer<O, String> biConsumer){
 
         TransitionMatrix<FunctionStates> matrix = TransitionMatrix.<FunctionStates>builder()
-                .withStartState(FunctionStates.START)
-                .withFinishState(FunctionStates.FINISH)
-                .allowTransition(FunctionStates.START, FunctionStates.IDENTIFIER)
-                .allowTransition(FunctionStates.IDENTIFIER, FunctionStates.OPENING_BRACKET)
-                .allowTransition(FunctionStates.OPENING_BRACKET, FunctionStates.CLOSING_BRACKET, FunctionStates.EXPRESSION)
-                .allowTransition(FunctionStates.EXPRESSION, FunctionStates.SEPARATOR, FunctionStates.CLOSING_BRACKET)
-                .allowTransition(FunctionStates.SEPARATOR, FunctionStates.EXPRESSION)
-                .allowTransition(FunctionStates.CLOSING_BRACKET, FunctionStates.FINISH)
+                .withStartState(START)
+                .withFinishState(FINISH)
+                .withTemporaryState(IDENTIFIER)
+                .allowTransition(START, IDENTIFIER)
+                .allowTransition(IDENTIFIER, OPENING_BRACKET)
+                .allowTransition(OPENING_BRACKET, CLOSING_BRACKET, EXPRESSION)
+                .allowTransition(EXPRESSION, SEPARATOR, CLOSING_BRACKET)
+                .allowTransition(SEPARATOR, EXPRESSION)
+                .allowTransition(CLOSING_BRACKET, FINISH)
 
                 .build();
 
-        return new FunctionMachine(matrix, factory);
+        return new FunctionMachine<>(matrix, expressionFunctionTransducer, biConsumer);
     }
 
 
-    private FunctionMachine(TransitionMatrix<FunctionStates> matrix, MathElementResolverFactory factory) {
+    private FunctionMachine(TransitionMatrix<FunctionStates> matrix, Transducer<O> expressionFunctionTransducer,
+                            BiConsumer<O, String> biConsumer) {
         super(matrix, true);
 
-        registerTransducer(FunctionStates.START, Transducer.illegalTransition());
-        registerTransducer(FunctionStates.FINISH, Transducer.autoTransition());
-        registerTransducer(FunctionStates.OPENING_BRACKET, Transducer.<FunctionHolder>checkAndPassChar('(').and((inputChain, outputChain) -> {
-
-            String functionName = outputChain.getFunctionName();
-
-            if (!functionFactory.hasFunction(functionName)){
-                throw new ResolvingException("Unknown function: " + functionName);
-            }
-
-            return true;
-        }));registerTransducer(FunctionStates.CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
-        registerTransducer(FunctionStates.SEPARATOR, Transducer.checkAndPassChar(','));
-        registerTransducer(FunctionStates.IDENTIFIER, new FunctionNameTransducer());
-        registerTransducer(FunctionStates.EXPRESSION, new ExpressionFunctionTransducer(factory.create(MathElement.EXPRESSION)));
+        registerTransducer(START, Transducer.illegalTransition());
+        registerTransducer(FINISH, Transducer.autoTransition());
+        registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('('));
+        registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
+        registerTransducer(SEPARATOR, Transducer.checkAndPassChar(','));
+        registerTransducer(IDENTIFIER, new FunctionNameTransducer<>(biConsumer));
+        registerTransducer(EXPRESSION, expressionFunctionTransducer);
     }
 }

@@ -1,6 +1,8 @@
 package src;
 
-
+/**
+ * {@code ProgramResult} is a tiny type which is used to store interpretation of BazaScript program.
+ */
 
 public class ProgramResult {
 

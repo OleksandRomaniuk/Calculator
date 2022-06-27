@@ -1,9 +1,10 @@
 package src.impl.fsm.calculator;
 
-import src.fsm.FiniteStateMachine;
-import src.fsm.Transducer;
-import src.fsm.TransitionMatrix;
-import src.impl.ShuntingYardTransducer;
+
+
+import fsm.FiniteStateMachine;
+import fsm.Transducer;
+import fsm.TransitionMatrix;
 import src.impl.fsm.util.ShuntingYard;
 import src.impl.math.MathElement;
 import src.impl.math.MathElementResolverFactory;
@@ -11,31 +12,30 @@ import src.impl.math.MathElementResolverFactory;
 import java.util.function.BiConsumer;
 
 /**
- * CalculatorMachine is a realisation of {@link FiniteStateMachine}
- * that implements a list of all possible transitions and actions in a certain state
- *
- */
+ * {@code CalculatorMachine} is a realisation of {@link FiniteStateMachine}
+ * that used to launch a {@link ExpressionMachine}.
+ * */
 
-
-public final class CalculatorMachine extends FiniteStateMachine<CalculatorState, ShuntingYard> {
+public final class CalculatorMachine extends FiniteStateMachine<CalculatorStates, ShuntingYard> {
 
     public static CalculatorMachine create(MathElementResolverFactory factory) {
-        TransitionMatrix<CalculatorState> matrix =
-                TransitionMatrix.<CalculatorState>builder()
-                        .withStartState(CalculatorState.START)
-                        .withFinishState(CalculatorState.FINISH)
-                        .allowTransition(CalculatorState.START, CalculatorState.EXPRESSION)
-                        .allowTransition(CalculatorState.EXPRESSION, CalculatorState.FINISH).build();
+        TransitionMatrix<CalculatorStates> matrix =
+                TransitionMatrix.<CalculatorStates>builder()
+                        .withStartState(CalculatorStates.START)
+                        .withFinishState(CalculatorStates.FINISH)
+                        .allowTransition(CalculatorStates.START, CalculatorStates.EXPRESSION)
+                        .allowTransition(CalculatorStates.EXPRESSION, CalculatorStates.FINISH).build();
 
         return new CalculatorMachine(matrix, factory);
     }
 
-    private CalculatorMachine(TransitionMatrix<CalculatorState> matrix, MathElementResolverFactory factory) {
+    private CalculatorMachine(TransitionMatrix<CalculatorStates> matrix, MathElementResolverFactory factory) {
         super(matrix, true);
+
         BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
 
-        registerTransducer(CalculatorState.START, Transducer.illegalTransition());
-        registerTransducer(CalculatorState.EXPRESSION, new ShuntingYardTransducer(factory.create(MathElement.EXPRESSION),consumer));
-        registerTransducer(CalculatorState.FINISH, (inputChain, outputChain) -> !inputChain.canRead());
+        registerTransducer(CalculatorStates.START, Transducer.illegalTransition());
+        registerTransducer(CalculatorStates.EXPRESSION, new DetachedShuntingYardTransducer<>(MathElement.EXPRESSION, consumer, factory));
+        registerTransducer(CalculatorStates.FINISH, (inputChain, outputChain) -> !inputChain.canRead());
     }
 }

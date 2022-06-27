@@ -1,13 +1,15 @@
 package src.impl.math;
 
-import src.fsm.Input;
-import src.impl.fsm.util.ResolvingException;
 
+
+import fsm.CharSequenceReader;
+import fsm.ResolvingException;
 
 import java.util.Optional;
+
 
 @FunctionalInterface
 public interface MathElementResolver {
 
-    Optional<Double> resolve(Input inputChain) throws ResolvingException;
+    Optional<Double> resolve(CharSequenceReader inputChain) throws ResolvingException;
 }

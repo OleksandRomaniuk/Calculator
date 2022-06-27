@@ -1,37 +1,30 @@
 package src.execute;
 
 
-import src.fsm.Input;
-import src.fsm.Transducer;
+import com.google.common.base.Preconditions;
+
+import fsm.CharSequenceReader;
+import fsm.ResolvingException;
+import fsm.Transducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import src.ProgramMemory;
-import src.impl.fsm.util.ResolvingException;
-import src.impl.math.MathElementResolverFactory;
-import src.program.ProgramMachine;
+import src.runtime.ScriptContext;
+import src.util.ScriptElementExecutor;
 
-public class ProgramTransducer implements Transducer<ProgramMemory> {
+public class ProgramTransducer implements Transducer<ScriptContext> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProgramTransducer.class);
+    private final ScriptElementExecutor executor;
 
-    private final MathElementResolverFactory factory;
+    ProgramTransducer(ScriptElementExecutor executor) {
 
-    public ProgramTransducer(MathElementResolverFactory factory) {
-
-        this.factory = factory;
+        this.executor = Preconditions.checkNotNull(executor);
     }
 
 
     @Override
-    public boolean doTransition(Input inputChain, ProgramMemory outputChain) throws ResolvingException {
+    public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ResolvingException {
 
-        ProgramMachine programMachine = ProgramMachine.create(factory);
 
-        if (logger.isInfoEnabled()){
-
-            logger.info("Working with input chain -> {}", inputChain.toString());
-        }
-
-        return programMachine.run(inputChain, outputChain);
+        return executor.execute(inputChain, outputChain);
     }
 }

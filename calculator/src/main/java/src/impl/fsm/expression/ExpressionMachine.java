@@ -1,28 +1,25 @@
 package src.impl.fsm.expression;
 
-import src.fsm.FiniteStateMachine;
-import src.fsm.Transducer;
-import src.fsm.TransitionMatrix;
-import src.impl.ShuntingYardTransducer;
-import src.impl.fsm.util.ShuntingYard;
-import src.impl.math.MathElement;
-import src.impl.math.MathElementResolverFactory;
 
+
+import fsm.FiniteStateMachine;
+import fsm.Transducer;
+import fsm.TransitionMatrix;
+import src.impl.fsm.util.PrioritizedBinaryOperator;
 
 import java.util.function.BiConsumer;
 
 /**
- *
- *   ExpressionMachine is a realisation of {@link FiniteStateMachine}
- *   that implements a list of all possible transitions and actions when reading an expression
- *
- *
+ * {@code ExpressionMachine} implementation of {@link FiniteStateMachine} which is intended to process
+ * the general structure of math expression — operands and binary operators.
+ * Operand may be a number, an expression in brackets, or a function —
+ * see {@link OperandMachine} for details.
  */
 
+public final class  ExpressionMachine<O> extends FiniteStateMachine<ExpressionStates, O> {
 
-public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates, ShuntingYard> {
-
-    public static ExpressionMachine create(MathElementResolverFactory factory) {
+    public static <O> ExpressionMachine<O> create(BiConsumer<O, PrioritizedBinaryOperator> binaryConsumer,
+                                                  Transducer<O> operandTransducer) {
 
         TransitionMatrix<ExpressionStates> matrix = TransitionMatrix.<ExpressionStates>builder()
                 .withStartState(ExpressionStates.START)
@@ -33,19 +30,20 @@ public final class ExpressionMachine extends FiniteStateMachine<ExpressionStates
 
                 .build();
 
-        return new ExpressionMachine(matrix, factory);
+        return new ExpressionMachine<>(matrix, binaryConsumer, operandTransducer);
     }
 
-    private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix, MathElementResolverFactory factory) {
+    private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix,
+                              BiConsumer<O, PrioritizedBinaryOperator> binaryConsumer,
+                              Transducer<O> operandTransducer) {
         super(matrix, true);
 
-        BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
-
         registerTransducer(ExpressionStates.START, Transducer.illegalTransition());
-        registerTransducer(ExpressionStates.OPERAND, new ShuntingYardTransducer(factory.create(MathElement.OPERAND),consumer));
-        registerTransducer(ExpressionStates.BINARY_OPERATOR, new BinaryOperatorTransducer());
+        registerTransducer(ExpressionStates.OPERAND, operandTransducer);
+        registerTransducer(ExpressionStates.BINARY_OPERATOR, new BinaryOperatorTransducer<>(binaryConsumer));
         registerTransducer(ExpressionStates.FINISH, Transducer.autoTransition());
     }
 }
+//new DetachedShuntingYardTransducer<O>(MathElement.OPERAND, consumer, factory)
 
 

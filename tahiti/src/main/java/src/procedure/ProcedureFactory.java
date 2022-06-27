@@ -9,12 +9,11 @@ public class ProcedureFactory {
 
     public ProcedureFactory() {
 
-        procedures.put("println", (arguments, output) -> output.setOutput(arguments.toString()));
+        procedures.put("print", (arguments, output) -> output.getOutput().print(arguments.toString()));
 
-//        procedurs.put("clean", )
     }
 
-    public Procedure create(String procedureName){
+    public Procedure create(String procedureName) {
 
         return procedures.get(procedureName);
     }

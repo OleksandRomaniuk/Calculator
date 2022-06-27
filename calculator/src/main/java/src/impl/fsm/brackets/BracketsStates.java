@@ -1,11 +1,11 @@
 package src.impl.fsm.brackets;
 
 /**
- *
- * List of all possible states in {@link BracketsMachine}
+ * {@code BracketsStates} is an enumeration of states
+ * that used in {@link BracketsMachine}.
  */
 
-public enum BracketsStates {
+enum BracketsStates {
 
     START,
     OPENING_BRACKET,

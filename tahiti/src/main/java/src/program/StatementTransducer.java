@@ -1,26 +1,26 @@
 package src.program;
 
+import com.google.common.base.Preconditions;
+import fsm.CharSequenceReader;
+import fsm.ResolvingException;
+import fsm.Transducer;
+import src.runtime.ScriptContext;
+import src.util.ScriptElementExecutor;
 
-import src.fsm.Input;
-import src.fsm.Transducer;
-import src.ProgramMemory;
-import src.impl.fsm.util.ResolvingException;
-import src.impl.math.MathElementResolverFactory;
-import src.statement.StatementMachine;
 
-public class StatementTransducer implements Transducer<ProgramMemory> {
+class StatementTransducer implements Transducer<ScriptContext> {
 
-    private final MathElementResolverFactory factory;
+    private final ScriptElementExecutor executor;
 
-    public StatementTransducer(MathElementResolverFactory factory) {
-        this.factory = factory;
+    public StatementTransducer(ScriptElementExecutor executor) {
+
+        this.executor = Preconditions.checkNotNull(executor);
     }
 
+
     @Override
-    public boolean doTransition(Input inputChain, ProgramMemory outputChain) throws ResolvingException {
+    public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ResolvingException {
 
-        StatementMachine machine = StatementMachine.create(factory);
-
-        return machine.run(inputChain, outputChain);
+        return executor.execute(inputChain, outputChain);
     }
 }

@@ -1,9 +1,10 @@
 package src.impl.fsm.operand;
 
-import src.fsm.FiniteStateMachine;
-import src.fsm.TransitionMatrix;
-import src.impl.ShuntingYardTransducer;
-import src.impl.fsm.function.FunctionTransducer;
+
+
+import fsm.FiniteStateMachine;
+import fsm.TransitionMatrix;
+import src.impl.fsm.calculator.DetachedShuntingYardTransducer;
 import src.impl.fsm.util.ShuntingYard;
 import src.impl.math.MathElement;
 import src.impl.math.MathElementResolverFactory;
@@ -11,9 +12,8 @@ import src.impl.math.MathElementResolverFactory;
 import java.util.function.BiConsumer;
 
 /**
- * NumberStateMachine is a realisation of {@link FiniteStateMachine}
- * that implements a list of all possible transitions and actions in a certain state when reading operand
- *
+ * {@code OperandMachine} is a realisation of {@link FiniteStateMachine}
+ * for parsing an operand. How an operand can act a number, an expression in brackets or function.
  */
 
 public final class OperandMachine extends FiniteStateMachine<Object, ShuntingYard> {
@@ -22,12 +22,13 @@ public final class OperandMachine extends FiniteStateMachine<Object, ShuntingYar
 
         BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
 
-        return FiniteStateMachine.oneOfMachine(new NumberTransducer(factory.create(MathElement.NUMBER)),
-                new ShuntingYardTransducer<>(factory.create(MathElement.BRACKETS), consumer),
-                new FunctionTransducer(factory.create(MathElement.FUNCTION)));
+        return FiniteStateMachine.oneOfMachine(new DetachedShuntingYardTransducer<>(MathElement.NUMBER, ShuntingYard::pushOperand, factory),
+                new DetachedShuntingYardTransducer<>(MathElement.BRACKETS, ShuntingYard::pushOperand, factory),
+                new DetachedShuntingYardTransducer<>(MathElement.FUNCTION, ShuntingYard::pushOperand, factory));
     }
 
-    private OperandMachine(TransitionMatrix<Object> matrix, MathElementResolverFactory factory) {
+    private OperandMachine(TransitionMatrix<Object> matrix) {
         super(matrix, true);
     }
 }
+
