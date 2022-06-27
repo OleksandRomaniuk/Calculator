@@ -77,7 +77,7 @@ public class ShuntingYard {
         return Preconditions.checkNotNull(operandStack.peek());
     }
 
-    public PrioritizedOperator peekOperator() {
+    public PrioritizedBinaryOperator peekOperator() {
         assert operatorStack.peek() != null;
         return Preconditions.checkNotNull(operatorStack.peek());
     }

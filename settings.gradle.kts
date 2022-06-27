@@ -1,4 +1,5 @@
 rootProject.name = "CalculatorGIT"
-include("fsm")
+include("src.fsm")
 include("tahiti")
 include("calculator")
+include("fsm")

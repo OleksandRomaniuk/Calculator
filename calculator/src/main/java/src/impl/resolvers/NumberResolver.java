@@ -1,6 +1,6 @@
 package src.impl.resolvers;
 
-import fsm.Input;
+import src.fsm.Input;
 import src.impl.fsm.number.NumberStateMachine;
 import src.impl.fsm.util.ResolvingException;
 import src.impl.math.MathElementResolver;

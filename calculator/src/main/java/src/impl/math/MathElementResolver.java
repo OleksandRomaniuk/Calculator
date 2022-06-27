@@ -1,6 +1,6 @@
 package src.impl.math;
 
-import fsm.Input;
+import src.fsm.Input;
 import src.impl.fsm.util.ResolvingException;
 
 

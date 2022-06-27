@@ -1,6 +1,6 @@
 package src.impl.resolvers;
 
-import fsm.Input;
+import src.fsm.Input;
 import src.impl.fsm.function.FunctionFactory;
 import src.impl.fsm.function.FunctionMachine;
 import src.impl.fsm.util.FunctionHolder;
