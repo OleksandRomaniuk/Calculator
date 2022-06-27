@@ -4,6 +4,7 @@ import fsm.CharSequenceReader;
 import fsm.ResolvingException;
 import fsm.Transducer;
 
+import fsm.identifier.IdentifierMachine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
