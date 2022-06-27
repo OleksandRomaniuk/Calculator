@@ -1,8 +1,8 @@
 package src.impl.fsm.function;
 
 import com.google.common.base.Preconditions;
-import fsm.Input;
-import fsm.Transducer;
+import src.fsm.Input;
+import src.fsm.Transducer;
 import src.impl.fsm.util.ResolvingException;
 import src.impl.fsm.util.ShuntingYard;
 import src.impl.math.MathElementResolver;

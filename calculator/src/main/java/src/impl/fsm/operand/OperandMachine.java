@@ -1,7 +1,7 @@
 package src.impl.fsm.operand;
 
-import fsm.FiniteStateMachine;
-import fsm.TransitionMatrix;
+import src.fsm.FiniteStateMachine;
+import src.fsm.TransitionMatrix;
 import src.impl.ShuntingYardTransducer;
 import src.impl.fsm.function.FunctionTransducer;
 import src.impl.fsm.util.ShuntingYard;

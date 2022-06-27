@@ -1,8 +1,8 @@
 package src.impl.fsm.function;
 
 
-import fsm.Input;
-import fsm.Transducer;
+import src.fsm.Input;
+import src.fsm.Transducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import src.impl.fsm.function.name.IdentifierMachine;

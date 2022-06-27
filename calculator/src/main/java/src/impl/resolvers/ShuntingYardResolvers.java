@@ -1,8 +1,8 @@
 package src.impl.resolvers;
 
 import com.google.common.base.Preconditions;
-import fsm.FiniteStateMachine;
-import fsm.Input;
+import src.fsm.FiniteStateMachine;
+import src.fsm.Input;
 import src.impl.fsm.util.ResolvingException;
 import src.impl.fsm.util.ShuntingYard;
 import src.impl.math.MathElementResolver;

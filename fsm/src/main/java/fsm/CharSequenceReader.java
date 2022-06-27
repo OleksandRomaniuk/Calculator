@@ -1,15 +1,15 @@
 package fsm;
 
-import com.google.common.base.Preconditions;
+
 
 import java.util.Arrays;
 
-
 /**
- *
- * The class that implements the input data
+ * {@code CharSequenceReader} is a class which can be used to
+ * simple work with char array and have a position of reading.
  */
-public final class Input {
+
+public final class CharSequenceReader {
 
     private final char[] source;
 
@@ -17,8 +17,8 @@ public final class Input {
 
     private int savedPosition = -1;
 
-    public Input(String source) {
-        this.source = Preconditions.checkNotNull(source).toCharArray();
+    public CharSequenceReader(String source) {
+        this.source = source.toCharArray();
     }
 
     public char read() {
@@ -44,13 +44,14 @@ public final class Input {
         return Arrays.toString(source);
     }
 
-    public void skipWhitespaces() {
+    void skipWhitespaces() {
 
         while (canRead() && Character.isWhitespace(read())){
 
                 incrementPosition();
         }
     }
+
     void savePosition() {
 
         savedPosition = readingPosition;

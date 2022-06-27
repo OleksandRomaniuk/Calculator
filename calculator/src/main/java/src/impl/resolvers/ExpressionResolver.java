@@ -1,7 +1,7 @@
 package src.impl.resolvers;
 
 import com.google.common.base.Preconditions;
-import fsm.Input;
+import src.fsm.Input;
 import src.impl.fsm.expression.ExpressionMachine;
 import src.impl.fsm.util.ResolvingException;
 import src.impl.fsm.util.ShuntingYard;

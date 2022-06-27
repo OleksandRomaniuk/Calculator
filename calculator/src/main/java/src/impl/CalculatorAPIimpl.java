@@ -1,7 +1,7 @@
 package src.impl;
 
 import com.google.common.base.Preconditions;
-import fsm.Input;
+import src.fsm.Input;
 import src.CalculatorAPI;
 import src.ExpressionException;
 import src.impl.fsm.calculator.CalculatorMachine;

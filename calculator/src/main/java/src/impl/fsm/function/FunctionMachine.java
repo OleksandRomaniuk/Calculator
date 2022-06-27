@@ -1,9 +1,9 @@
 package src.impl.fsm.function;
 
 
-import fsm.FiniteStateMachine;
-import fsm.Transducer;
-import fsm.TransitionMatrix;
+import src.fsm.FiniteStateMachine;
+import src.fsm.Transducer;
+import src.fsm.TransitionMatrix;
 import src.impl.fsm.expression.ExpressionFunctionTransducer;
 import src.impl.fsm.util.FunctionHolder;
 import src.impl.fsm.util.ResolvingException;

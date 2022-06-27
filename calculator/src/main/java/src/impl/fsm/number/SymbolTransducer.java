@@ -1,8 +1,8 @@
 package src.impl.fsm.number;
 
 import com.google.common.base.Preconditions;
-import fsm.Input;
-import fsm.Transducer;
+import src.fsm.Input;
+import src.fsm.Transducer;
 
 import java.util.function.Predicate;
 

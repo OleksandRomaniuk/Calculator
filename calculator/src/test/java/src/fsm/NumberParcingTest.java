@@ -1,6 +1,7 @@
-package fsm;
+package src.fsm;
 
 import org.junit.jupiter.params.provider.Arguments;
+import src.AbstractCalculatorAPIimplTest;
 
 import java.util.stream.Stream;
 

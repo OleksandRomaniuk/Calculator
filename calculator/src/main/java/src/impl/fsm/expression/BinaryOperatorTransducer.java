@@ -1,8 +1,8 @@
 package src.impl.fsm.expression;
 
 import com.google.common.base.Preconditions;
-import fsm.Input;
-import fsm.Transducer;
+import src.fsm.Input;
+import src.fsm.Transducer;
 import src.impl.fsm.util.BinaryOperatorFactory;
 import src.impl.fsm.util.PrioritizedOperator;
 import src.impl.fsm.util.ShuntingYard;
