@@ -8,26 +8,26 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- *
- *  {@code BinaryOperatorFactory create an instance of {@link PrioritizedOperator} by symbol.
+ * {@code BinaryOperatorFactory} is a realization of factory pattern
+ * that create an instance of {@link PrioritizedBinaryOperator} by symbol.
  */
 
 public class BinaryOperatorFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(BinaryOperatorFactory.class);
 
-    private final Map<Character, PrioritizedOperator> binaryOperators = new HashMap<>();
+    private final Map<Character, PrioritizedBinaryOperator> binaryOperators = new HashMap<>();
 
     public BinaryOperatorFactory() {
 
-        binaryOperators.put('+', new PrioritizedOperator(PrioritizedOperator.Priority.LOW, Double::sum));
-        binaryOperators.put('-', new PrioritizedOperator(PrioritizedOperator.Priority.LOW, (left, right) -> left - right));
-        binaryOperators.put('*', new PrioritizedOperator(PrioritizedOperator.Priority.MEDIUM, (left, right) -> left * right));
-        binaryOperators.put('/', new PrioritizedOperator(PrioritizedOperator.Priority.MEDIUM, (left, right) -> left / right));
-        binaryOperators.put('^', new PrioritizedOperator(PrioritizedOperator.Priority.HIGH, Math::pow));
+        binaryOperators.put('+', new PrioritizedBinaryOperator(PrioritizedBinaryOperator.Priority.LOW, Double::sum));
+        binaryOperators.put('-', new PrioritizedBinaryOperator(PrioritizedBinaryOperator.Priority.LOW, (left, right) -> left - right));
+        binaryOperators.put('*', new PrioritizedBinaryOperator(PrioritizedBinaryOperator.Priority.MEDIUM, (left, right) -> left * right));
+        binaryOperators.put('/', new PrioritizedBinaryOperator(PrioritizedBinaryOperator.Priority.MEDIUM, (left, right) -> left / right));
+        binaryOperators.put('^', new PrioritizedBinaryOperator(PrioritizedBinaryOperator.Priority.HIGH, Math::pow));
     }
 
-    public Optional<PrioritizedOperator> create(char operatorSymbol) {
+    public Optional<PrioritizedBinaryOperator> create(char operatorSymbol) {
 
         if (logger.isInfoEnabled()) {
 

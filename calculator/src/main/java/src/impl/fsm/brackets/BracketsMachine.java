@@ -1,51 +1,43 @@
 package src.impl.fsm.brackets;
 
-import src.fsm.FiniteStateMachine;
-import src.fsm.Transducer;
-import src.fsm.TransitionMatrix;
-import src.impl.ShuntingYardTransducer;
+import com.google.common.base.Preconditions;
+import fsm.FiniteStateMachine;
+import fsm.Transducer;
+import fsm.TransitionMatrix;
 import src.impl.fsm.util.ShuntingYard;
-import src.impl.math.MathElement;
-import src.impl.math.MathElementResolverFactory;
 
 
 import java.util.function.BiConsumer;
 
-import static src.impl.fsm.brackets.BracketsStates.*;
 
 
-/**
- * BracketsMachine is a realisation of {@link FiniteStateMachine}
- * that implements a list of all possible transitions and actions in a certain state
- *
- */
+public final class BracketsMachine<O> extends FiniteStateMachine<BracketsStates, O> {
 
+    public static <O> BracketsMachine<O> create(Transducer<O> transducer) {
 
-public final class BracketsMachine extends FiniteStateMachine<BracketsStates, ShuntingYard> {
-
-    public static BracketsMachine create(MathElementResolverFactory factory) {
+        Preconditions.checkNotNull(transducer);
 
         TransitionMatrix<BracketsStates> matrix = TransitionMatrix.<BracketsStates>builder()
-                .withStartState(START)
-                .withFinishState(FINISH)
-                .allowTransition(START, OPENING_BRACKET)
-                .allowTransition(OPENING_BRACKET, EXPRESSION)
-                .allowTransition(EXPRESSION, CLOSING_BRACKET)
-                .allowTransition(CLOSING_BRACKET, FINISH)
+                .withStartState(BracketsStates.START)
+                .withFinishState(BracketsStates.FINISH)
+                .allowTransition(BracketsStates.START, BracketsStates.OPENING_BRACKET)
+                .allowTransition(BracketsStates.OPENING_BRACKET, BracketsStates.EXPRESSION)
+                .allowTransition(BracketsStates.EXPRESSION, BracketsStates.CLOSING_BRACKET)
+                .allowTransition(BracketsStates.CLOSING_BRACKET, BracketsStates.FINISH)
                 .build();
 
-        return new BracketsMachine(matrix, factory);
+        return new BracketsMachine<>(matrix, transducer);
     }
 
-    private BracketsMachine(TransitionMatrix<BracketsStates> matrix, MathElementResolverFactory factory) {
+    private BracketsMachine(TransitionMatrix<BracketsStates> matrix, Transducer<O> transducer) {
         super(matrix, true);
 
         BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
 
-        registerTransducer(START, Transducer.illegalTransition());
-        registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('(') );
-        registerTransducer(EXPRESSION, new ShuntingYardTransducer(factory.create(MathElement.EXPRESSION),consumer));
-        registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
-        registerTransducer(FINISH, Transducer.autoTransition());
+        registerTransducer(BracketsStates.START, Transducer.illegalTransition());
+        registerTransducer(BracketsStates.OPENING_BRACKET, Transducer.checkAndPassChar('(') );
+        registerTransducer(BracketsStates.EXPRESSION, transducer);
+        registerTransducer(BracketsStates.CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
+        registerTransducer(BracketsStates.FINISH, Transducer.autoTransition());
     }
 }

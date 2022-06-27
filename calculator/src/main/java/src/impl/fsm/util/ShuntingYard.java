@@ -9,16 +9,17 @@ import java.util.Deque;
 import java.util.function.DoubleBinaryOperator;
 
 /**
- * ShuntingYardStack is a data storing class
- *
+ * {@code ShuntingYardStack} is a data storing class for realization of concept of
+ *  * <a href = "https://en.wikipedia.org/wiki/Shunting_yard_algorithm"> Shunting yard algorithm </a>
  */
+
 public class ShuntingYard {
 
     private static final Logger logger = LoggerFactory.getLogger(ShuntingYard.class);
 
     private final Deque<Double> operandStack = new ArrayDeque<>();
 
-    private final Deque<PrioritizedOperator> operatorStack = new ArrayDeque<>();
+    private final Deque<PrioritizedBinaryOperator> operatorStack = new ArrayDeque<>();
 
     public void pushOperand(double operand) {
 
@@ -30,7 +31,7 @@ public class ShuntingYard {
         operandStack.push(operand);
     }
 
-    public void pushOperator(PrioritizedOperator operator) {
+    public void pushOperator(PrioritizedBinaryOperator operator) {
 
         Preconditions.checkNotNull(operator);
 
@@ -51,12 +52,9 @@ public class ShuntingYard {
 
         Preconditions.checkState(operandStack.size() == 1, "Operand stack has more than one result in the end of calculation");
 
-        if (logger.isInfoEnabled()) {
-            logger.info("Result -> {}", operandStack.peek());
-        }
-
-        assert operandStack.peek() != null;
-        return Preconditions.checkNotNull(operandStack.peek());
+//        assert operandStack.peek() != null;
+//        return Preconditions.checkNotNull(operandStack.peek());
+        return operandStack.pop();
     }
 
 

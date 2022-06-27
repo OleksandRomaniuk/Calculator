@@ -1,14 +1,16 @@
 package src.impl.fsm.function;
 
-import src.fsm.Function;
+import com.google.common.base.Preconditions;
 
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
- *
- * A factory that calculates values, depending on the function
+ * {@code FunctionFactory} is a realization of factory pattern
+ * that create an instance of {@link Function} by name.
  */
+
 public class FunctionFactory {
 
     private final Map<String, Function> functions = new TreeMap<>();
@@ -16,69 +18,40 @@ public class FunctionFactory {
     public FunctionFactory() {
 
         functions.put("min", arguments -> {
-            double min = arguments.get(0);
+            Preconditions.checkState(arguments.size()>1, "Not enough arguments in min function");
 
-            for (double argument : arguments) {
-
-                if (argument < min) {
-                    min = argument;
-                }
-            }
-
-            return min;
+            return arguments.stream().min(Double::compare).get();
         });
 
         functions.put("max", arguments -> {
-            double max = arguments.get(0);
+            Preconditions.checkState(arguments.size()>1, "Not enough arguments in max function");
 
-            for (double argument : arguments) {
-
-                if (argument > max) {
-                    max = argument;
-                }
-            }
-
-            return max;
+            return arguments.stream().max(Double::compare).get();
         });
 
         functions.put("avg", arguments -> {
-            double avg=0;
+            Preconditions.checkState(arguments.size()>1, "Not enough arguments in avg function");
 
-            for (double argument : arguments) {
-                avg+=argument;
-            }
-            avg = avg/ arguments.size();
-            return avg;
+            return arguments.stream().collect(Collectors.averagingDouble((a) -> a));
+        });
+        functions.put("sqrt", arguments -> {
+            Preconditions.checkState(arguments.size() == 1);
+
+            return StrictMath.sqrt(arguments.get(0));
         });
         functions.put("pi", arguments -> {
+            Preconditions.checkState(arguments.isEmpty());
             return Math.PI;
         });
-        functions.put("sum", arguments -> {
-            double avg=0;
-
-            for (double argument : arguments) {
-                avg+=argument;
-            }
-            avg = avg/ arguments.size();
-            return avg;
-        });
-        functions.put("pi", arguments -> {
-            double sum = 0;
-
-            for (double argument : arguments) {
-                sum += argument;
-            }
-
-            return sum;
-        });
-    }
-    public boolean hasFunction(String name){
-
-        return functions.containsKey(name);
     }
 
     public Function create(String functionName){
 
         return functions.get(functionName);
+    }
+
+    public boolean hasFunction(String name){
+
+        return functions.containsKey(name);
     }
 }

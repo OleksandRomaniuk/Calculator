@@ -3,8 +3,10 @@ package src.impl;
 import com.google.common.base.Preconditions;
 
 /**
- * Class for generalizations input
+ * {@code MathematicalExpression } is a tiny type which is used to store mathematical expression
+ * which user want to resolve.
  */
+
 
 public class MathematicalExpression {
 

@@ -1,16 +1,15 @@
 package fsm;
 
-
-import src.impl.fsm.util.ResolvingException;
-
 /**
- * Basic interface for navigating the program
- * @param <O>
+ * {@code Transducer} is a functional interface that can be used to
+ * produce {@param <O>} output based on a given input
+ * and potentially throws a {@link ResolvingException}.
  */
+
 @FunctionalInterface
 public interface Transducer<O> {
 
-    boolean doTransition(Input inputChain, O outputChain) throws ResolvingException, ResolvingException;
+    boolean doTransition(CharSequenceReader inputChain, O outputChain) throws ResolvingException;
 
     static <O> Transducer<O> autoTransition() {
 
@@ -35,6 +34,7 @@ public interface Transducer<O> {
             return false;
         };
     }
+
     default Transducer<O> and (Transducer<O> transducer){
         return (inputChain, outputChain) -> {
 

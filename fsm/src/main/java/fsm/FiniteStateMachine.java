@@ -4,45 +4,38 @@ import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import src.impl.fsm.util.ResolvingException;
-
 import java.util.*;
 
-
 /**
- * Abstract implementation of the concept of
- * <a href="https://en.wikipedia.org/wiki/Finite-state_machine">Finite State Machine</a>.
+ * {@code FiniteStateMachine} is a realization of concept of
+ * <a href = "https://en.wikipedia.org/wiki/Finite-state_machine">Finite state machine</a>
+ * <p>
+ * It can change states with help of {@link Transducer}
+ * </p>
  *
- * <p>Requires {@link TransitionMatrix} as a definition of assigned directed graph.
- * Realizes traversal algorithm from a so-called start state to so-called finish state
- * that are defined by a transition matrix also.
+ * <p>
+ * Requires a {@link TransitionMatrix} which is a definition of directed graph
+ * </p>
  *
- * <p>Uses {@link Transducer} to determine a possibility of transition
- * to a particular state.
- *
- * <p>Optionally, may skip whitespaces between elements in Input.
- *
- * @param <S> possible states of the machine
- * @param <O> output chain of the machine
+ * @param <S> States for {@link TransitionMatrix}
+ * @param <O> Output chain
  */
 
 public class FiniteStateMachine<S, O> {
 
-
-
     @SafeVarargs
-    protected static <O> FiniteStateMachine<Object, O> oneOfMachine(Transducer<O>... transducers) {
+    public static <O> FiniteStateMachine<Object, O> oneOfMachine(Transducer<O>... transducers) {
 
-        Map <Object, Transducer<O>> registers =  new LinkedHashMap<>() ;
+        Map<Object, Transducer<O>> registers = new LinkedHashMap<>();
 
         Object startState = new Object();
         Object finishState = new Object();
 
-        TransitionMatrix.MatrixBuilder<Object> builder = new TransitionMatrix.MatrixBuilder<>();
+        MatrixBuilder<Object> builder = new MatrixBuilder<>();
 
         builder.withStartState(startState).withFinishState(finishState);
 
-        for (Transducer<O> transducer: transducers){
+        for (Transducer<O> transducer : transducers) {
 
             Object transducerState = new Object();
 
@@ -54,7 +47,7 @@ public class FiniteStateMachine<S, O> {
 
         FiniteStateMachine<Object, O> machine = new FiniteStateMachine<>(builder.build());
 
-        for (Map.Entry<Object, Transducer<O>> entry : registers.entrySet()){
+        for (Map.Entry<Object, Transducer<O>> entry : registers.entrySet()) {
 
             machine.registerTransducer(entry.getKey(), entry.getValue());
         }
@@ -68,11 +61,11 @@ public class FiniteStateMachine<S, O> {
 
     private static final Logger logger = LoggerFactory.getLogger(FiniteStateMachine.class);
 
-    private final TransitionMatrix<S> matrix;
+    private TransitionMatrix<S> matrix;
 
     private final Map<S, Transducer<O>> transducers = new HashMap<>();
 
-    private final boolean allowedSkippingWhitespaces;
+    private boolean allowedSkippingWhitespaces;
 
     public FiniteStateMachine(TransitionMatrix<S> matrix, boolean allowedSkippingWhitespaces) {
 
@@ -80,18 +73,21 @@ public class FiniteStateMachine<S, O> {
         this.allowedSkippingWhitespaces = allowedSkippingWhitespaces;
     }
 
+    public FiniteStateMachine() {
+    }
+
     protected FiniteStateMachine(TransitionMatrix<S> matrix) {
 
         this(matrix, false);
     }
 
-    public boolean run(Input inputChain, O outputChain) throws ResolvingException {
+    public boolean run(CharSequenceReader inputChain, O outputChain) throws ResolvingException {
 
         inputChain.savePosition();
 
         if (logger.isInfoEnabled()) {
 
-            logger.info("Start of machine: {} for {}", getClass().getSimpleName(), inputChain);
+            logger.info("Start of machine: {} ", getClass().getSimpleName());
         }
 
         S currentState = matrix.getStartState();
@@ -106,7 +102,13 @@ public class FiniteStateMachine<S, O> {
 
                     return false;
                 }
-                if (matrix.isTemporaryState(currentState)){
+
+                if (matrix.isTemporaryState(currentState)) {
+
+                    if (logger.isInfoEnabled()) {
+
+                        logger.info("Rejected temporary state -> {}", currentState);
+                    }
 
                     inputChain.restorePosition();
 
@@ -122,8 +124,8 @@ public class FiniteStateMachine<S, O> {
         return true;
     }
 
-    private Optional<S> makeNextStep(Input inputChain, O outputChain, S currentState) throws ResolvingException {
-        if (allowedSkippingWhitespaces){
+    private Optional<S> makeNextStep(CharSequenceReader inputChain, O outputChain, S currentState) throws ResolvingException {
+        if (allowedSkippingWhitespaces) {
 
             inputChain.skipWhitespaces();
         }
@@ -146,7 +148,7 @@ public class FiniteStateMachine<S, O> {
         return Optional.empty();
     }
 
-    protected void registerTransducer(S state, Transducer<O> transducer){
+    protected void registerTransducer(S state, Transducer<O> transducer) {
 
         transducers.put(state, transducer);
     }

@@ -25,7 +25,6 @@ class FunctionTest extends AbstractCalculatorAPIimplTest {
 
     static Stream<Arguments> negativeCases(){
         return Stream.of(
-                of("min3,6)", 3, "Not opened bracket test has not throw exception"),
                 of("min(5", 5, "Evaluation of min without closing brackets function failed"),
                 of("min(3,6", 7, "Not closed bracket test has not throw exception")
         );

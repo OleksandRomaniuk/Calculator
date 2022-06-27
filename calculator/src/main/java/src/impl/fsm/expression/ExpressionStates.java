@@ -1,10 +1,8 @@
 package src.impl.fsm.expression;
 
-
-
 /**
- *
- * List of all possible states in {@link ExpressionMachine}
+ * {@code ExpressionState} is an enumeration of states
+ * that used in {@link ExpressionMachine}.
  */
 
 public enum ExpressionStates {

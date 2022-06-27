@@ -2,11 +2,11 @@ package src.procedure;
 
 
 
-import src.ProgramMemory;
+import src.runtime.ScriptContext;
 
 import java.util.List;
 
 public interface Procedure {
 
-    void create(List<Double> arguments, ProgramMemory output);
+    void execute(List<Double> arguments, ScriptContext output);
 }

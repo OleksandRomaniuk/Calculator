@@ -1,15 +1,23 @@
 package src.impl.resolvers;
 
-import src.fsm.Input;
+
+
+import fsm.CharSequenceReader;
+import fsm.ResolvingException;
+import src.impl.fsm.calculator.DetachedShuntingYardTransducer;
 import src.impl.fsm.function.FunctionFactory;
 import src.impl.fsm.function.FunctionMachine;
 import src.impl.fsm.util.FunctionHolder;
-import src.impl.fsm.util.ResolvingException;
+import src.impl.math.MathElement;
 import src.impl.math.MathElementResolver;
 import src.impl.math.MathElementResolverFactory;
 
-
 import java.util.Optional;
+
+/**
+ * {@code FunctionResolver} is an implementation of {@link MathElementResolver} that
+ * resolve input chain for {@link FunctionMachine}.
+ */
 
 public class FunctionResolver implements MathElementResolver {
 
@@ -23,11 +31,12 @@ public class FunctionResolver implements MathElementResolver {
     }
 
     @Override
-    public Optional<Double> resolve(Input inputChain) throws ResolvingException {
+    public Optional<Double> resolve(CharSequenceReader inputChain) throws ResolvingException {
 
         FunctionHolder holder = new FunctionHolder();
 
-        FunctionMachine functionMachine = FunctionMachine.create(elementResolverFactory);
+        FunctionMachine<FunctionHolder> functionMachine = FunctionMachine.create(new DetachedShuntingYardTransducer<>(
+                MathElement.EXPRESSION, FunctionHolder::setArgument, elementResolverFactory), FunctionHolder::setFunctionName);
 
         if (functionMachine.run(inputChain, holder)) {
 

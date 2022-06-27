@@ -1,26 +1,27 @@
 package src.program;
 
 
-import src.fsm.FiniteStateMachine;
-import src.fsm.Transducer;
-import src.fsm.TransitionMatrix;
-import src.ProgramMemory;
-import src.impl.math.MathElementResolverFactory;
+import fsm.FiniteStateMachine;
+import fsm.Transducer;
+import fsm.TransitionMatrix;
+import src.runtime.ScriptContext;
+import src.util.ScriptElement;
+import src.util.ScriptElementExecutorFactory;
 
 import static src.program.ProgramStates.*;
 
-public final class ProgramMachine extends FiniteStateMachine<ProgramStates, ProgramMemory> {
+public final class ProgramMachine extends FiniteStateMachine<ProgramStates, ScriptContext> {
 
-    private ProgramMachine(TransitionMatrix<ProgramStates> matrix, MathElementResolverFactory factory) {
+    private ProgramMachine(TransitionMatrix<ProgramStates> matrix, ScriptElementExecutorFactory factory) {
         super(matrix, true);
 
         registerTransducer(START, Transducer.illegalTransition());
-        registerTransducer(STATEMENT, new StatementTransducer(factory));
+        registerTransducer(STATEMENT, new StatementTransducer(factory.create(ScriptElement.STATEMENT)));
         registerTransducer(SEPARATOR, Transducer.checkAndPassChar(';'));
         registerTransducer(FINISH, Transducer.autoTransition());
     }
 
-    public static ProgramMachine create(MathElementResolverFactory factory) {
+    public static ProgramMachine create(ScriptElementExecutorFactory factory) {
         TransitionMatrix<ProgramStates> matrix =
                 TransitionMatrix.<ProgramStates>builder()
                         .withStartState(START)
