@@ -5,7 +5,8 @@ import fsm.CharSequenceReader;
 import fsm.FiniteStateMachine;
 import fsm.ResolvingException;
 import src.FunctionHolderWithContext;
-import src.impl.fsm.function.FunctionFactory;
+
+import src.fsm.function.FunctionFactory;
 import src.runtime.ScriptContext;
 import src.util.ScriptElementExecutor;
 

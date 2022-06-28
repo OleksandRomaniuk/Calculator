@@ -1,12 +1,23 @@
-# Calculator
+# Tahiti language
 
-Pogram that reads and calculates a mathematical expression
+Language may contain:
 
-Math expression may contain:
- * - integer and float numbers;
- * - binary operators with priorities, e.g. +, -, *, /, ^ (power operator);
- * - brackets;
- * - functions, e.g. sum, min, max, pi.
- 
- The program is able to find and return the location of incorrect data
+© Variable initialize;
+© Procedures.
+
+Variable value and procedure arguments may contain expressions, Expression may contain
+
+- integer and float numbers;
+- binary operators with priorities, e.. +, -,* /
+- brackets;
+- functions, e.g. sum, min, max, sqrt, pi.
+
+Raises a specific error if program input is incorrect,
+
+Typical usage scenario:
+
+InputProgram script = new InputProgram(mathScript);
+ProgramResult output = tahiti.interpret(script);
+
+
  

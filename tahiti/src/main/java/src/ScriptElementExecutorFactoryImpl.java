@@ -3,12 +3,14 @@ package src;
 import com.google.common.base.Preconditions;
 import fsm.FiniteStateMachine;
 import fsm.ResolvingException;
-import fsm.identifier.IdentifierMachine;
+
 import src.executors.*;
-import src.impl.fsm.brackets.BracketsMachine;
-import src.impl.fsm.expression.ExpressionMachine;
-import src.impl.fsm.function.FunctionMachine;
-import src.impl.fsm.number.NumberStateMachine;
+
+import src.fsm.brackets.BracketsMachine;
+import src.fsm.expression.ExpressionMachine;
+import src.fsm.function.FunctionMachine;
+import src.fsm.number.NumberStateMachine;
+
 import src.initvar.InitVarContext;
 import src.initvar.InitVarMachine;
 import src.program.ProgramMachine;
