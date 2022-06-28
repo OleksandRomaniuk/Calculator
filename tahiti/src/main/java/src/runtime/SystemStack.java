@@ -1,7 +1,7 @@
 package src.runtime;
 
 import com.google.common.base.Preconditions;
-import src.impl.fsm.util.ShuntingYard;
+import src.ShuntingYard;
 
 
 import java.util.ArrayDeque;

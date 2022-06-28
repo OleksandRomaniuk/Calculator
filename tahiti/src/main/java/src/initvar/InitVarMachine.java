@@ -4,7 +4,8 @@ package src.initvar;
 import fsm.FiniteStateMachine;
 import fsm.Transducer;
 import fsm.TransitionMatrix;
-import src.impl.fsm.function.FunctionNameTransducer;
+
+import src.fsm.function.FunctionNameTransducer;
 import src.util.ScriptElement;
 import src.util.ScriptElementExecutorFactory;
 

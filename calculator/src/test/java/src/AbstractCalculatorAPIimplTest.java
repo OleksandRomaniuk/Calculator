@@ -4,11 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import src.impl.CalculationResult;
-import src.impl.Calculator;
-import src.impl.MathematicalExpression;
-import src.impl.WrongExpressionException;
-
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
