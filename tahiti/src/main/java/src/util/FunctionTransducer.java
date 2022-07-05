@@ -1,29 +1,39 @@
 package src.util;
 
 
+
 import fsm.CharSequenceReader;
-import fsm.ResolvingException;
 import fsm.Transducer;
+import fsm.type.Value;
 
 import java.util.function.BiConsumer;
 
-public class FunctionTransducer<O extends WithContext> implements Transducer<O> {
+public class FunctionTransducer<O extends WithContext> implements Transducer<O, ExecutionException> {
 
-    private final BiConsumer<O, Double> consumer;
+    private final BiConsumer<O, Value> consumer;
 
-    private final ScriptElementExecutor expressionExecutor;
+    private final ScriptElementExecutorFactory factory;
 
-    public FunctionTransducer(BiConsumer<O, Double> consumer, ScriptElementExecutor expressionExecutor) {
+    private final ScriptElement scriptElement;
+
+    public FunctionTransducer(BiConsumer<O, Value> consumer, ScriptElementExecutorFactory factory, ScriptElement scriptElement) {
         this.consumer = consumer;
-        this.expressionExecutor = expressionExecutor;
+        this.factory = factory;
+        this.scriptElement = scriptElement;
     }
 
-
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, O outputChain) throws ResolvingException {
-        if (expressionExecutor.execute(inputChain, outputChain.getContext())) {
+    public boolean doTransition(CharSequenceReader inputChain, O outputChain) throws ExecutionException {
 
-            double result = outputChain.getContext().systemStack().current().peekResult();
+        ScriptElementExecutor expressionExecutor = factory.create(scriptElement);
+
+        if (expressionExecutor.execute(inputChain, outputChain.getScriptContext())) {
+
+            if (outputChain.getScriptContext().isParseonly()){
+                return true;
+            }
+
+            Value result = outputChain.getScriptContext().systemStack().current().peekResult();
 
             consumer.accept(outputChain, result);
 

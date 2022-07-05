@@ -1,39 +1,37 @@
 package src.fsm.calculator;
 
 
-
+import fsm.ExceptionThrower;
 import fsm.FiniteStateMachine;
 import fsm.Transducer;
 import fsm.TransitionMatrix;
-import src.ShuntingYard;
+import src.ResolvingException;
+import src.fsm.ShuntingYard;
 import src.math.MathElement;
 import src.math.MathElementResolverFactory;
+import fsm.type.Value;
 
 import java.util.function.BiConsumer;
 
-/**
- * CalculatorMachine is a realisation of {@link FiniteStateMachine}
- * that implements a list of all possible transitions and actions in a certain state
- *
- */
 
-public final class CalculatorMachine extends FiniteStateMachine<CalculatorStates, ShuntingYard> {
+public final class CalculatorMachine extends FiniteStateMachine<CalculatorStates, ShuntingYard, ResolvingException> {
 
-    public static CalculatorMachine create(MathElementResolverFactory factory) {
-        TransitionMatrix<CalculatorStates> matrix =
+    public static CalculatorMachine create(MathElementResolverFactory factory,
+                                           ExceptionThrower<ResolvingException> exceptionThrower) {
+        var matrix =
                 TransitionMatrix.<CalculatorStates>builder()
                         .withStartState(CalculatorStates.START)
                         .withFinishState(CalculatorStates.FINISH)
                         .allowTransition(CalculatorStates.START, CalculatorStates.EXPRESSION)
                         .allowTransition(CalculatorStates.EXPRESSION, CalculatorStates.FINISH).build();
 
-        return new CalculatorMachine(matrix, factory);
+        return new CalculatorMachine(matrix, factory, exceptionThrower);
     }
 
-    private CalculatorMachine(TransitionMatrix<CalculatorStates> matrix, MathElementResolverFactory factory) {
-        super(matrix, true);
+    private CalculatorMachine(TransitionMatrix<CalculatorStates> matrix, MathElementResolverFactory factory, ExceptionThrower<ResolvingException> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
 
-        BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
+        var consumer = (BiConsumer<ShuntingYard, Value>) ShuntingYard::pushOperand;
 
         registerTransducer(CalculatorStates.START, Transducer.illegalTransition());
         registerTransducer(CalculatorStates.EXPRESSION, new DetachedShuntingYardTransducer<>(MathElement.EXPRESSION, consumer, factory));

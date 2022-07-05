@@ -1,11 +1,15 @@
 package src.runtime;
 
 import com.google.common.base.Preconditions;
-import src.ShuntingYard;
+import src.fsm.ShuntingYard;
 
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+
+/**
+ * {@code SystemStack} is a stack of {@link ShuntingYard} it is used to store results of calculations and value of variables.
+ */
 
 public class SystemStack {
 
@@ -29,4 +33,5 @@ public class SystemStack {
 
         return stacks.pop();
     }
+
 }

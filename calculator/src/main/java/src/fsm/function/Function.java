@@ -1,5 +1,9 @@
 package src.fsm.function;
 
+
+
+import fsm.type.Value;
+
 import java.util.List;
 
 /**
@@ -10,5 +14,5 @@ import java.util.List;
 
 public interface Function{
 
-    Double evaluate(List<Double> arguments);
+    Value evaluate(List<Value> arguments);
 }

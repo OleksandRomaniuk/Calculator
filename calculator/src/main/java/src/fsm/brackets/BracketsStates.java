@@ -1,9 +1,8 @@
 package src.fsm.brackets;
 
-
 /**
- *
- * List of all possible states in {@link BracketsMachine}
+ * {@code BracketsStates} is an enumeration of states
+ * that used in {@link BracketsMachine}.
  */
 
 enum BracketsStates {

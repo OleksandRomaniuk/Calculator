@@ -3,27 +3,26 @@ package src.fsm.expression;
 import com.google.common.base.Preconditions;
 import fsm.CharSequenceReader;
 import fsm.Transducer;
-import src.fsm.util.BinaryOperatorFactory;
-import src.fsm.util.PrioritizedBinaryOperator;
+import src.AbstractBinaryOperator;
+import src.BinaryOperatorFactory;
 
-import java.util.Optional;
+
 import java.util.function.BiConsumer;
 
 /**
- *Implementation of {@link Transducer} }
- *
- *
+ * BinaryOperatorTransducer is an implementation of  Transducer
+ * that produce an AbstractBinaryOperator to ShuntingYard output
  */
 
-class BinaryOperatorTransducer<O> implements Transducer<O> {
+public class BinaryOperatorTransducer<O, E extends Exception> implements Transducer<O, E> {
 
-    private final BinaryOperatorFactory factory = new BinaryOperatorFactory();
+    private final BinaryOperatorFactory factory;
 
-    private final BiConsumer<O, PrioritizedBinaryOperator> operatorConsumer;
+    private final BiConsumer<O, AbstractBinaryOperator> operatorConsumer;
 
-    BinaryOperatorTransducer(BiConsumer<O, PrioritizedBinaryOperator> operatorConsumer) {
-
-        this.operatorConsumer = Preconditions.checkNotNull(operatorConsumer);
+    public BinaryOperatorTransducer(BinaryOperatorFactory factory, BiConsumer<O, AbstractBinaryOperator> operatorConsumer) {
+        this.factory = factory;
+        this.operatorConsumer = operatorConsumer;
     }
 
     @Override
@@ -35,7 +34,7 @@ class BinaryOperatorTransducer<O> implements Transducer<O> {
             return false;
         }
 
-        Optional<PrioritizedBinaryOperator> operator = factory.create(inputChain.read());
+        var operator = factory.create(inputChain.readOperator());
 
         if (operator.isPresent()) {
 
@@ -44,6 +43,9 @@ class BinaryOperatorTransducer<O> implements Transducer<O> {
             inputChain.incrementPosition();
 
             return true;
+        }
+        if(inputChain.previous() == '>' || inputChain.previous() == '<'){
+            inputChain.decrementPosition();
         }
         return false;
     }

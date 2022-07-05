@@ -1,14 +1,22 @@
 package src.util;
 
+/**
+ * {@code ScriptElement} is an enumeration of program elements
+ * that can be used in {@link ScriptElementExecutorFactory}.
+ */
+
 public enum ScriptElement {
     NUMBER,
+    NUMERIC_EXPRESSION,
+    RELATIONAL_EXPRESSION,
     EXPRESSION,
     OPERAND,
     BRACKETS,
     FUNCTION,
     STATEMENT,
-    INITVAR,
+    INIT_VAR,
     PROGRAM,
     PROCEDURE,
-    READVARIABLE
+    READ_VARIABLE,
+    WHILE_OPERATOR
 }

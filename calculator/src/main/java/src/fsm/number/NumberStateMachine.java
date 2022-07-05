@@ -2,12 +2,14 @@ package src.fsm.number;
 
 import com.google.common.base.Preconditions;
 import fsm.*;
-import src.SymbolTransducer;
+import fsm.identifier.SymbolTransducer;
+import fsm.type.DoubleValue;
+import fsm.type.Value;
+
 
 import java.util.Optional;
 
 import static src.fsm.number.NumberStates.*;
-
 
 
 /**
@@ -15,23 +17,25 @@ import static src.fsm.number.NumberStates.*;
  * for parsing a number.
  */
 
-public final class NumberStateMachine extends FiniteStateMachine<NumberStates, StringBuilder> {
+public final class NumberStateMachine<E extends Exception> extends FiniteStateMachine<NumberStates, StringBuilder, E> {
 
-    public static Optional<Double> execute(CharSequenceReader inputChain) throws ResolvingException {
-        StringBuilder stringBuilder = new StringBuilder();
+    public static <E extends Exception> Optional<Value> execute(CharSequenceReader inputChain, ExceptionThrower<E> exceptionThrower) throws E {
+        var stringBuilder = new StringBuilder();
 
-        NumberStateMachine numberMachine = NumberStateMachine.create();
+        var numberMachine = NumberStateMachine.create(exceptionThrower);
 
         if (numberMachine.run(inputChain, stringBuilder)) {
 
-            return Optional.of(Double.parseDouble(stringBuilder.toString()));
+            Value number = new DoubleValue(Double.parseDouble(stringBuilder.toString()));
+
+            return Optional.of(number);
         }
 
         return Optional.empty();
     }
 
-    public static NumberStateMachine create() {
-        TransitionMatrix<NumberStates> matrix = TransitionMatrix.<NumberStates>builder().
+    public static <E extends Exception> NumberStateMachine<E> create(ExceptionThrower<E> exceptionThrower) {
+        var matrix = TransitionMatrix.<NumberStates>builder().
                 withStartState(START)
                 .withFinishState(FINISH)
                 .allowTransition(START, NEGATIVE_SIGN, INTEGER_DIGIT)
@@ -41,18 +45,18 @@ public final class NumberStateMachine extends FiniteStateMachine<NumberStates, S
                 .allowTransition(FLOATING_INTEGER, FLOATING_INTEGER, FINISH)
                 .build();
 
-        return new NumberStateMachine(matrix);
+        return new NumberStateMachine<>(matrix, exceptionThrower);
     }
 
-    private NumberStateMachine(TransitionMatrix<NumberStates> matrix) {
+    private NumberStateMachine(TransitionMatrix<NumberStates> matrix, ExceptionThrower<E> exceptionThrower) {
 
-        super(Preconditions.checkNotNull(matrix));
+        super(Preconditions.checkNotNull(matrix), exceptionThrower);
 
         registerTransducer(START, Transducer.illegalTransition());
-        registerTransducer(NEGATIVE_SIGN, new SymbolTransducer('-'));
-        registerTransducer(INTEGER_DIGIT, new SymbolTransducer(Character::isDigit));
-        registerTransducer(DOT, new SymbolTransducer('.'));
-        registerTransducer(FLOATING_INTEGER, new SymbolTransducer(Character::isDigit));
+        registerTransducer(NEGATIVE_SIGN, new SymbolTransducer<>('-'));
+        registerTransducer(INTEGER_DIGIT, new SymbolTransducer<>(Character::isDigit));
+        registerTransducer(DOT, new SymbolTransducer<>('.'));
+        registerTransducer(FLOATING_INTEGER, new SymbolTransducer<>(Character::isDigit));
         registerTransducer(FINISH, Transducer.autoTransition());
     }
 

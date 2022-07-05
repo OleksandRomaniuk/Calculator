@@ -1,11 +1,11 @@
 package fsm;
 
-
+import com.google.common.base.Preconditions;
 
 import java.util.Arrays;
 
 /**
- * {@code CharSequenceReader} is a class which can be used to
+ * СharSequenceReader is a class which can be used to
  * simple work with char array and have a position of reading.
  */
 
@@ -18,11 +18,29 @@ public final class CharSequenceReader {
     private int savedPosition = -1;
 
     public CharSequenceReader(String source) {
-        this.source = source.toCharArray();
+        this.source = Preconditions.checkNotNull(source).toCharArray();
     }
 
     public char read() {
         return source[readingPosition];
+    }
+
+    public String readOperator(){
+
+        var operator = new StringBuilder();
+
+        if (read() == '>' || read() == '<'){
+            operator.append(read());
+            incrementPosition();
+            if (read() == '='){
+                operator.append(read());
+            }
+            else decrementPosition();
+
+        }
+        else operator.append(read());
+
+        return operator.toString();
     }
 
     public void incrementPosition() {
@@ -30,8 +48,21 @@ public final class CharSequenceReader {
         readingPosition++;
     }
 
+    public char previous(){
+        return source[readingPosition-1];
+    }
+
+    public void decrementPosition() {
+
+        readingPosition--;
+    }
+
     public int position() {
         return readingPosition;
+    }
+
+    public void setPosition(int newPosition){
+        readingPosition = newPosition;
     }
 
     public boolean canRead() {
@@ -52,15 +83,5 @@ public final class CharSequenceReader {
         }
     }
 
-    void savePosition() {
 
-        savedPosition = readingPosition;
-    }
-
-    void restorePosition() {
-
-        readingPosition = savedPosition;
-
-        savedPosition = -1;
-    }
 }

@@ -1,27 +1,28 @@
 package src.fsm.brackets;
 
 import com.google.common.base.Preconditions;
+import fsm.ExceptionThrower;
 import fsm.FiniteStateMachine;
 import fsm.Transducer;
 import fsm.TransitionMatrix;
-import src.ShuntingYard;
+import src.fsm.ShuntingYard;
+import fsm.type.Value;
 
 import java.util.function.BiConsumer;
 
+
 /**
- * BracketsMachine is a realisation of {@link FiniteStateMachine}
- * that implements a list of all possible transitions and actions in a certain state
- *
+ * {@code BracketsMachine} is a realisation of {@link FiniteStateMachine}
+ * for parsing an expression inside the brackets.
  */
 
+public final class BracketsMachine<O, E extends Exception> extends FiniteStateMachine<BracketsStates, O, E> {
 
-public final class BracketsMachine<O> extends FiniteStateMachine<BracketsStates, O> {
-
-    public static <O> BracketsMachine<O> create(Transducer<O> transducer) {
+    public static <O, E extends Exception> BracketsMachine<O, E> create(Transducer<O, E> transducer, ExceptionThrower<E> exceptionThrower) {
 
         Preconditions.checkNotNull(transducer);
 
-        TransitionMatrix<BracketsStates> matrix = TransitionMatrix.<BracketsStates>builder()
+        var matrix = TransitionMatrix.<BracketsStates>builder()
                 .withStartState(BracketsStates.START)
                 .withFinishState(BracketsStates.FINISH)
                 .allowTransition(BracketsStates.START, BracketsStates.OPENING_BRACKET)
@@ -30,13 +31,13 @@ public final class BracketsMachine<O> extends FiniteStateMachine<BracketsStates,
                 .allowTransition(BracketsStates.CLOSING_BRACKET, BracketsStates.FINISH)
                 .build();
 
-        return new BracketsMachine<>(matrix, transducer);
+        return new BracketsMachine<>(matrix, transducer, exceptionThrower);
     }
 
-    private BracketsMachine(TransitionMatrix<BracketsStates> matrix, Transducer<O> transducer) {
-        super(matrix, true);
+    private BracketsMachine(TransitionMatrix<BracketsStates> matrix, Transducer<O, E> transducer, ExceptionThrower<E> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
 
-        BiConsumer<ShuntingYard, Double> consumer = ShuntingYard::pushOperand;
+        var consumer = (BiConsumer<ShuntingYard, Value>) ShuntingYard::pushOperand;
 
         registerTransducer(BracketsStates.START, Transducer.illegalTransition());
         registerTransducer(BracketsStates.OPENING_BRACKET, Transducer.checkAndPassChar('(') );

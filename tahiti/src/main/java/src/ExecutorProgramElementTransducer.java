@@ -2,15 +2,14 @@ package src;
 
 import com.google.common.base.Preconditions;
 import fsm.CharSequenceReader;
-import fsm.ResolvingException;
 import fsm.Transducer;
 import src.runtime.ScriptContext;
+import src.util.ExecutionException;
 import src.util.ScriptElement;
 import src.util.ScriptElementExecutor;
 import src.util.ScriptElementExecutorFactory;
 
-
-public class ExecutorProgramElementTransducer implements Transducer<ScriptContext> {
+public class ExecutorProgramElementTransducer implements Transducer<ScriptContext, ExecutionException> {
 
     private final ScriptElementExecutorFactory factory;
 
@@ -23,7 +22,7 @@ public class ExecutorProgramElementTransducer implements Transducer<ScriptContex
     }
 
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ResolvingException {
+    public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
 
         ScriptElementExecutor elementExecutor = factory.create(scriptElement);
 

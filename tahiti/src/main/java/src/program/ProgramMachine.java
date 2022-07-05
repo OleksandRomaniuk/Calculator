@@ -1,19 +1,27 @@
 package src.program;
 
 
+import fsm.ExceptionThrower;
 import fsm.FiniteStateMachine;
 import fsm.Transducer;
 import fsm.TransitionMatrix;
 import src.runtime.ScriptContext;
+import src.util.ExecutionException;
 import src.util.ScriptElement;
 import src.util.ScriptElementExecutorFactory;
 
 import static src.program.ProgramStates.*;
 
-public final class ProgramMachine extends FiniteStateMachine<ProgramStates, ScriptContext> {
+/**
+ * {@code ProgramMachine} is a realisation of {@link FiniteStateMachine} that used to
+ * separate statement and launch machine for them.
+ */
 
-    private ProgramMachine(TransitionMatrix<ProgramStates> matrix, ScriptElementExecutorFactory factory) {
-        super(matrix, true);
+public final class ProgramMachine extends FiniteStateMachine<ProgramStates, ScriptContext, ExecutionException> {
+
+    private ProgramMachine(TransitionMatrix<ProgramStates> matrix, ScriptElementExecutorFactory factory,
+                           ExceptionThrower<ExecutionException> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(STATEMENT, new StatementTransducer(factory.create(ScriptElement.STATEMENT)));
@@ -21,7 +29,7 @@ public final class ProgramMachine extends FiniteStateMachine<ProgramStates, Scri
         registerTransducer(FINISH, Transducer.autoTransition());
     }
 
-    public static ProgramMachine create(ScriptElementExecutorFactory factory) {
+    public static ProgramMachine create(ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
         TransitionMatrix<ProgramStates> matrix =
                 TransitionMatrix.<ProgramStates>builder()
                         .withStartState(START)
@@ -32,6 +40,6 @@ public final class ProgramMachine extends FiniteStateMachine<ProgramStates, Scri
 
                         .build();
 
-        return new ProgramMachine(matrix, factory);
+        return new ProgramMachine(matrix, factory, exceptionThrower);
     }
 }
