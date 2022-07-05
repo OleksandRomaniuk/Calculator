@@ -1,9 +1,7 @@
 package src;
 
-import com.google.common.base.Preconditions;
-
 /**
- * Class for calculated result
+ * {@code CalculationResult} is a tiny type which is used to store result of calculation.
  */
 
 public class CalculationResult {
@@ -11,7 +9,6 @@ public class CalculationResult {
     private final double result;
 
     CalculationResult(double result) {
-        Preconditions.checkNotNull(result);
 
         this.result = result;
     }
@@ -25,8 +22,4 @@ public class CalculationResult {
         return super.hashCode();
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
 }

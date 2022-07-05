@@ -2,17 +2,14 @@ package src;
 
 import com.google.common.base.Preconditions;
 import fsm.CharSequenceReader;
-import fsm.ResolvingException;
 import src.execute.InterpreterMachine;
 import src.runtime.ScriptContext;
+import src.util.ExecutionException;
 import src.util.ScriptElementExecutorFactory;
 
 
 public class Tahiti {
 
-    private static void raiseException(CharSequenceReader inputChain) throws IncorrectProgramException {
-        throw new IncorrectProgramException("Syntax error", inputChain.position());
-    }
 
     public ProgramResult interpret(InputProgram code) throws IncorrectProgramException {
 
@@ -24,17 +21,23 @@ public class Tahiti {
 
         ScriptElementExecutorFactory factory = new ScriptElementExecutorFactoryImpl();
 
-        InterpreterMachine interpreterMachine = InterpreterMachine.create(factory);
+        InterpreterMachine interpreterMachine = InterpreterMachine.create(Preconditions.checkNotNull(factory), errorMessage -> {
+            throw new ExecutionException(errorMessage);
+        });
 
         try {
             if (!interpreterMachine.run(inputChain, scriptContext)) {
 
-                raiseException(inputChain);
+                programExeption(inputChain);
             }
-        } catch (ResolvingException | IncorrectProgramException e) {
-            raiseException(inputChain);
+        } catch (IncorrectProgramException | ExecutionException e) {
+            programExeption(inputChain);
         }
 
         return new ProgramResult(scriptContext.getOutput().content());
     }
+    private static void programExeption(CharSequenceReader inputChain) throws IncorrectProgramException {
+        throw new IncorrectProgramException("Syntax error", inputChain.position());
+    }
+
 }

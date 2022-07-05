@@ -4,5 +4,7 @@ import src.runtime.ScriptContext;
 
 public interface WithContext {
 
-    ScriptContext getContext();
+    ScriptContext getScriptContext();
+
+    boolean isParseonly();
 }

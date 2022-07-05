@@ -1,8 +1,8 @@
 package src.fsm.calculator;
 
 /**
- *
- * List of all possible states in {@link CalculatorMachine}
+ * {@code CalculatorState} is an enumeration of states
+ * that used in {@link CalculatorMachine}.
  */
 
 enum CalculatorStates {

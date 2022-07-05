@@ -1,25 +1,3 @@
 
-U
-%fsm/src/main/java/fsm/Transducer.java,5\2\52ca232a3f5e18bb88ae35ba1dc1c77287f4734b
-]
--fsm/src/main/java/fsm/FiniteStateMachine.java,2\c\2c1a42fb20c440f2f89c035bffccf8ea776a69d5
 i
 9calculator/src/test/java/src/fsm/BracketsMachineTest.java,1\1\11dcd065d13747f0ab9b37047c613d620044bea0
-o
-?calculator/src/main/java/src/impl/math/MathElementResolver.java,9\2\9200707e3e17f092cc928d79c88ed49ef2e681b4
-v
-Fcalculator/src/main/java/src/impl/math/MathElementResolverFactory.java,0\6\06944e7f86cc5e3da98f2564932a3bfa92e3ee42
-g
-7calculator/src/main/java/src/impl/math/MathElement.java,b\c\bcde57a56e216f0440f4aa648cdc9bffbab2a1a9
-q
-Acalculator/src/main/java/src/impl/resolvers/FunctionResolver.java,e\a\ea000dbe0eb110722f18386677e5a66837578f0d
-w
-Gcalculator/src/main/java/src/impl/fsm/expression/ExpressionMachine.java,f\3\f3ebc49d9a6169ac7150fc448a3a7854a04b47ae
-„
-Tcalculator/src/main/java/src/impl/fsm/calculator/DetachedShuntingYardTransducer.java,4\4\445582430f3001b6e48449b36c776b19fdd34216
-v
-Fcalculator/src/main/java/src/impl/fsm/calculator/CalculatorStates.java,4\c\4ccdf1a32537bbe72f8d73c8fae0c5e84b7cd1dc
-€
-Pcalculator/src/main/java/src/impl/fsm/function/ExpressionFunctionTransducer.java,8\f\8f2b2e209465051805dc6c2a27908800e5725d01
-w
-Gcalculator/src/main/java/src/impl/fsm/calculator/CalculatorMachine.java,6\f\6fbf3188200808dd9f9b24518a8772f7cb909052

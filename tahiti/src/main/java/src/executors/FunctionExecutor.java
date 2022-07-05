@@ -1,9 +1,9 @@
 package src.executors;
 
-
+import com.google.common.base.Preconditions;
 import fsm.CharSequenceReader;
-import fsm.ResolvingException;
 import src.runtime.ScriptContext;
+import src.util.ExecutionException;
 import src.util.ScriptElementExecutor;
 
 public class FunctionExecutor implements ScriptElementExecutor {
@@ -15,7 +15,9 @@ public class FunctionExecutor implements ScriptElementExecutor {
     }
 
     @Override
-    public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ResolvingException {
+    public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ExecutionException {
+
+        Preconditions.checkNotNull(inputChain, output);
 
         return factoryExecutor.execute(inputChain, output);
     }

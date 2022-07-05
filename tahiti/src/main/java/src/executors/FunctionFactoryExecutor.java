@@ -1,24 +1,27 @@
 package src.executors;
 
-
+import com.google.common.base.Preconditions;
 import fsm.CharSequenceReader;
 import fsm.FiniteStateMachine;
-import fsm.ResolvingException;
+import fsm.type.Value;
 import src.FunctionHolderWithContext;
-
 import src.fsm.function.FunctionFactory;
 import src.runtime.ScriptContext;
+import src.util.ExecutionException;
 import src.util.ScriptElementExecutor;
 
-public class FunctionFactoryExecutor<I> implements ScriptElementExecutor {
-    private final FiniteStateMachine<I, FunctionHolderWithContext> machine;
 
-    public FunctionFactoryExecutor(FiniteStateMachine<I, FunctionHolderWithContext> machine) {
-        this.machine = machine;
+public class FunctionFactoryExecutor<I> implements ScriptElementExecutor {
+    private final FiniteStateMachine<I, FunctionHolderWithContext, ExecutionException> machine;
+
+    public FunctionFactoryExecutor(FiniteStateMachine<I, FunctionHolderWithContext, ExecutionException> machine) {
+        this.machine = Preconditions.checkNotNull(machine);
     }
 
     @Override
-    public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ResolvingException {
+    public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ExecutionException {
+
+        Preconditions.checkNotNull(inputChain, output);
 
         FunctionFactory functionFactory = new FunctionFactory();
 
@@ -26,7 +29,11 @@ public class FunctionFactoryExecutor<I> implements ScriptElementExecutor {
 
         if (machine.run(inputChain, functionHolder)) {
 
-            Double evaluateFunctionResult = functionFactory.
+            if(output.isParseonly()){
+                return true;
+            }
+
+            Value evaluateFunctionResult = functionFactory.
                     create(functionHolder.getFunctionName()).evaluate(functionHolder.getArguments());
 
             output.systemStack().current().pushOperand(evaluateFunctionResult);

@@ -2,13 +2,10 @@ package src;
 
 import com.google.common.base.Preconditions;
 import fsm.CharSequenceReader;
-import fsm.ResolvingException;
-
+import src.fsm.ShuntingYard;
 import src.fsm.calculator.CalculatorMachine;
 import src.math.MathElementResolverFactory;
-
-
-import java.util.function.DoubleBinaryOperator;
+import fsm.type.DoubleValueVisitor;
 
 /**
  * An API for resolving of math expressions. Math expression may contain:
@@ -42,10 +39,12 @@ public class Calculator {
 
         MathElementResolverFactory factory = new MathElementResolverFactoryImpl();
 
-        CalculatorMachine numberStateMachine = CalculatorMachine.create(factory);
+        var numberStateMachine = CalculatorMachine.create(factory, errorMessage -> {
+            throw new ResolvingException(errorMessage);
+        });
 
-        CharSequenceReader inputChain = new CharSequenceReader(expression.getExpression());
-        ShuntingYard outputChain = new ShuntingYard();
+        var inputChain = new CharSequenceReader(expression.getExpression());
+        var outputChain = new ShuntingYard();
 
         try {
             if (!numberStateMachine.run(inputChain, outputChain)) {
@@ -56,16 +55,11 @@ public class Calculator {
             raiseException(inputChain);
         }
 
-        return new CalculationResult(outputChain.peekResult());
+        return new CalculationResult(DoubleValueVisitor.read(outputChain.peekResult()));
     }
 
     private static void raiseException(CharSequenceReader inputChain) throws WrongExpressionException {
         throw new WrongExpressionException("Wrong mathematical expression", inputChain.position());
-    }
-
-    private static double infinity() {
-        DoubleBinaryOperator divisionByZero = (left, right) -> left / right;
-        return divisionByZero.applyAsDouble(1, 0);
     }
 
 }

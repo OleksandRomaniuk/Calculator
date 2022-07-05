@@ -2,13 +2,12 @@ package src.program;
 
 import com.google.common.base.Preconditions;
 import fsm.CharSequenceReader;
-import fsm.ResolvingException;
 import fsm.Transducer;
 import src.runtime.ScriptContext;
+import src.util.ExecutionException;
 import src.util.ScriptElementExecutor;
 
-
-class StatementTransducer implements Transducer<ScriptContext> {
+class StatementTransducer implements Transducer<ScriptContext, ExecutionException> {
 
     private final ScriptElementExecutor executor;
 
@@ -19,7 +18,9 @@ class StatementTransducer implements Transducer<ScriptContext> {
 
 
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ResolvingException {
+    public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
+
+        Preconditions.checkNotNull(inputChain, outputChain);
 
         return executor.execute(inputChain, outputChain);
     }

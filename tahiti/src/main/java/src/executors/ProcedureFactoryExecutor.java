@@ -1,34 +1,37 @@
 package src.executors;
 
-
+import com.google.common.base.Preconditions;
 import fsm.CharSequenceReader;
 import fsm.FiniteStateMachine;
-import fsm.ResolvingException;
 import src.FunctionHolderWithContext;
 import src.procedure.ProcedureFactory;
 import src.runtime.ScriptContext;
+import src.util.ExecutionException;
 import src.util.ScriptElementExecutor;
+
 
 public class ProcedureFactoryExecutor<I> implements ScriptElementExecutor {
 
-    private final FiniteStateMachine<I, FunctionHolderWithContext> machine;
+    private final FiniteStateMachine<I, FunctionHolderWithContext, ExecutionException> machine;
 
-    public ProcedureFactoryExecutor(FiniteStateMachine<I, FunctionHolderWithContext> machine) {
-        this.machine = machine;
+    public ProcedureFactoryExecutor(FiniteStateMachine<I, FunctionHolderWithContext, ExecutionException> machine) {
+        this.machine = Preconditions.checkNotNull(machine);
     }
 
 
     @Override
-    public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ResolvingException {
+    public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ExecutionException {
 
-        FunctionHolderWithContext functionHolder = new FunctionHolderWithContext(output);
+        Preconditions.checkNotNull(inputChain, output);
 
-        ProcedureFactory procedureFactory = new ProcedureFactory();
+        var functionHolder = new FunctionHolderWithContext(output);
+
+        var procedureFactory = new ProcedureFactory();
 
         if (machine.run(inputChain, functionHolder)) {
 
             procedureFactory.create(functionHolder.getFunctionName())
-                    .execute(functionHolder.getArguments(), functionHolder.getContext());
+                    .execute(functionHolder.getArguments(), functionHolder.getScriptContext());
 
             return true;
         }

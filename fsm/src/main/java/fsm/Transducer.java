@@ -1,22 +1,39 @@
 package fsm;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
- * {@code Transducer} is a functional interface that can be used to
- * produce {@param <O>} output based on a given input
- * and potentially throws a {@link ResolvingException}.
+ * Transducer is a functional interface that can be used to
+ * produce output based on a given input
  */
 
 @FunctionalInterface
-public interface Transducer<O> {
+public interface Transducer<O, E extends Exception> {
 
-    boolean doTransition(CharSequenceReader inputChain, O outputChain) throws ResolvingException;
+    boolean doTransition(CharSequenceReader inputChain, O outputChain) throws E;
 
-    static <O> Transducer<O> autoTransition() {
+    default Transducer<O, E> named(String name) {
+        return new Transducer<>() {
+            @Override
+            public boolean doTransition(CharSequenceReader inputChain, O outputChain) throws E {
+                return Transducer.this.doTransition(inputChain, outputChain);
+            }
+
+            @Override
+            public String toString() {
+                return name;
+            }
+        };
+    }
+
+    static <O, E extends Exception> Transducer<O, E> autoTransition() {
 
         return (inputChain, outputChain) -> true;
     }
 
-    static <O> Transducer<O> illegalTransition() {
+    static <O, E extends Exception> Transducer<O, E> illegalTransition() {
 
         return (inputChain, outputChain) -> {
 
@@ -24,7 +41,14 @@ public interface Transducer<O> {
         };
     }
 
-    static <O> Transducer<O> checkAndPassChar(char character) {
+    static <O, E extends Exception> List<Transducer<O, E>> keyword(String keyword) {
+
+        Stream<Transducer<O, E>> stream = keyword.chars().mapToObj(value -> checkAndPassChar((char) value));
+
+        return stream.collect(Collectors.toList());
+    }
+
+    static <O, E extends Exception> Transducer<O, E> checkAndPassChar(char character) {
 
         return (inputChain, outputChain) -> {
             if (inputChain.canRead() && inputChain.read() == character) {
@@ -35,7 +59,7 @@ public interface Transducer<O> {
         };
     }
 
-    default Transducer<O> and (Transducer<O> transducer){
+    default Transducer<O, E> and(Transducer<O, E> transducer) {
         return (inputChain, outputChain) -> {
 
             if (doTransition(inputChain, outputChain)) {

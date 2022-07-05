@@ -1,8 +1,14 @@
 package src.initvar;
 
-
+import com.google.common.base.Preconditions;
+import fsm.type.Value;
 import src.runtime.ScriptContext;
 import src.util.WithContext;
+
+
+/**
+ * {@code InitVarContext} is a class that used for variable initialisation, as an output for InitVarMachine
+ */
 
 public class InitVarContext implements WithContext {
 
@@ -10,31 +16,36 @@ public class InitVarContext implements WithContext {
 
     private String variableName;
 
-    private Double variableValue;
+    private Value variableValue;
 
     public InitVarContext(ScriptContext scriptContext) {
 
         this.scriptContext = scriptContext;
     }
 
-    String getVariableName() {
+    public String getVariableName() {
         return variableName;
     }
 
-    void setVariableName(String variableName) {
-        this.variableName = variableName;
+    public void setVariableName(String variableName) {
+        this.variableName = Preconditions.checkNotNull(variableName);
     }
 
-    Double getVariableValue() {
+    public Value getVariableValue() {
         return variableValue;
     }
 
-    void setVariableValue(Double variableValue) {
-        this.variableValue = variableValue;
+    void setVariableValue(Value variableValue) {
+        this.variableValue = Preconditions.checkNotNull(variableValue);
     }
 
     @Override
-    public ScriptContext getContext() {
+    public ScriptContext getScriptContext() {
         return scriptContext;
+    }
+
+    @Override
+    public boolean isParseonly() {
+        return scriptContext.isParseonly();
     }
 }

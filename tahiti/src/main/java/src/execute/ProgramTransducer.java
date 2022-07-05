@@ -4,14 +4,16 @@ package src.execute;
 import com.google.common.base.Preconditions;
 
 import fsm.CharSequenceReader;
-import fsm.ResolvingException;
 import fsm.Transducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import src.runtime.ScriptContext;
+import src.util.ExecutionException;
 import src.util.ScriptElementExecutor;
 
-public class ProgramTransducer implements Transducer<ScriptContext> {
+public class ProgramTransducer implements Transducer<ScriptContext, ExecutionException> {
+
+    private static final Logger logger = LoggerFactory.getLogger(ProgramTransducer.class);
 
     private final ScriptElementExecutor executor;
 
@@ -22,8 +24,16 @@ public class ProgramTransducer implements Transducer<ScriptContext> {
 
 
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ResolvingException {
+    public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
 
+        Preconditions.checkNotNull(inputChain, outputChain);
+
+        if (logger.isInfoEnabled()) {
+
+            logger.info("Working with input chain -> {}", inputChain.toString());
+
+            logger.info("OutputChain is null : {}", (outputChain));
+        }
 
         return executor.execute(inputChain, outputChain);
     }

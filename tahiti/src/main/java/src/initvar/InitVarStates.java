@@ -1,6 +1,8 @@
 package src.initvar;
 
-public enum InitVarStates {
+
+
+enum InitVarStates {
 
     START,
     ASSIGN,
