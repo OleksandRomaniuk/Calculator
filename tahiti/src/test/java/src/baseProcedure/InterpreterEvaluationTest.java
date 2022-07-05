@@ -10,13 +10,7 @@ import static org.junit.jupiter.params.provider.Arguments.of;
 class InterpreterEvaluationTest extends AbstractInterpreterEvaluationTest {
     static Stream<Arguments> positiveCases(){
         return Stream.of(
-                of("a = 0; while(a<4){a = a+1; print(a);};", "[1.0][2.0][3.0][4.0]",
-                        "While loop test has failed"),
-                of("a = 2; while(a<4){a = a+1;}; print(a);", "[4.0]",
-                        "While loop test with code after loop has failed"),
-                of("a = 7; print(a<=2);", "[false]", "Boolean expression inside procedure test has failed"),
-                of("a = 5 > 2; print(a);", "[true]", "Boolean variable initialization test has failed"),
-                of("print(5);", "[5.0]", "Evaluation of print failed"),
+
                 of("a = 5; print(a); ", "[5.0]", "Evaluation of initialization and print failed"),
                 of("a = 5; b = 4; print(a + b); ", "[9.0]", "Evaluation of initialization two variables and sum of them failed"),
                 of("a = 5; b = 3 + 7; print(a * b); ", "[50.0]", "Evaluation of initialization two variables and multiply of them failed"),
