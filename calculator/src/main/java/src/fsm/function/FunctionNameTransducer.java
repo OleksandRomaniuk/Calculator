@@ -1,32 +1,42 @@
 package src.fsm.function;
 
+import com.google.common.base.Preconditions;
+
 import fsm.CharSequenceReader;
-import fsm.ResolvingException;
+import fsm.ExceptionThrower;
 import fsm.Transducer;
+import fsm.identifier.IdentifierMachine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import src.IdentifierMachine;
 
 import java.util.function.BiConsumer;
 
+/**
+ * FunctionNameTransducer is an implementation of Transducer
+ * that produce a name of function for FunctionHolder output.
+ */
 
-public class FunctionNameTransducer<O> implements Transducer<O> {
+public class FunctionNameTransducer<O, E extends Exception> implements Transducer<O, E> {
 
     private final BiConsumer<O, String> resultConsumer;
 
+    private final ExceptionThrower<E> exceptionThrower;
+
     private static final Logger logger = LoggerFactory.getLogger(FunctionNameTransducer.class);
 
-    public FunctionNameTransducer(BiConsumer<O, String> resultConsumer) {
+    public FunctionNameTransducer(BiConsumer<O, String> resultConsumer, ExceptionThrower<E> exceptionThrower) {
 
-        this.resultConsumer = resultConsumer;
+        this.resultConsumer = Preconditions.checkNotNull(resultConsumer);
+
+        this.exceptionThrower = exceptionThrower;
     }
 
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, O outputChain) throws ResolvingException {
+    public boolean doTransition(CharSequenceReader inputChain, O outputChain) throws E {
 
-        StringBuilder stringBuilder = new StringBuilder();
+        var stringBuilder = new StringBuilder();
 
-        IdentifierMachine identifierMachine = IdentifierMachine.create();
+        var identifierMachine = IdentifierMachine.create(exceptionThrower);
 
         if (identifierMachine.run(inputChain, stringBuilder)){
 

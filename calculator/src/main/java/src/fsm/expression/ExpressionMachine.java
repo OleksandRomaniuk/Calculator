@@ -1,29 +1,30 @@
 package src.fsm.expression;
 
 
-
+import fsm.ExceptionThrower;
 import fsm.FiniteStateMachine;
 import fsm.Transducer;
 import fsm.TransitionMatrix;
-import src.fsm.util.PrioritizedBinaryOperator;
+import src.AbstractBinaryOperator;
+import src.BinaryOperatorFactory;
+import src.DoubleBinaryOperatorFactory;
+
 
 import java.util.function.BiConsumer;
 
 /**
- *
- *   ExpressionMachine is a realisation of {@link FiniteStateMachine}
- *   that implements a list of all possible transitions and actions when reading an expression
- *
- *
+ * {@code ExpressionMachine} implementation of {@link FiniteStateMachine} which is intended to process
+ * the general structure of math expression — operands and binary operators.
+ * Operand may be a number, an expression in brackets, or a function —
+ * see OperandMachine for details.
  */
 
+public final class  ExpressionMachine<O, E extends Exception> extends FiniteStateMachine<ExpressionStates, O, E > {
 
-public final class  ExpressionMachine<O> extends FiniteStateMachine<ExpressionStates, O> {
+    public static <O, E extends Exception> ExpressionMachine<O, E> create(BiConsumer<O, AbstractBinaryOperator> binaryConsumer,
+                                                                          Transducer<O, E> operandTransducer, ExceptionThrower<E> exceptionThrower) {
 
-    public static <O> ExpressionMachine<O> create(BiConsumer<O, PrioritizedBinaryOperator> binaryConsumer,
-                                                  Transducer<O> operandTransducer) {
-
-        TransitionMatrix<ExpressionStates> matrix = TransitionMatrix.<ExpressionStates>builder()
+        var matrix = TransitionMatrix.<ExpressionStates>builder()
                 .withStartState(ExpressionStates.START)
                 .withFinishState(ExpressionStates.FINISH)
                 .allowTransition(ExpressionStates.START, ExpressionStates.OPERAND)
@@ -32,19 +33,23 @@ public final class  ExpressionMachine<O> extends FiniteStateMachine<ExpressionSt
 
                 .build();
 
-        return new ExpressionMachine<>(matrix, binaryConsumer, operandTransducer);
+        return new ExpressionMachine<>(matrix, binaryConsumer, operandTransducer, exceptionThrower);
     }
 
     private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix,
-                              BiConsumer<O, PrioritizedBinaryOperator> binaryConsumer,
-                              Transducer<O> operandTransducer) {
-        super(matrix, true);
+                              BiConsumer<O, AbstractBinaryOperator> binaryConsumer,
+                              Transducer<O, E> operandTransducer,
+                              ExceptionThrower<E> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
+
+        BinaryOperatorFactory doubleBinaryOperatorFactory = new DoubleBinaryOperatorFactory();
 
         registerTransducer(ExpressionStates.START, Transducer.illegalTransition());
         registerTransducer(ExpressionStates.OPERAND, operandTransducer);
-        registerTransducer(ExpressionStates.BINARY_OPERATOR, new BinaryOperatorTransducer<>(binaryConsumer));
+        registerTransducer(ExpressionStates.BINARY_OPERATOR, new BinaryOperatorTransducer<>(doubleBinaryOperatorFactory, binaryConsumer));
         registerTransducer(ExpressionStates.FINISH, Transducer.autoTransition());
     }
 }
+
 
 
