@@ -2,11 +2,14 @@ package src.fsm.function;
 
 
 
+import fsm.ExceptionThrower;
 import fsm.FiniteStateMachine;
 import fsm.Transducer;
 import fsm.TransitionMatrix;
 
 import java.util.function.BiConsumer;
+
+import static src.fsm.function.FunctionStates.*;
 
 
 /**
@@ -14,39 +17,39 @@ import java.util.function.BiConsumer;
  * for parsing a function.
  */
 
-public final class FunctionMachine<O> extends FiniteStateMachine<FunctionStates, O> {
+public final class FunctionMachine<O, E extends Exception> extends FiniteStateMachine<FunctionStates, O, E> {
 
-    private final FunctionFactory functionFactory = new FunctionFactory();
+    public static <O, E extends Exception> FunctionMachine<O, E> create(Transducer<O, E> expressionFunctionTransducer,
+                                                                        BiConsumer<O, String> biConsumer,
+                                                                        ExceptionThrower<E> exceptionThrower){
 
-    public static <O> FunctionMachine<O> create(Transducer<O> expressionFunctionTransducer, BiConsumer<O, String> biConsumer){
-
-        TransitionMatrix<FunctionStates> matrix = TransitionMatrix.<FunctionStates>builder()
-                .withStartState(FunctionStates.START)
-                .withFinishState(FunctionStates.FINISH)
-                .withTemporaryState(FunctionStates.IDENTIFIER)
-                .allowTransition(FunctionStates.START, FunctionStates.IDENTIFIER)
-                .allowTransition(FunctionStates.IDENTIFIER, FunctionStates.OPENING_BRACKET)
-                .allowTransition(FunctionStates.OPENING_BRACKET, FunctionStates.CLOSING_BRACKET, FunctionStates.EXPRESSION)
-                .allowTransition(FunctionStates.EXPRESSION, FunctionStates.SEPARATOR, FunctionStates.CLOSING_BRACKET)
-                .allowTransition(FunctionStates.SEPARATOR, FunctionStates.EXPRESSION)
-                .allowTransition(FunctionStates.CLOSING_BRACKET, FunctionStates.FINISH)
+        var matrix = TransitionMatrix.<FunctionStates>builder()
+                .withStartState(START)
+                .withFinishState(FINISH)
+                .withTemporaryState(IDENTIFIER)
+                .allowTransition(START, IDENTIFIER)
+                .allowTransition(IDENTIFIER, OPENING_BRACKET)
+                .allowTransition(OPENING_BRACKET, CLOSING_BRACKET, EXPRESSION)
+                .allowTransition(EXPRESSION, SEPARATOR, CLOSING_BRACKET)
+                .allowTransition(SEPARATOR, EXPRESSION)
+                .allowTransition(CLOSING_BRACKET, FINISH)
 
                 .build();
 
-        return new FunctionMachine<>(matrix, expressionFunctionTransducer, biConsumer);
+        return new FunctionMachine<>(matrix, expressionFunctionTransducer, biConsumer, exceptionThrower);
     }
 
 
-    private FunctionMachine(TransitionMatrix<FunctionStates> matrix, Transducer<O> expressionFunctionTransducer,
-                            BiConsumer<O, String> biConsumer) {
-        super(matrix, true);
+    private FunctionMachine(TransitionMatrix<FunctionStates> matrix, Transducer<O, E> expressionFunctionTransducer,
+                            BiConsumer<O, String> biConsumer, ExceptionThrower<E> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
 
-        registerTransducer(FunctionStates.START, Transducer.illegalTransition());
-        registerTransducer(FunctionStates.FINISH, Transducer.autoTransition());
-        registerTransducer(FunctionStates.OPENING_BRACKET, Transducer.checkAndPassChar('('));
-        registerTransducer(FunctionStates.CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
-        registerTransducer(FunctionStates.SEPARATOR, Transducer.checkAndPassChar(','));
-        registerTransducer(FunctionStates.IDENTIFIER, new FunctionNameTransducer<>(biConsumer));
-        registerTransducer(FunctionStates.EXPRESSION, expressionFunctionTransducer);
+        registerTransducer(START, Transducer.illegalTransition());
+        registerTransducer(FINISH, Transducer.autoTransition());
+        registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('('));
+        registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
+        registerTransducer(SEPARATOR, Transducer.checkAndPassChar(','));
+        registerTransducer(IDENTIFIER, new FunctionNameTransducer<>(biConsumer, exceptionThrower));
+        registerTransducer(EXPRESSION, expressionFunctionTransducer);
     }
 }

@@ -2,8 +2,8 @@ package src;
 
 import com.google.common.base.Preconditions;
 import fsm.FiniteStateMachine;
-
-import src.fsm.brackets.BracketsMachine;
+import fsm.Transducer;
+import src.fsm.ShuntingYard;
 import src.fsm.calculator.DetachedShuntingYardTransducer;
 import src.fsm.expression.ExpressionMachine;
 import src.math.MathElement;
@@ -15,7 +15,10 @@ import src.resolvers.NumberResolver;
 
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
+
+import static src.math.MathElement.*;
 
 
 public class MathElementResolverFactoryImpl implements MathElementResolverFactory {
@@ -24,21 +27,37 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
 
     MathElementResolverFactoryImpl() {
 
-        resolvers.put(MathElement.NUMBER, NumberResolver::new);
+        resolvers.put(NUMBER, NumberResolver::new);
 
-        resolvers.put(MathElement.EXPRESSION, () -> new DetachedShuntingYardResolver<>
+        resolvers.put(EXPRESSION, () -> new DetachedShuntingYardResolver<>
                 (ExpressionMachine.create(ShuntingYard::pushOperator,
-                        new DetachedShuntingYardTransducer<>(MathElement.OPERAND, ShuntingYard::pushOperand, this))));
+                        new DetachedShuntingYardTransducer<>(OPERAND, ShuntingYard::pushOperand, this),
+                        errorMessage -> {
+                            throw new ResolvingException(errorMessage);
+                        })));
 
-        resolvers.put(MathElement.OPERAND, () -> new DetachedShuntingYardResolver<>(
-                FiniteStateMachine.oneOfMachine(new DetachedShuntingYardTransducer<>(MathElement.NUMBER, ShuntingYard::pushOperand, this),
-                        new DetachedShuntingYardTransducer<>(MathElement.BRACKETS, ShuntingYard::pushOperand, this),
-                        new DetachedShuntingYardTransducer<>(MathElement.FUNCTION, ShuntingYard::pushOperand, this))));
+        resolvers.put(OPERAND, () -> new DetachedShuntingYardResolver<>(
+                FiniteStateMachine.oneOfMachine(
+                        errorMessage -> {
+                            throw new ResolvingException(errorMessage);
+                        },
+                        new DetachedShuntingYardTransducer<>(NUMBER, ShuntingYard::pushOperand, this).named("Number"),
+                        new DetachedShuntingYardTransducer<>(MathElement.BRACKETS, ShuntingYard::pushOperand, this).named("Brackets"),
+                        new DetachedShuntingYardTransducer<>(MathElement.FUNCTION, ShuntingYard::pushOperand, this).named("Function"))));
 
-        resolvers.put(MathElement.BRACKETS, () -> new DetachedShuntingYardResolver<>(BracketsMachine.create(
-                new DetachedShuntingYardTransducer<>(MathElement.EXPRESSION, ShuntingYard::pushOperand, this))));
 
-        resolvers.put(MathElement.FUNCTION, () -> new FunctionResolver(this));
+
+        resolvers.put(BRACKETS, () -> new DetachedShuntingYardResolver<>(
+                FiniteStateMachine.chainMachine(errorMessage -> {
+                            throw new ResolvingException(errorMessage);
+                        }, List.of(), List.of(Transducer.checkAndPassChar('('),
+                        new DetachedShuntingYardTransducer<>(EXPRESSION, ShuntingYard::pushOperand, this).named("Expression"),
+                        Transducer.checkAndPassChar(')'))
+
+                )
+        ));
+
+        resolvers.put(FUNCTION, () -> new FunctionResolver(this));
     }
 
 
@@ -46,7 +65,7 @@ public class MathElementResolverFactoryImpl implements MathElementResolverFactor
     public MathElementResolver create(MathElement mathElement) {
         Preconditions.checkState(resolvers.containsKey(Preconditions.checkNotNull(mathElement)));
 
-        MathElementResolverCreator resolverCreator = resolvers.get(mathElement);
+        var resolverCreator = resolvers.get(mathElement);
 
         return resolverCreator.create();
     }
