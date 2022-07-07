@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import fsm.FiniteStateMachine;
 import fsm.identifier.IdentifierMachine;
 import fsm.type.Value;
+import src.booleanOperator.BooleanMachine;
 import src.executors.*;
 import src.fsm.brackets.BracketsMachine;
 import src.fsm.expression.ExpressionMachine;
@@ -58,6 +59,11 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                             throw new ExecutionException(errorMessage);
                         })));
 
+        executors.put(ScriptElement.BOOLEAN_EXPRESSION, () ->
+
+                ));
+
+
 
         executors.put(ScriptElement.RELATIONAL_EXPRESSION, () ->
                 new RelationalExpressionElementExecutor(this));
@@ -68,7 +74,10 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                             throw new ExecutionException(errorMessage);
                         },
                         new ExecutorProgramElementTransducer(ScriptElement.RELATIONAL_EXPRESSION, this).named("relational expression"),
-                        new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, this).named("numeric expression"))));
+                        new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, this).named("numeric expression"),
+                        new ExecutorProgramElementTransducer(ScriptElement.BOOLEAN_EXPRESSION, this).named("boolean expression"))));
+
+
 
         executors.put(ScriptElement.OPERAND, () -> new ActionExecutor<>(
                 FiniteStateMachine.oneOfMachine(

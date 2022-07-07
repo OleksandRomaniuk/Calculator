@@ -18,5 +18,6 @@ public enum ScriptElement {
     PROGRAM,
     PROCEDURE,
     READ_VARIABLE,
-    WHILE_OPERATOR
+    WHILE_OPERATOR,
+    BOOLEAN_EXPRESSION;
 }
