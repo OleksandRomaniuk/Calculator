@@ -1,15 +1,16 @@
 package src.booleanOperator;
 
-import src.fsm.expression.ExpressionMachine;
+
 
 /**
- * {@code ExpressionState} is an enumeration of states
- * that used in {@link ExpressionMachine}.
+ * {@code BooleanState} is an enumeration of states
+ * that used in {@link BooleanMachine}.
  */
 
 public enum BooleanStates {
 
     START,
+    BOOLEAN_OPERAND,
     OPERAND,
     BOOLEAN_OPERATOR,
     FINISH

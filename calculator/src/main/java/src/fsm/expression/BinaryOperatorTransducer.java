@@ -47,6 +47,7 @@ public class BinaryOperatorTransducer<O, E extends Exception> implements Transdu
         if(inputChain.previous() == '>' || inputChain.previous() == '<'){
             inputChain.decrementPosition();
         }
+
         return false;
     }
 }

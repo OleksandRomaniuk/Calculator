@@ -22,15 +22,15 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
     @Override
     public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ExecutionException {
 
-        var keyword = (Transducer<WhileOperatorContext, ExecutionException>) (inputChain12, outputChain) -> {
+        var keyword = (Transducer<WhileOperatorContext, ExecutionException>) (input, outputChain) -> {
 
-            outputChain.setPosition(inputChain12.position());
+            outputChain.setPosition(input.position());
 
-            List<Transducer<WhileOperatorContext, ExecutionException>> keyword1 = Transducer.keyword("while");
+            List<Transducer<WhileOperatorContext, ExecutionException>> whileKeyword = Transducer.keyword("while");
 
-            for (var transducer : keyword1) {
+            for (var transducer : whileKeyword) {
 
-                if (!transducer.doTransition(inputChain12, outputChain)) {
+                if (!transducer.doTransition(input, outputChain)) {
                     return false;
                 }
             }

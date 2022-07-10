@@ -59,11 +59,8 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                             throw new ExecutionException(errorMessage);
                         })));
 
-        executors.put(ScriptElement.BOOLEAN_EXPRESSION, () ->
-
-                ));
-
-
+       // executors.put(ScriptElement.BOOLEAN_EXPRESSION, () ->
+       //         new  );
 
         executors.put(ScriptElement.RELATIONAL_EXPRESSION, () ->
                 new RelationalExpressionElementExecutor(this));
