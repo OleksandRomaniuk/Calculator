@@ -11,7 +11,7 @@ public class RelationalBinaryOperator extends AbstractBinaryOperator{
 
     private final BiFunction<Double, Double, Boolean> origin;
 
-    public RelationalBinaryOperator(Priority priority, BiFunction<Double, Double, Boolean> origin) {
+    RelationalBinaryOperator(Priority priority, BiFunction<Double, Double, Boolean> origin) {
         super(priority);
         this.origin = origin;
     }

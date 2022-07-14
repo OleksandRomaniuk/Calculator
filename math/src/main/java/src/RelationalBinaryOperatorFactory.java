@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static src.AbstractBinaryOperator.Priority.MEDIUM;
+import static src.AbstractBinaryOperator.Priority.HIGH;
 
 
 public class RelationalBinaryOperatorFactory implements BinaryOperatorFactory {
@@ -18,10 +18,10 @@ public class RelationalBinaryOperatorFactory implements BinaryOperatorFactory {
 
     public RelationalBinaryOperatorFactory() {
 
-        relationalOperators.put(">", new RelationalBinaryOperator(MEDIUM, (left, right) -> left > right));
-        relationalOperators.put("<", new RelationalBinaryOperator(MEDIUM, (left, right) -> left < right));
-        relationalOperators.put(">=", new RelationalBinaryOperator(MEDIUM, (left, right) -> left >= right));
-        relationalOperators.put("<=", new RelationalBinaryOperator(MEDIUM, (left, right) -> left <= right));
+        relationalOperators.put(">", new RelationalBinaryOperator(HIGH, (left, right) -> left > right));
+        relationalOperators.put("<", new RelationalBinaryOperator(HIGH, (left, right) -> left < right));
+        relationalOperators.put(">=", new RelationalBinaryOperator(HIGH, (left, right) -> left >= right));
+        relationalOperators.put("<=", new RelationalBinaryOperator(HIGH, (left, right) -> left <= right));
     }
 
     @Override
