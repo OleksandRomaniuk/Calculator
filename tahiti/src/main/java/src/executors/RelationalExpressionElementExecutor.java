@@ -1,21 +1,21 @@
 package src.executors;
 
+import src.BinaryOperatorFactory;
 import src.CharSequenceReader;
 import src.FiniteStateMachine;
+import src.RelationalBinaryOperatorFactory;
 import src.fsm.expression.BinaryOperatorTransducer;
-import src.operators.BinaryOperatorFactory;
-import src.operators.RelationalBinaryOperatorFactory;
 import src.runtime.ScriptContext;
 import src.util.*;
 
 import java.util.List;
 
-public class RelationalExpressionElementExecutor implements ScriptElementExecutor {
+public class RelationalExpressionElementExecutor implements ProgramElementExecutor {
 
-    private final ScriptElementExecutorFactory factory;
+    private final ProgramFactory factory;
 
-    public RelationalExpressionElementExecutor(ScriptElementExecutorFactory scriptElementExecutorFactory) {
-        this.factory = scriptElementExecutorFactory;
+    public RelationalExpressionElementExecutor(ProgramFactory programFactory) {
+        this.factory = programFactory;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class RelationalExpressionElementExecutor implements ScriptElementExecuto
 
         BinaryOperatorFactory relationalOperatorFactory = new RelationalBinaryOperatorFactory();
 
-        var partOfExpression = new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, factory)
+        var partOfExpression = new ExecutorProgramElementTransducer(ProgramElement.NUMERIC_EXPRESSION, factory)
                 .named("Part Of Relational Expression");
 
         var relationalMachine = FiniteStateMachine.chainMachine(errorMessage -> {
@@ -39,7 +39,7 @@ public class RelationalExpressionElementExecutor implements ScriptElementExecuto
                                         scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
                                     }
                                 }).named("Binary operator"),
-                        new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, factory)));
+                        new ExecutorProgramElementTransducer(ProgramElement.NUMERIC_EXPRESSION, factory)));
 
         return relationalMachine.run(inputChain, output);
     }

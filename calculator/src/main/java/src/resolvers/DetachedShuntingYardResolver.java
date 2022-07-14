@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import src.CharSequenceReader;
 import src.FiniteStateMachine;
 import src.ResolvingException;
-import src.datastructures.ShuntingYard;
+import src.fsm.function.ShuntingYard;
 import src.math.MathElementResolver;
 import src.type.Value;
 

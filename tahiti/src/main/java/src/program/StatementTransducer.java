@@ -5,13 +5,13 @@ import src.CharSequenceReader;
 import src.Transducer;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;
-import src.util.ScriptElementExecutor;
+import src.util.ProgramElementExecutor;
 
 class StatementTransducer implements Transducer<ScriptContext, ExecutionException> {
 
-    private final ScriptElementExecutor executor;
+    private final ProgramElementExecutor executor;
 
-    public StatementTransducer(ScriptElementExecutor executor) {
+    public StatementTransducer(ProgramElementExecutor executor) {
 
         this.executor = Preconditions.checkNotNull(executor);
     }

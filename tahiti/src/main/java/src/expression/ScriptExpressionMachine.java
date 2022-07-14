@@ -7,8 +7,8 @@ import src.TransitionMatrix;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;
 import src.util.ExecutorProgramElementTransducer;
-import src.util.ScriptElement;
-import src.util.ScriptElementExecutorFactory;
+import src.util.ProgramElement;
+import src.util.ProgramFactory;
 
 /**
  * {@code ScriptExpressionMachine} is an implementation of {@link FiniteStateMachine}.
@@ -19,19 +19,19 @@ public final class ScriptExpressionMachine extends FiniteStateMachine<ScriptExpr
 
     private ScriptExpressionMachine(TransitionMatrix<ScriptExpressionStates> matrix,
                                     ExceptionThrower<ExecutionException> exceptionThrower,
-                                    ScriptElementExecutorFactory factory) {
+                                    ProgramFactory factory) {
 
         super(matrix, exceptionThrower, true);
 
         registerTransducer(ScriptExpressionStates.START, Transducer.illegalTransition());
         registerTransducer(ScriptExpressionStates.FINISH, Transducer.autoTransition());
         registerTransducer(ScriptExpressionStates.LOGICAL_EXPRESSION,
-                new ExecutorProgramElementTransducer(ScriptElement.LOGICAL_EXPRESSION, factory));
+                new ExecutorProgramElementTransducer(ProgramElement.BOOLEAN_EXPRESSION, factory));
         registerTransducer(ScriptExpressionStates.NUMERIC_EXPRESSION,
-                new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, factory));
+                new ExecutorProgramElementTransducer(ProgramElement.NUMERIC_EXPRESSION, factory));
     }
 
-    public static ScriptExpressionMachine create(ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
+    public static ScriptExpressionMachine create(ProgramFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
 
         TransitionMatrix<ScriptExpressionStates> matrix =
                 TransitionMatrix.<ScriptExpressionStates>builder()

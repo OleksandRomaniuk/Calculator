@@ -3,13 +3,13 @@ package src.executors;
 import com.google.common.base.Preconditions;
 import src.CharSequenceReader;
 import src.FiniteStateMachine;
-import src.procedure.ProcedureFactory;
+import src.programStructure.procedure.ProcedureFactory;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;
 import src.util.FunctionHolderWithContext;
-import src.util.ScriptElementExecutor;
+import src.util.ProgramElementExecutor;
 
-public class ProcedureFactoryExecutor<I> implements ScriptElementExecutor {
+public class ProcedureFactoryExecutor<I> implements ProgramElementExecutor {
 
     private final FiniteStateMachine<I, FunctionHolderWithContext, ExecutionException> machine;
 

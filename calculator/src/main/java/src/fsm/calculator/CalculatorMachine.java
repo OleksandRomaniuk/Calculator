@@ -2,7 +2,7 @@ package src.fsm.calculator;
 
 
 import src.*;
-import src.datastructures.ShuntingYard;
+import src.fsm.function.ShuntingYard;
 import src.math.MathElement;
 import src.math.MathElementResolverFactory;
 import src.type.Value;

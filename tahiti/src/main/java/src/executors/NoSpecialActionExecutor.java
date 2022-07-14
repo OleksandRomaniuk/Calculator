@@ -5,9 +5,9 @@ import src.CharSequenceReader;
 import src.FiniteStateMachine;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;
-import src.util.ScriptElementExecutor;
+import src.util.ProgramElementExecutor;
 
-public class NoSpecialActionExecutor<I> implements ScriptElementExecutor {
+public class NoSpecialActionExecutor<I> implements ProgramElementExecutor {
 
     private final FiniteStateMachine<I, ScriptContext, ExecutionException> machine;
 

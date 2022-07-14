@@ -1,4 +1,4 @@
-package src.procedure;
+package src.programStructure.procedure;
 
 import com.google.common.base.Preconditions;
 
@@ -14,12 +14,6 @@ public class ProcedureFactory {
         procedures.put("print", (arguments, output) -> {
             if (!output.isParseOnly()) {
                 output.getOutput().print(arguments.toString());
-            }
-        });
-
-        procedures.put("clear", (arguments, output) -> {
-            if (!output.isParseOnly()) {
-                output.memory().clearMemory();
             }
         });
 

@@ -6,8 +6,8 @@ import src.Transducer;
 import src.TransitionMatrix;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;
-import src.util.ScriptElement;
-import src.util.ScriptElementExecutorFactory;
+import src.util.ProgramElement;
+import src.util.ProgramFactory;
 
 import static src.program.ProgramStates.*;
 
@@ -18,17 +18,17 @@ import static src.program.ProgramStates.*;
 
 public final class ProgramMachine extends FiniteStateMachine<ProgramStates, ScriptContext, ExecutionException> {
 
-    private ProgramMachine(TransitionMatrix<ProgramStates> matrix, ScriptElementExecutorFactory factory,
+    private ProgramMachine(TransitionMatrix<ProgramStates> matrix, ProgramFactory factory,
                            ExceptionThrower<ExecutionException> exceptionThrower) {
         super(matrix, exceptionThrower, true);
 
         registerTransducer(START, Transducer.illegalTransition());
-        registerTransducer(STATEMENT, new StatementTransducer(factory.create(ScriptElement.STATEMENT)));
+        registerTransducer(STATEMENT, new StatementTransducer(factory.create(ProgramElement.STATEMENT)));
         registerTransducer(SEPARATOR, Transducer.checkAndPassChar(';'));
         registerTransducer(FINISH, Transducer.autoTransition());
     }
 
-    public static ProgramMachine create(ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
+    public static ProgramMachine create(ProgramFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
         TransitionMatrix<ProgramStates> matrix =
                 TransitionMatrix.<ProgramStates>builder()
                         .withStartState(START)

@@ -11,20 +11,20 @@ public class FunctionTransducer<O extends WithContext> implements Transducer<O, 
 
     private final BiConsumer<O, Value> consumer;
 
-    private final ScriptElementExecutorFactory factory;
+    private final ProgramFactory factory;
 
-    private final ScriptElement scriptElement;
+    private final ProgramElement programElement;
 
-    public FunctionTransducer(BiConsumer<O, Value> consumer, ScriptElementExecutorFactory factory, ScriptElement scriptElement) {
+    public FunctionTransducer(BiConsumer<O, Value> consumer, ProgramFactory factory, ProgramElement programElement) {
         this.consumer = consumer;
         this.factory = factory;
-        this.scriptElement = scriptElement;
+        this.programElement = programElement;
     }
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, O outputChain) throws ExecutionException {
 
-        ScriptElementExecutor expressionExecutor = factory.create(scriptElement);
+        ProgramElementExecutor expressionExecutor = factory.create(programElement);
 
         if (expressionExecutor.execute(inputChain, outputChain.getScriptContext())) {
 

@@ -1,4 +1,4 @@
-package src.initvar;
+package src.programStructure.initvar;
 
 import com.google.common.base.Preconditions;
 import src.runtime.ScriptContext;
@@ -7,7 +7,7 @@ import src.type.Value;
 
 
 /**
- * {@code InitVarContext} is a class that used for variable initialisation, as an output for {@link InitVarMachine}.
+ * InitVarContext is a class that used for variable initialisation, as an output for InitVarMachine
  */
 
 public class InitVarContext implements WithContext {

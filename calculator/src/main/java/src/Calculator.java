@@ -1,8 +1,8 @@
 package src;
 
 import com.google.common.base.Preconditions;
-import src.datastructures.ShuntingYard;
 import src.fsm.calculator.CalculatorMachine;
+import src.fsm.function.ShuntingYard;
 import src.math.MathElementResolverFactory;
 import src.type.DoubleValueVisitor;
 

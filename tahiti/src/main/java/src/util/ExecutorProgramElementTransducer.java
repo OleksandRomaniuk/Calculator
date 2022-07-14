@@ -8,20 +8,20 @@ import src.runtime.ScriptContext;
 
 public class ExecutorProgramElementTransducer implements Transducer<ScriptContext, ExecutionException> {
 
-    private final ScriptElementExecutorFactory factory;
+    private final ProgramFactory factory;
 
-    private final ScriptElement scriptElement;
+    private final ProgramElement programElement;
 
-    public ExecutorProgramElementTransducer(ScriptElement resolver,
-                                            ScriptElementExecutorFactory factory) {
-        this.scriptElement = Preconditions.checkNotNull(resolver);
+    public ExecutorProgramElementTransducer(ProgramElement resolver,
+                                            ProgramFactory factory) {
+        this.programElement = Preconditions.checkNotNull(resolver);
         this.factory = factory;
     }
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
 
-        ScriptElementExecutor elementExecutor = factory.create(scriptElement);
+        ProgramElementExecutor elementExecutor = factory.create(programElement);
 
         boolean executeResult = elementExecutor.execute(inputChain, outputChain);
 

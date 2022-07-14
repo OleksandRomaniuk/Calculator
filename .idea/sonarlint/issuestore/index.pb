@@ -11,10 +11,6 @@ i
 9calculator/src/main/java/src/fsm/number/NumberStates.java,7\7\77401c2ce5ad790b06dcf7ec9cd695b910d4741c
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-c
-3tahiti/src/main/java/src/program/ProgramStates.java,0\f\0f479de6e5225cb3670fc9244b7774f75c25137c
-g
-7math/src/main/java/src/DoubleBinaryOperatorFactory.java,b\c\bc998477103849af6375c5e0c54b8a43f5096bb3
 \
 ,fsm/src/main/java/fsm/type/BooleanValue.java,5\b\5b58bfeee4f97beb6919079bf306a99acd7197c5
 c

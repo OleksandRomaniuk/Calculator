@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import src.execute.InterpreterMachine;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;
-import src.util.ScriptElementExecutorFactory;
+import src.util.ProgramFactory;
 
 
 public class Tahiti {
@@ -18,7 +18,7 @@ public class Tahiti {
 
         ScriptContext scriptContext = new ScriptContext();
 
-        ScriptElementExecutorFactory factory = new ScriptElementExecutorFactoryImpl();
+        ProgramFactory factory = new ProgramExecutorFactoryImpl();
 
         InterpreterMachine interpreterMachine = InterpreterMachine.create(Preconditions.checkNotNull(factory), errorMessage -> {
             throw new ExecutionException(errorMessage);

@@ -5,7 +5,7 @@ import src.ExceptionThrower;
 import src.FiniteStateMachine;
 import src.Transducer;
 import src.TransitionMatrix;
-import src.datastructures.ShuntingYard;
+import src.fsm.function.ShuntingYard;
 import src.type.Value;
 
 import java.util.function.BiConsumer;
