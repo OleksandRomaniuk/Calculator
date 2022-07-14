@@ -2,10 +2,10 @@ package src;
 
 import com.google.common.base.Preconditions;
 import fsm.CharSequenceReader;
+import fsm.type.DoubleValueVisitor;
 import src.fsm.ShuntingYard;
 import src.fsm.calculator.CalculatorMachine;
 import src.math.MathElementResolverFactory;
-import fsm.type.DoubleValueVisitor;
 
 /**
  * An API for resolving of math expressions. Math expression may contain:
@@ -55,7 +55,7 @@ public class Calculator {
             raiseException(inputChain);
         }
 
-        return new CalculationResult(DoubleValueVisitor.read(outputChain.peekResult()));
+        return new CalculationResult(DoubleValueVisitor.read(outputChain.popResult()));
     }
 
     private static void raiseException(CharSequenceReader inputChain) throws WrongExpressionException {
