@@ -19,6 +19,7 @@ public class ScriptContext implements WithContext {
         return memory;
     }
 
+
     public void setParsingPermission(boolean parsingPermission) {
         this.parsingPermission = parsingPermission;
     }
