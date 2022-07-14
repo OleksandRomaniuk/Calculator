@@ -30,7 +30,7 @@ public class FunctionTransducer<O extends WithContext> implements Transducer<O, 
 
         if (expressionExecutor.execute(inputChain, outputChain.getScriptContext())) {
 
-            if (outputChain.getScriptContext().isParseonly()){
+            if (outputChain.getScriptContext().isParseOnly()) {
                 return true;
             }
 

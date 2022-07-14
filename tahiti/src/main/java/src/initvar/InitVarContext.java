@@ -7,7 +7,7 @@ import src.runtime.WithContext;
 
 
 /**
- * {@code InitVarContext} is a class that used for variable initialisation, as an output for InitVarMachine
+ * {@code InitVarContext} is a class that used for variable initialisation, as an output for {@link InitVarMachine}.
  */
 
 public class InitVarContext implements WithContext {
@@ -45,7 +45,7 @@ public class InitVarContext implements WithContext {
     }
 
     @Override
-    public boolean isParseonly() {
-        return scriptContext.isParseonly();
+    public boolean isParseOnly() {
+        return scriptContext.isParseOnly();
     }
 }

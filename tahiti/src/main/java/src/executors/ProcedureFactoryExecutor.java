@@ -24,9 +24,9 @@ public class ProcedureFactoryExecutor<I> implements ScriptElementExecutor {
 
         Preconditions.checkNotNull(inputChain, output);
 
-        var functionHolder = new FunctionHolderWithContext(output);
+        FunctionHolderWithContext functionHolder = new FunctionHolderWithContext(output);
 
-        var procedureFactory = new ProcedureFactory();
+        ProcedureFactory procedureFactory = new ProcedureFactory();
 
         if (machine.run(inputChain, functionHolder)) {
 

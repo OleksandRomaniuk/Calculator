@@ -1,5 +1,6 @@
 package src.executors;
 
+
 import fsm.CharSequenceReader;
 import fsm.FiniteStateMachine;
 import src.BinaryOperatorFactory;

@@ -1,6 +1,10 @@
 package src.execute;
 
-public enum InterpreterState {
+/**
+ * {@code InterpreterState} is an enumeration of states that used in {@link InterpreterMachine}
+ */
+
+enum InterpreterState {
     START,
     PROGRAM,
     FINISH

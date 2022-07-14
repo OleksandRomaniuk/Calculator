@@ -1,16 +1,23 @@
 package src.initvar;
 
 import com.google.common.base.Preconditions;
-
 import fsm.CharSequenceReader;
 import fsm.Transducer;
 import fsm.type.Value;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import src.util.ExecutionException;
 import src.util.ScriptElementExecutor;
 
+/**
+ * {@code VariableExpressionTransducer} is an implementation of {@link Transducer}
+ * that call execute method of {@link ScriptElementExecutor}, take and put result of execution
+ * to {@link InitVarContext}.
+ */
 
 public class VariableExpressionTransducer implements Transducer<InitVarContext, ExecutionException> {
+
+    private static final Logger logger = LoggerFactory.getLogger(VariableExpressionTransducer.class);
 
     private final ScriptElementExecutor expressionExecutor;
 
@@ -26,7 +33,7 @@ public class VariableExpressionTransducer implements Transducer<InitVarContext, 
 
         if (expressionExecutor.execute(inputChain, outputChain.getScriptContext())) {
 
-            if(outputChain.isParseonly()){
+            if (outputChain.isParseOnly()) {
                 return true;
             }
 

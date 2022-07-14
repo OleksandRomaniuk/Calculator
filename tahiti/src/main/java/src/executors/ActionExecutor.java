@@ -7,7 +7,6 @@ import src.runtime.ScriptContext;
 import src.util.ExecutionException;
 import src.util.ScriptElementExecutor;
 
-
 public class ActionExecutor<I> implements ScriptElementExecutor {
 
     private final FiniteStateMachine<I, ScriptContext, ExecutionException> machine;

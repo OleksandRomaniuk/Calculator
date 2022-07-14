@@ -8,6 +8,7 @@ import src.runtime.ScriptContext;
 import src.util.ExecutionException;
 import src.util.ScriptElementExecutor;
 
+
 public class ShuntingYardExecutor<I> implements ScriptElementExecutor {
 
     private final FiniteStateMachine<I, ScriptContext, ExecutionException> machine;
@@ -19,11 +20,14 @@ public class ShuntingYardExecutor<I> implements ScriptElementExecutor {
     @Override
     public boolean execute(CharSequenceReader inputChain, ScriptContext output) throws ExecutionException {
 
-        output.systemStack().create();
+
+        if (!output.isParseOnly()) {
+            output.systemStack().create();
+        }
 
         if (machine.run(inputChain, output)) {
 
-            if(output.isParseonly()){
+            if (output.isParseOnly()) {
                 return true;
             }
 
