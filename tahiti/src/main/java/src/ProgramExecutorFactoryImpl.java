@@ -8,8 +8,8 @@ import src.fsm.expression.ExpressionMachine;
 import src.fsm.function.FunctionMachine;
 import src.fsm.number.NumberStateMachine;
 import src.identifier.IdentifierMachine;
-import src.logicaloperand.LogicalOperandMachine;
 import src.program.ProgramMachine;
+import src.programStructure.booleanOperand.BooleanOperandMachine;
 import src.programStructure.initvar.InitVarContext;
 import src.programStructure.initvar.InitVarMachine;
 import src.programStructure.whileoperator.WhileOperatorExecutor;
@@ -61,11 +61,11 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
                             throw new ExecutionException(errorMessage);
                         })));
 
-        BinaryOperatorFactory logicalOperatorFactory = new LogicalBinaryOperatorFactory();
+        BinaryOperatorFactory logicalOperatorFactory = new BooleanBinaryOperatorFactory();
 
 
         executors.put(ProgramElement.BOOLEAN_OPERAND, () -> new NoSpecialActionExecutor<>(
-                LogicalOperandMachine.create(this, errorMessage -> {
+                BooleanOperandMachine.create(this, errorMessage -> {
                     throw new ExecutionException(errorMessage);
                 })
         ));
