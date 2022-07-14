@@ -4,44 +4,42 @@ import fsm.ExceptionThrower;
 import fsm.FiniteStateMachine;
 import fsm.Transducer;
 import fsm.TransitionMatrix;
-import src.AbstractBinaryOperator;
-import src.BinaryOperatorFactory;
-import src.BooleanBinaryOperator;
-import src.BooleanBinaryOperatorFactory;
-import src.fsm.expression.BinaryOperatorTransducer;
-import java.util.function.BiConsumer;
+import src.ExecutorProgramElementTransducer;
+import src.runtime.ScriptContext;
+import src.util.ExecutionException;
+import src.util.ScriptElement;
+import src.util.ScriptElementExecutorFactory;
+
+import static src.booleanOperator.BooleanStates.*;
 
 
+public final class BooleanMachine extends FiniteStateMachine<BooleanStates, ScriptContext, ExecutionException> {
 
-public final class BooleanMachine<O, E extends Exception> extends FiniteStateMachine<BooleanStates, O, E > {
+    private BooleanMachine(TransitionMatrix<BooleanStates> matrix, ExceptionThrower<ExecutionException> exceptionThrower,
+                           ScriptElementExecutorFactory factory) {
+        super(matrix, exceptionThrower);
 
-    public static <O, E extends Exception> BooleanMachine<O, E> create(BiConsumer<O, BooleanBinaryOperator> binaryConsumer,
-                                                                       Transducer<O, E> operandTransducer, ExceptionThrower<E> exceptionThrower) {
-
-        var matrix = TransitionMatrix.<BooleanStates>builder()
-                .withStartState(BooleanStates.START)
-                .withFinishState(BooleanStates.FINISH)
-                .allowTransition(BooleanStates.START, BooleanStates.BOOLEAN_OPERAND)
-                .allowTransition(BooleanStates.BOOLEAN_OPERAND, BooleanStates.BOOLEAN_OPERATOR, BooleanStates.FINISH)
-                .allowTransition(BooleanStates.BOOLEAN_OPERATOR, BooleanStates.BOOLEAN_OPERAND)
-
-                .build();
-
-        return new BooleanMachine<>(matrix, binaryConsumer, operandTransducer, exceptionThrower);
+        registerTransducer(START, Transducer.illegalTransition());
+        registerTransducer(FINISH, Transducer.autoTransition());
+        registerTransducer(VARIABLE, new BooleanOperatorTransducer());
+        registerTransducer(RELATIONAL_EXPRESSION, new ExecutorProgramElementTransducer(ScriptElement.RELATIONAL_EXPRESSION, factory));
     }
 
-    private BooleanMachine(TransitionMatrix<BooleanStates> matrix,
-                           BiConsumer<O, BooleanBinaryOperator> binaryConsumer,
-                           Transducer<O, E> operandTransducer,
-                           ExceptionThrower<E> exceptionThrower) {
-        super(matrix, exceptionThrower, true);
+    public static BooleanMachine create(ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
 
-        BinaryOperatorFactory booleanOperatorFactory = new BooleanBinaryOperatorFactory();
+        var matrix =
+                TransitionMatrix.<BooleanStates>builder()
+                        .withStartState(START)
+                        .withFinishState(FINISH)
+                        .withTemporaryState(RELATIONAL_EXPRESSION)
+                        .withTemporaryState(VARIABLE)
+                        .allowTransition(START, RELATIONAL_EXPRESSION, VARIABLE)
+                        .allowTransition(VARIABLE, FINISH)
+                        .allowTransition(RELATIONAL_EXPRESSION, FINISH)
 
-        registerTransducer(BooleanStates.START, Transducer.illegalTransition());
-        registerTransducer(BooleanStates.BOOLEAN_OPERAND, operandTransducer);
-        registerTransducer(BooleanStates.BOOLEAN_OPERATOR, new BinaryOperatorTransducer(booleanOperatorFactory, binaryConsumer));
-        registerTransducer(BooleanStates.FINISH, Transducer.autoTransition());
+                        .build();
+
+        return new BooleanMachine(matrix, exceptionThrower, factory);
     }
 }
 

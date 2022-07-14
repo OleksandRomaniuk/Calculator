@@ -1,4 +1,4 @@
-package src;
+package src.booleanOperator;
 
 
 import fsm.type.BooleanValue;
@@ -6,7 +6,6 @@ import fsm.type.BooleanValueVisitor;
 import fsm.type.Value;
 import src.AbstractBinaryOperator;
 
-import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 
 /**

@@ -19,11 +19,22 @@ public class BooleanValueVisitor implements ValueVisitor{
         return booleanValue;
     }
 
-    public static Boolean read(Value value){
+    public static Boolean read(Value value) {
         BooleanValueVisitor booleanValueVisitor = new BooleanValueVisitor();
 
         value.accept(booleanValueVisitor);
 
         return booleanValueVisitor.getBooleanValue();
+    }
+
+    public static Boolean isBoolean(Value value) {
+
+        try {
+            read(value);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+
+        return true;
     }
 }

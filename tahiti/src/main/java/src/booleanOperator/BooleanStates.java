@@ -10,9 +10,8 @@ package src.booleanOperator;
 public enum BooleanStates {
 
     START,
-    BOOLEAN_OPERAND,
-    OPERAND,
-    BOOLEAN_OPERATOR,
+    RELATIONAL_EXPRESSION,
+    VARIABLE,
     FINISH
 }
 
