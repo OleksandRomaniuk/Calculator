@@ -7,8 +7,8 @@ import src.TransitionMatrix;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;
 import src.util.ExecutorProgramElementTransducer;
-import src.util.ScriptElement;
-import src.util.ScriptElementExecutorFactory;
+import src.util.ProgramElement;
+import src.util.ProgramFactory;
 
 import static src.logicaloperand.LogicalOperandStates.*;
 
@@ -16,16 +16,16 @@ import static src.logicaloperand.LogicalOperandStates.*;
 public final class LogicalOperandMachine extends FiniteStateMachine<LogicalOperandStates, ScriptContext, ExecutionException> {
 
     private LogicalOperandMachine(TransitionMatrix<LogicalOperandStates> matrix, ExceptionThrower<ExecutionException> exceptionThrower,
-                                  ScriptElementExecutorFactory factory) {
+                                  ProgramFactory factory) {
         super(matrix, exceptionThrower);
 
         registerTransducer(START, Transducer.illegalTransition());
         registerTransducer(FINISH, Transducer.autoTransition());
         registerTransducer(READ_BOOLEAN_VARIABLE, new ReadBooleanVariableTransducer());
-        registerTransducer(RELATIONAL_EXPRESSION, new ExecutorProgramElementTransducer(ScriptElement.RELATIONAL_EXPRESSION, factory));
+        registerTransducer(RELATIONAL_EXPRESSION, new ExecutorProgramElementTransducer(ProgramElement.RELATIONAL_EXPRESSION, factory));
     }
 
-    public static LogicalOperandMachine create(ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
+    public static LogicalOperandMachine create(ProgramFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
 
         TransitionMatrix<LogicalOperandStates> matrix =
                 TransitionMatrix.<LogicalOperandStates>builder()

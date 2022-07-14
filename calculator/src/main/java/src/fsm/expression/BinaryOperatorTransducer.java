@@ -1,10 +1,10 @@
 package src.fsm.expression;
 
 import com.google.common.base.Preconditions;
+import src.AbstractBinaryOperator;
+import src.BinaryOperatorFactory;
 import src.CharSequenceReader;
 import src.Transducer;
-import src.operators.AbstractBinaryOperator;
-import src.operators.BinaryOperatorFactory;
 
 import java.util.Optional;
 import java.util.function.BiConsumer;

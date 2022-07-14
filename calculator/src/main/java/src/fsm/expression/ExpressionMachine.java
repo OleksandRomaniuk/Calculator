@@ -1,12 +1,7 @@
 package src.fsm.expression;
 
 
-import src.ExceptionThrower;
-import src.FiniteStateMachine;
-import src.Transducer;
-import src.TransitionMatrix;
-import src.operators.AbstractBinaryOperator;
-import src.operators.BinaryOperatorFactory;
+import src.*;
 
 import java.util.function.BiConsumer;
 

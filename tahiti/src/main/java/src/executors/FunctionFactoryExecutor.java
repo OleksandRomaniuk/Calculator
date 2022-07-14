@@ -9,9 +9,9 @@ import src.runtime.ScriptContext;
 import src.type.Value;
 import src.util.ExecutionException;
 import src.util.FunctionHolderWithContext;
-import src.util.ScriptElementExecutor;
+import src.util.ProgramElementExecutor;
 
-public class FunctionFactoryExecutor<I> implements ScriptElementExecutor {
+public class FunctionFactoryExecutor<I> implements ProgramElementExecutor {
     private final FiniteStateMachine<I, FunctionHolderWithContext, ExecutionException> machine;
 
     public FunctionFactoryExecutor(FiniteStateMachine<I, FunctionHolderWithContext, ExecutionException> machine) {

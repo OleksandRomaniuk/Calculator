@@ -1,4 +1,4 @@
-package src.initvar;
+package src.programStructure.initvar;
 
 import src.ExceptionThrower;
 import src.FiniteStateMachine;
@@ -6,10 +6,10 @@ import src.Transducer;
 import src.TransitionMatrix;
 import src.fsm.function.FunctionNameTransducer;
 import src.util.ExecutionException;
-import src.util.ScriptElement;
-import src.util.ScriptElementExecutorFactory;
+import src.util.ProgramElement;
+import src.util.ProgramFactory;
 
-import static src.initvar.InitVarStates.*;
+import static src.programStructure.initvar.InitVarStates.*;
 
 /**
  * {@code InitVarMachine} is a realisation of {@link FiniteStateMachine} that used to variable initialisation.
@@ -17,7 +17,7 @@ import static src.initvar.InitVarStates.*;
 
 public final class InitVarMachine extends FiniteStateMachine<InitVarStates, InitVarContext, ExecutionException> {
 
-    private InitVarMachine(TransitionMatrix<InitVarStates> matrix, ScriptElementExecutorFactory factory,
+    private InitVarMachine(TransitionMatrix<InitVarStates> matrix, ProgramFactory factory,
                            ExceptionThrower<ExecutionException> exceptionThrower) {
         super(matrix, exceptionThrower, true);
 
@@ -30,7 +30,7 @@ public final class InitVarMachine extends FiniteStateMachine<InitVarStates, Init
                     throw new ExecutionException(errorMessage);
                 }).named("Function name"));
 
-        registerTransducer(EXPRESSION, new VariableExpressionTransducer(factory.create(ScriptElement.EXPRESSION)));
+        registerTransducer(EXPRESSION, new VariableExpressionTransducer(factory.create(ProgramElement.EXPRESSION)));
 
         registerTransducer(FINISH, (inputChain, outputChain) -> {
 
@@ -45,7 +45,7 @@ public final class InitVarMachine extends FiniteStateMachine<InitVarStates, Init
         });
     }
 
-    public static InitVarMachine create(ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
+    public static InitVarMachine create(ProgramFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
         TransitionMatrix<InitVarStates> matrix = TransitionMatrix.<InitVarStates>builder()
                 .withStartState(START)
                 .withFinishState(FINISH)

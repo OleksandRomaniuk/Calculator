@@ -1,4 +1,4 @@
-package src.whileoperator;
+package src.programStructure.whileoperator;
 
 
 import src.runtime.ScriptContext;

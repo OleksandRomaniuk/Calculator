@@ -1,13 +1,13 @@
 package src.runtime;
 
 import com.google.common.base.Preconditions;
-import src.datastructures.ShuntingYard;
+import src.fsm.function.ShuntingYard;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
- * {@code SystemStack} is a stack of {@link ShuntingYard} it is used to store results of calculations and value of variables.
+ * SystemStack is a stack to store results of calculations and value of variables.
  */
 
 public class SystemStack {

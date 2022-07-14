@@ -1,11 +1,11 @@
 package src.util;
 
 /**
- * {@code ScriptElement} is an enumeration of program elements
- * that can be used in {@link ScriptElementExecutorFactory}.
+ * {@code ProgramElement} is an enumeration of program elements
+ * that can be used in {@link ProgramFactory}.
  */
 
-public enum ScriptElement {
+public enum ProgramElement {
     NUMBER,
     NUMERIC_EXPRESSION,
     RELATIONAL_EXPRESSION,
@@ -19,6 +19,6 @@ public enum ScriptElement {
     PROCEDURE,
     READ_VARIABLE,
     WHILE_OPERATOR,
-    LOGICAL_EXPRESSION,
-    LOGICAL_EXPRESSION_OPERAND
+    BOOLEAN_EXPRESSION,
+    BOOLEAN_OPERAND
 }

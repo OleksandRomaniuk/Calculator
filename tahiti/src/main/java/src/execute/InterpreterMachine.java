@@ -6,8 +6,8 @@ import src.Transducer;
 import src.TransitionMatrix;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;
-import src.util.ScriptElement;
-import src.util.ScriptElementExecutorFactory;
+import src.util.ProgramElement;
+import src.util.ProgramFactory;
 
 import static src.execute.InterpreterState.*;
 
@@ -18,16 +18,16 @@ import static src.execute.InterpreterState.*;
 
 public final class InterpreterMachine extends FiniteStateMachine<InterpreterState, ScriptContext, ExecutionException> {
 
-    private InterpreterMachine(TransitionMatrix<InterpreterState> matrix, ScriptElementExecutorFactory factory,
+    private InterpreterMachine(TransitionMatrix<InterpreterState> matrix, ProgramFactory factory,
                                ExceptionThrower<ExecutionException> exceptionThrower) {
         super(matrix, exceptionThrower, true);
 
         registerTransducer(START, Transducer.illegalTransition());
-        registerTransducer(PROGRAM, new ProgramTransducer(factory.create(ScriptElement.PROGRAM)));
+        registerTransducer(PROGRAM, new ProgramTransducer(factory.create(ProgramElement.PROGRAM)));
         registerTransducer(FINISH, (inputChain, outputChain) -> !inputChain.canRead());
     }
 
-    public static InterpreterMachine create(ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
+    public static InterpreterMachine create(ProgramFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
         TransitionMatrix<InterpreterState> matrix =
                 TransitionMatrix.<InterpreterState>builder()
                         .withStartState(START)

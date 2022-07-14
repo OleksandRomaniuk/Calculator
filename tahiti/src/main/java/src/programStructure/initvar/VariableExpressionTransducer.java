@@ -1,4 +1,4 @@
-package src.initvar;
+package src.programStructure.initvar;
 
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
@@ -7,11 +7,11 @@ import src.CharSequenceReader;
 import src.Transducer;
 import src.type.Value;
 import src.util.ExecutionException;
-import src.util.ScriptElementExecutor;
+import src.util.ProgramElementExecutor;
 
 /**
  * {@code VariableExpressionTransducer} is an implementation of {@link Transducer}
- * that call execute method of {@link ScriptElementExecutor}, take and put result of execution
+ * that call execute method of {@link ProgramElementExecutor}, take and put result of execution
  * to {@link InitVarContext}.
  */
 
@@ -19,9 +19,9 @@ public class VariableExpressionTransducer implements Transducer<InitVarContext, 
 
     private static final Logger logger = LoggerFactory.getLogger(VariableExpressionTransducer.class);
 
-    private final ScriptElementExecutor expressionExecutor;
+    private final ProgramElementExecutor expressionExecutor;
 
-    public VariableExpressionTransducer(ScriptElementExecutor executor) {
+    public VariableExpressionTransducer(ProgramElementExecutor executor) {
         this.expressionExecutor = Preconditions.checkNotNull(executor);
     }
 

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * {@code Memory} is a class that used to store Double type variables.
+ * Memory is a class that used to store Value type variables.
  */
 
 public class Memory {

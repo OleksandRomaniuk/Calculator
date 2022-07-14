@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import src.CharSequenceReader;
 import src.ResolvingException;
 import src.Transducer;
-import src.datastructures.ShuntingYard;
 import src.math.MathElementResolver;
 import src.type.Value;
 

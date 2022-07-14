@@ -1,4 +1,4 @@
-package src.operators;
+package src;
 
 import com.google.common.base.Preconditions;
 import src.type.Value;

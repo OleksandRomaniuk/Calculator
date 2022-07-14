@@ -1,4 +1,4 @@
-package src.datastructures;
+package src.fsm.function;
 
 import com.google.common.base.Preconditions;
 import src.type.Value;

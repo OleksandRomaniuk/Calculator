@@ -38,10 +38,6 @@ class ReadBooleanVariableTransducer implements Transducer<ScriptContext, Executi
 
                 if (!BooleanValueVisitor.isBoolean(variable)) {
 
-                    if (logger.isInfoEnabled()) {
-
-                        logger.info("NOT A BOOLEAN VARIABLE INSIDE LOGICAL EXPRESSION");
-                    }
                     return false;
                 }
 

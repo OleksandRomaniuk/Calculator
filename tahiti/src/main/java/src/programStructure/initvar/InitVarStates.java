@@ -1,4 +1,4 @@
-package src.initvar;
+package src.programStructure.initvar;
 
 /**
  * {@code InitVarStates} is an enumeration of states that used in {@link InitVarMachine}

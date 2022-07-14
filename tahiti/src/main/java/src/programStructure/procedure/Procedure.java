@@ -1,4 +1,4 @@
-package src.procedure;
+package src.programStructure.procedure;
 
 
 import src.runtime.ScriptContext;

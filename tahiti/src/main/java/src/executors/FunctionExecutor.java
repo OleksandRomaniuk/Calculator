@@ -4,14 +4,14 @@ import com.google.common.base.Preconditions;
 import src.CharSequenceReader;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;
-import src.util.ScriptElementExecutor;
+import src.util.ProgramElementExecutor;
 
 
-public class FunctionExecutor implements ScriptElementExecutor {
+public class FunctionExecutor implements ProgramElementExecutor {
 
-    private final ScriptElementExecutor factoryExecutor;
+    private final ProgramElementExecutor factoryExecutor;
 
-    public FunctionExecutor(ScriptElementExecutor factoryExecutor) {
+    public FunctionExecutor(ProgramElementExecutor factoryExecutor) {
         this.factoryExecutor = factoryExecutor;
     }
 

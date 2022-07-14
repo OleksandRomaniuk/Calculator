@@ -1,4 +1,4 @@
-package src.whileoperator;
+package src.programStructure.whileoperator;
 
 import com.google.common.base.Preconditions;
 import src.CharSequenceReader;
@@ -10,11 +10,11 @@ import src.util.*;
 
 import java.util.List;
 
-public class WhileOperatorExecutor implements ScriptElementExecutor {
+public class WhileOperatorExecutor implements ProgramElementExecutor {
 
-    private final ScriptElementExecutorFactory factory;
+    private final ProgramFactory factory;
 
-    public WhileOperatorExecutor(ScriptElementExecutorFactory factory) {
+    public WhileOperatorExecutor(ProgramFactory factory) {
         this.factory = Preconditions.checkNotNull(factory);
     }
 
@@ -40,12 +40,12 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
         Transducer<WhileOperatorContext, ExecutionException> relationTransducer =
                 new FunctionTransducer<>((whileOperatorContext, value) -> {
                     whileOperatorContext.setConditionValue(BooleanValueVisitor.read(value));
-                }, factory, ScriptElement.LOGICAL_EXPRESSION);
+                }, factory, ProgramElement.BOOLEAN_EXPRESSION);
 
         Transducer<WhileOperatorContext, ExecutionException> programTransducer =
                 (inputChain1, outputChain) -> {
 
-                    ScriptElementExecutor executor = factory.create(ScriptElement.PROGRAM);
+                    ProgramElementExecutor executor = factory.create(ProgramElement.PROGRAM);
 
                     return executor.execute(inputChain1, outputChain.getScriptContext());
                 };
@@ -72,7 +72,7 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
 
                                 inputChain12.setPosition(outputChain.getPosition());
 
-                                ScriptElementExecutor executor = factory.create(ScriptElement.WHILE_OPERATOR);
+                                ProgramElementExecutor executor = factory.create(ProgramElement.WHILE_OPERATOR);
 
                                 executor.execute(inputChain12, outputChain.getScriptContext());
                             }

@@ -1,14 +1,12 @@
 package src;
 
 import com.google.common.base.Preconditions;
-import src.datastructures.ShuntingYard;
 import src.fsm.calculator.DetachedShuntingYardTransducer;
 import src.fsm.expression.ExpressionMachine;
+import src.fsm.function.ShuntingYard;
 import src.math.MathElement;
 import src.math.MathElementResolver;
 import src.math.MathElementResolverFactory;
-import src.operators.BinaryOperatorFactory;
-import src.operators.DoubleBinaryOperatorFactory;
 import src.resolvers.DetachedShuntingYardResolver;
 import src.resolvers.FunctionResolver;
 import src.resolvers.NumberResolver;
