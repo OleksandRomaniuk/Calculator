@@ -1,7 +1,4 @@
-package src.booleanOperator;
-
-import src.AbstractBinaryOperator;
-import src.BinaryOperatorFactory;
+package src;
 
 import java.util.HashMap;
 import java.util.Map;

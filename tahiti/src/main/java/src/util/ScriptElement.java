@@ -1,9 +1,6 @@
 package src.util;
 
-/**
- * {@code ScriptElement} is an enumeration of program elements
- * that can be used in {@link ScriptElementExecutorFactory}.
- */
+
 
 public enum ScriptElement {
     NUMBER,
@@ -19,5 +16,6 @@ public enum ScriptElement {
     PROCEDURE,
     READ_VARIABLE,
     WHILE_OPERATOR,
-    BOOLEAN_EXPRESSION
+    BOOLEAN_EXPRESSION,
+    BOOLEAN_OPERAND
 }

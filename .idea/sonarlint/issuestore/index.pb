@@ -1,10 +1,6 @@
 
 i
 9calculator/src/test/java/src/fsm/BracketsMachineTest.java,1\1\11dcd065d13747f0ab9b37047c613d620044bea0
-g
-7tahiti/src/main/java/src/IncorrectProgramException.java,e\4\e497b78c707d0b66ed055b76289d087cea2382aa
-Z
-*tahiti/src/main/java/src/InputProgram.java,5\a\5a28e296b234a293cb1f76b505908531a293c97d
 ]
 -fsm/src/main/java/fsm/CharSequenceReader.java,6\8\687e0d98a42d3779900582b0a1778b4c6e8d23fe
 b
@@ -33,8 +29,6 @@ h
 8calculator/src/main/java/src/MathematicalExpression.java,9\a\9a550ff92fcad396ebde053ddbee4a8854d93627
 l
 <calculator/src/main/java/src/MathElementResolverCreator.java,3\c\3cdadb4fbc0b0b90c1e80d02b22613b21094c407
-[
-+tahiti/src/main/java/src/ProgramResult.java,4\0\40d0fc7a8035d07c1b55138f7291c91e2a3628d8
 u
 Etahiti/src/test/java/src/baseProcedure/InterpreterEvaluationTest.java,b\7\b77ecf68a52f6c29c2c63bd04ab4679604ddfb6a
 p

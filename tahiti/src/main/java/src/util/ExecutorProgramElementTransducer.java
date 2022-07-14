@@ -1,13 +1,9 @@
-package src;
+package src.util;
 
 import com.google.common.base.Preconditions;
 import fsm.CharSequenceReader;
 import fsm.Transducer;
 import src.runtime.ScriptContext;
-import src.util.ExecutionException;
-import src.util.ScriptElement;
-import src.util.ScriptElementExecutor;
-import src.util.ScriptElementExecutorFactory;
 
 public class ExecutorProgramElementTransducer implements Transducer<ScriptContext, ExecutionException> {
 

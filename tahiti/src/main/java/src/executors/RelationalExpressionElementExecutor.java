@@ -4,14 +4,10 @@ package src.executors;
 import fsm.CharSequenceReader;
 import fsm.FiniteStateMachine;
 import src.BinaryOperatorFactory;
-import src.ExecutorProgramElementTransducer;
 import src.RelationalBinaryOperatorFactory;
 import src.fsm.expression.BinaryOperatorTransducer;
 import src.runtime.ScriptContext;
-import src.util.ExecutionException;
-import src.util.ScriptElement;
-import src.util.ScriptElementExecutor;
-import src.util.ScriptElementExecutorFactory;
+import src.util.*;
 
 import java.util.List;
 

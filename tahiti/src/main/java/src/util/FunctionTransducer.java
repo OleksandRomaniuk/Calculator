@@ -13,6 +13,8 @@ public class FunctionTransducer<O extends WithContext> implements Transducer<O, 
 
     private final BiConsumer<O, Value> consumer;
 
+//    private final ScriptElementExecutor expressionExecutor;
+
     private final ScriptElementExecutorFactory factory;
 
     private final ScriptElement scriptElement;
@@ -34,7 +36,7 @@ public class FunctionTransducer<O extends WithContext> implements Transducer<O, 
                 return true;
             }
 
-            Value result = outputChain.getScriptContext().systemStack().current().peekResult();
+            Value result = outputChain.getScriptContext().systemStack().current().popResult();
 
             consumer.accept(outputChain, result);
 

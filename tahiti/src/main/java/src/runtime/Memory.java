@@ -27,8 +27,4 @@ public class Memory {
 
         return variables.containsKey(Preconditions.checkNotNull(variableName));
     }
-
-    public void clearMemory() {
-        variables.clear();
-    }
 }
