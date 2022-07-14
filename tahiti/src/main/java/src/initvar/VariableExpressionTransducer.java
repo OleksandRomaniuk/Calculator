@@ -37,7 +37,7 @@ public class VariableExpressionTransducer implements Transducer<InitVarContext, 
                 return true;
             }
 
-            Value variableValue = outputChain.getScriptContext().systemStack().current().peekResult();
+            Value variableValue = outputChain.getScriptContext().systemStack().current().popResult();
 
             outputChain.setVariableValue(variableValue);
 

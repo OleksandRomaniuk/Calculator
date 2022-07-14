@@ -1,11 +1,9 @@
 package src.fsm;
 
 import com.google.common.base.Preconditions;
-
+import fsm.type.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import fsm.type.Value;
 import src.AbstractBinaryOperator;
 
 import java.util.ArrayDeque;
@@ -46,7 +44,7 @@ public class ShuntingYard {
         operatorStack.push(operator);
     }
 
-    public Value peekResult() {
+    public Value popResult() {
 
         while (!operatorStack.isEmpty()) {
 

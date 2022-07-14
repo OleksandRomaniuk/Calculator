@@ -6,10 +6,6 @@ import fsm.type.Value;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * {@code Memory} is a class that used to store Double type variables.
- */
-
 public class Memory {
 
     private final Map<String, Value> variables = new HashMap<>();

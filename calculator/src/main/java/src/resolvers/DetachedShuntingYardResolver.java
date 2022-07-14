@@ -3,10 +3,10 @@ package src.resolvers;
 import com.google.common.base.Preconditions;
 import fsm.CharSequenceReader;
 import fsm.FiniteStateMachine;
+import fsm.type.Value;
 import src.ResolvingException;
 import src.fsm.ShuntingYard;
 import src.math.MathElementResolver;
-import fsm.type.Value;
 
 import java.util.Optional;
 
@@ -33,7 +33,7 @@ public class DetachedShuntingYardResolver<I> implements MathElementResolver {
 
         if (machine.run(inputChain, nestingShuntingYardStack)) {
 
-            return Optional.of(nestingShuntingYardStack.peekResult());
+            return Optional.of(nestingShuntingYardStack.popResult());
         }
 
         return Optional.empty();

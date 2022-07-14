@@ -31,7 +31,7 @@ public class ShuntingYardExecutor<I> implements ScriptElementExecutor {
                 return true;
             }
 
-            Value peekResult = output.systemStack().close().peekResult();
+            Value peekResult = output.systemStack().close().popResult();
 
             output.systemStack().current().pushOperand(peekResult);
 
