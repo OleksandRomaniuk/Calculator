@@ -1,9 +1,9 @@
 package src.math;
 
 
-import fsm.CharSequenceReader;
+import src.CharSequenceReader;
 import src.ResolvingException;
-import fsm.type.Value;
+import src.type.Value;
 
 import java.util.Optional;
 

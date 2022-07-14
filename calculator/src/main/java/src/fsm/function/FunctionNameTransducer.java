@@ -1,13 +1,12 @@
 package src.fsm.function;
 
 import com.google.common.base.Preconditions;
-
-import fsm.CharSequenceReader;
-import fsm.ExceptionThrower;
-import fsm.Transducer;
-import fsm.identifier.IdentifierMachine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import src.CharSequenceReader;
+import src.ExceptionThrower;
+import src.Transducer;
+import src.identifier.IdentifierMachine;
 
 import java.util.function.BiConsumer;
 

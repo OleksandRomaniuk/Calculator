@@ -1,12 +1,13 @@
-package fsm;
+package src;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Transducer is a functional interface that can be used to
- * produce output based on a given input
+ * {@code src.Transducer} is a functional interface that can be used to
+ * produce {@param <O>} output based on a given input
+ * and potentially throws a generic exception.
  */
 
 @FunctionalInterface

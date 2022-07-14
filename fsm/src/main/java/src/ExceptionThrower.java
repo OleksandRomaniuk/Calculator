@@ -1,4 +1,4 @@
-package fsm;
+package src;
 
 @FunctionalInterface
 public interface ExceptionThrower<E extends Exception> {

@@ -1,13 +1,15 @@
 package src.fsm.calculator;
 
 import com.google.common.base.Preconditions;
-import fsm.CharSequenceReader;
-import fsm.Transducer;
+import src.CharSequenceReader;
 import src.ResolvingException;
+import src.Transducer;
 import src.math.MathElement;
+import src.math.MathElementResolver;
 import src.math.MathElementResolverFactory;
-import fsm.type.Value;
+import src.type.Value;
 
+import java.util.Optional;
 import java.util.function.BiConsumer;
 
 /**
@@ -32,12 +34,13 @@ public class DetachedShuntingYardTransducer<O> implements Transducer<O, Resolvin
     @Override
     public boolean doTransition(CharSequenceReader inputChain, O outputChain) throws ResolvingException {
 
-        var resolver = factory.create(resolverType);
+        MathElementResolver resolver = factory.create(resolverType);
 
-        var resolveResult = resolver.resolve(inputChain);
+        Optional<Value> resolveResult = resolver.resolve(inputChain);
 
         resolveResult.ifPresent((Value value) -> resultConsumer.accept(outputChain, value));
 
         return resolveResult.isPresent();
     }
 }
+

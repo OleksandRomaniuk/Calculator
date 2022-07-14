@@ -2,7 +2,7 @@ package src.fsm.function;
 
 
 
-import fsm.type.Value;
+import src.type.Value;
 
 import java.util.List;
 

@@ -1,11 +1,7 @@
 package src.executors;
 
 
-import fsm.CharSequenceReader;
-import fsm.FiniteStateMachine;
-import src.BinaryOperatorFactory;
-import src.ExecutorProgramElementTransducer;
-import src.RelationalBinaryOperatorFactory;
+import src.*;
 import src.fsm.expression.BinaryOperatorTransducer;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;

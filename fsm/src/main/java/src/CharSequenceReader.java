@@ -1,11 +1,14 @@
-package fsm;
+package src;
 
 import com.google.common.base.Preconditions;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
+import java.util.List;
 
 /**
- * СharSequenceReader is a class which can be used to
+ * {@code src.CharSequenceReader} is a class which can be used to
  * simple work with char array and have a position of reading.
  */
 
@@ -15,7 +18,9 @@ public final class CharSequenceReader {
 
     private int readingPosition;
 
-    private int savedPosition = -1;
+    private final Deque<Integer> savedPositions = new ArrayDeque<>();
+
+    private final int savedPosition = -1;
 
     public CharSequenceReader(String source) {
         this.source = Preconditions.checkNotNull(source).toCharArray();
@@ -25,22 +30,28 @@ public final class CharSequenceReader {
         return source[readingPosition];
     }
 
-    public String readOperator(){
+    public String readOperator() {
 
-        var operator = new StringBuilder();
+        StringBuilder operator = new StringBuilder();
 
-        if (read() == '>' || read() == '<'){
+        int startPosition = position();
+
+        while (canRead() && isOperator(read())) {
             operator.append(read());
             incrementPosition();
-            if (read() == '='){
-                operator.append(read());
-            }
-            else decrementPosition();
-
         }
-        else operator.append(read());
+
+        if (startPosition != position())
+            decrementPosition();
 
         return operator.toString();
+    }
+
+    public boolean isOperator(char sign) {
+
+        List<Character> operators = List.of('+', '-', '>', '<', '=', '%', '^', '*', '/', '&', '|');
+
+        return operators.contains(sign);
     }
 
     public void incrementPosition() {
@@ -48,8 +59,8 @@ public final class CharSequenceReader {
         readingPosition++;
     }
 
-    public char previous(){
-        return source[readingPosition-1];
+    public char previous() {
+        return source[readingPosition - 1];
     }
 
     public void decrementPosition() {
@@ -77,11 +88,19 @@ public final class CharSequenceReader {
 
     void skipWhitespaces() {
 
-        while (canRead() && Character.isWhitespace(read())){
+        while (canRead() && Character.isWhitespace(read())) {
 
-                incrementPosition();
+            incrementPosition();
         }
     }
 
+    public void savePosition() {
 
+        savedPositions.push(readingPosition);
+    }
+
+    public void restorePosition() {
+
+        readingPosition = savedPositions.pop();
+    }
 }

@@ -1,10 +1,10 @@
-package fsm.identifier;
+package src.identifier;
 
 
-import fsm.ExceptionThrower;
-import fsm.FiniteStateMachine;
-import fsm.Transducer;
-import fsm.TransitionMatrix;
+import src.ExceptionThrower;
+import src.FiniteStateMachine;
+import src.Transducer;
+import src.TransitionMatrix;
 
 /**
  * {@code IdentifierMachine} is a realisation of {@link FiniteStateMachine}
@@ -15,7 +15,7 @@ public final class IdentifierMachine<E extends Exception> extends FiniteStateMac
 
     public static <E extends Exception> IdentifierMachine<E> create(ExceptionThrower<E> exceptionThrower) {
 
-        var matrix = TransitionMatrix.<IdentifierStates>builder()
+        TransitionMatrix<IdentifierStates> matrix = TransitionMatrix.<IdentifierStates>builder()
 
                 .withStartState(IdentifierStates.START)
                 .withFinishState(IdentifierStates.FINISH)

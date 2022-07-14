@@ -1,8 +1,6 @@
 package src;
 
 import com.google.common.base.Preconditions;
-import fsm.FiniteStateMachine;
-import fsm.Transducer;
 import src.fsm.ShuntingYard;
 import src.fsm.calculator.DetachedShuntingYardTransducer;
 import src.fsm.expression.ExpressionMachine;
@@ -12,7 +10,6 @@ import src.math.MathElementResolverFactory;
 import src.resolvers.DetachedShuntingYardResolver;
 import src.resolvers.FunctionResolver;
 import src.resolvers.NumberResolver;
-
 
 import java.util.EnumMap;
 import java.util.List;

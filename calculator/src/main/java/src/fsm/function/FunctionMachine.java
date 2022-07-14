@@ -2,10 +2,10 @@ package src.fsm.function;
 
 
 
-import fsm.ExceptionThrower;
-import fsm.FiniteStateMachine;
-import fsm.Transducer;
-import fsm.TransitionMatrix;
+import src.ExceptionThrower;
+import src.FiniteStateMachine;
+import src.Transducer;
+import src.TransitionMatrix;
 
 import java.util.function.BiConsumer;
 

@@ -1,7 +1,6 @@
 package src;
 
 import com.google.common.base.Preconditions;
-import fsm.CharSequenceReader;
 import src.execute.InterpreterMachine;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;

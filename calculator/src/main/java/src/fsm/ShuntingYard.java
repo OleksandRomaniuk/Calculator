@@ -1,10 +1,10 @@
 package src.fsm;
 
 import com.google.common.base.Preconditions;
-import fsm.type.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import src.AbstractBinaryOperator;
+import src.type.Value;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

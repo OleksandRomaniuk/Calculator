@@ -1,11 +1,11 @@
 package src.whileoperator;
 
 import com.google.common.base.Preconditions;
-import fsm.CharSequenceReader;
-import fsm.FiniteStateMachine;
-import fsm.Transducer;
-import fsm.type.BooleanValueVisitor;
+import src.CharSequenceReader;
+import src.FiniteStateMachine;
+import src.Transducer;
 import src.runtime.ScriptContext;
+import src.type.BooleanValueVisitor;
 import src.util.*;
 
 import java.util.List;

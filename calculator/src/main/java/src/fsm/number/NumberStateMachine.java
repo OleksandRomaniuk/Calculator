@@ -1,11 +1,10 @@
 package src.fsm.number;
 
 import com.google.common.base.Preconditions;
-import fsm.*;
-import fsm.identifier.SymbolTransducer;
-import fsm.type.DoubleValue;
-import fsm.type.Value;
-
+import src.*;
+import src.identifier.SymbolTransducer;
+import src.type.DoubleValue;
+import src.type.Value;
 
 import java.util.Optional;
 

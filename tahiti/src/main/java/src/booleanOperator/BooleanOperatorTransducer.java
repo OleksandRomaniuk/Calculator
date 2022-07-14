@@ -1,11 +1,11 @@
 package src.booleanOperator;
 
-import fsm.CharSequenceReader;
-import fsm.Transducer;
-import fsm.identifier.IdentifierMachine;
-import fsm.type.BooleanValueVisitor;
-import fsm.type.Value;
+import src.CharSequenceReader;
+import src.Transducer;
+import src.identifier.IdentifierMachine;
 import src.runtime.ScriptContext;
+import src.type.BooleanValueVisitor;
+import src.type.Value;
 import src.util.ExecutionException;
 
 /**

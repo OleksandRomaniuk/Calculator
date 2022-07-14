@@ -1,11 +1,10 @@
 package src.util;
 
 
-
-import fsm.CharSequenceReader;
-import fsm.Transducer;
-import fsm.type.Value;
+import src.CharSequenceReader;
+import src.Transducer;
 import src.runtime.WithContext;
+import src.type.Value;
 
 import java.util.function.BiConsumer;
 

@@ -1,10 +1,9 @@
 package src.fsm.function;
 
 import com.google.common.base.Preconditions;
-import fsm.type.DoubleValue;
-import fsm.type.DoubleValueVisitor;
-import fsm.type.Value;
-
+import src.type.DoubleValue;
+import src.type.DoubleValueVisitor;
+import src.type.Value;
 
 import java.util.Collection;
 import java.util.List;

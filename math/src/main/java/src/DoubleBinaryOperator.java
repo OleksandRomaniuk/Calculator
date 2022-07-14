@@ -1,9 +1,9 @@
 package src;
 
 
-import fsm.type.DoubleValue;
-import fsm.type.DoubleValueVisitor;
-import fsm.type.Value;
+import src.type.DoubleValue;
+import src.type.DoubleValueVisitor;
+import src.type.Value;
 
 import java.util.function.BiFunction;
 
