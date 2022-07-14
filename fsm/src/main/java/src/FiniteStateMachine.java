@@ -113,8 +113,7 @@ public class FiniteStateMachine<S, O, E extends Exception> {
             if (i == 0) {
                 builder.allowTransition(startState, transducerState);
 
-            }
-            else {
+            } else {
                 builder.allowTransition(temp, transducerState);
 
             }

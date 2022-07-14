@@ -1,4 +1,4 @@
-package src;
+package src.operators;
 
 import com.google.common.base.Preconditions;
 import src.type.Value;
@@ -16,7 +16,6 @@ import java.util.function.DoubleBinaryOperator;
 
 public abstract class AbstractBinaryOperator implements BiFunction<Value, Value, Value>, Comparable<AbstractBinaryOperator> {
 
-
     public enum Priority {
         LOW, MEDIUM, HIGH
     }
@@ -33,6 +32,5 @@ public abstract class AbstractBinaryOperator implements BiFunction<Value, Value,
 
         this.priority = Preconditions.checkNotNull(priority);
     }
-
 
 }

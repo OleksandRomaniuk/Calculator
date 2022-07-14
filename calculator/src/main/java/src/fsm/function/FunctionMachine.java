@@ -19,11 +19,24 @@ import static src.fsm.function.FunctionStates.*;
 
 public final class FunctionMachine<O, E extends Exception> extends FiniteStateMachine<FunctionStates, O, E> {
 
+    private FunctionMachine(TransitionMatrix<FunctionStates> matrix, Transducer<O, E> expressionFunctionTransducer,
+                            BiConsumer<O, String> biConsumer, ExceptionThrower<E> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
+
+        registerTransducer(START, Transducer.illegalTransition());
+        registerTransducer(FINISH, Transducer.autoTransition());
+        registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('('));
+        registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
+        registerTransducer(SEPARATOR, Transducer.checkAndPassChar(','));
+        registerTransducer(IDENTIFIER, new FunctionNameTransducer<>(biConsumer, exceptionThrower).named("Function name"));
+        registerTransducer(EXPRESSION, expressionFunctionTransducer);
+    }
+
     public static <O, E extends Exception> FunctionMachine<O, E> create(Transducer<O, E> expressionFunctionTransducer,
                                                                         BiConsumer<O, String> biConsumer,
-                                                                        ExceptionThrower<E> exceptionThrower){
+                                                                        ExceptionThrower<E> exceptionThrower) {
 
-        var matrix = TransitionMatrix.<FunctionStates>builder()
+        TransitionMatrix<FunctionStates> matrix = TransitionMatrix.<FunctionStates>builder()
                 .withStartState(START)
                 .withFinishState(FINISH)
                 .withTemporaryState(IDENTIFIER)
@@ -37,19 +50,5 @@ public final class FunctionMachine<O, E extends Exception> extends FiniteStateMa
                 .build();
 
         return new FunctionMachine<>(matrix, expressionFunctionTransducer, biConsumer, exceptionThrower);
-    }
-
-
-    private FunctionMachine(TransitionMatrix<FunctionStates> matrix, Transducer<O, E> expressionFunctionTransducer,
-                            BiConsumer<O, String> biConsumer, ExceptionThrower<E> exceptionThrower) {
-        super(matrix, exceptionThrower, true);
-
-        registerTransducer(START, Transducer.illegalTransition());
-        registerTransducer(FINISH, Transducer.autoTransition());
-        registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('('));
-        registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
-        registerTransducer(SEPARATOR, Transducer.checkAndPassChar(','));
-        registerTransducer(IDENTIFIER, new FunctionNameTransducer<>(biConsumer, exceptionThrower));
-        registerTransducer(EXPRESSION, expressionFunctionTransducer);
     }
 }

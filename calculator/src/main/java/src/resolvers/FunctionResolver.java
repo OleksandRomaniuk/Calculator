@@ -1,11 +1,12 @@
 package src.resolvers;
 
 
+
 import src.CharSequenceReader;
 import src.ResolvingException;
+import src.datastructures.FunctionHolder;
 import src.fsm.calculator.DetachedShuntingYardTransducer;
 import src.fsm.function.FunctionFactory;
-import src.fsm.function.FunctionHolder;
 import src.fsm.function.FunctionMachine;
 import src.math.MathElement;
 import src.math.MathElementResolver;
@@ -33,7 +34,7 @@ public class FunctionResolver implements MathElementResolver {
     @Override
     public Optional<Value> resolve(CharSequenceReader inputChain) throws ResolvingException {
 
-        var holder = new FunctionHolder();
+        FunctionHolder holder = new FunctionHolder();
 
         var functionMachine = FunctionMachine.create(new DetachedShuntingYardTransducer<>(
                         MathElement.EXPRESSION, FunctionHolder::setArgument, elementResolverFactory), FunctionHolder::setFunctionName,

@@ -16,20 +16,20 @@ public class WhileOperatorContext implements WithContext {
         this.scriptContext = context;
     }
 
-    int getPosition() {
-        return position;
+    void setConditionValue(boolean condition) {
+        this.condition = condition;
     }
 
     void setPosition(int position) {
         this.position = position;
     }
 
-    boolean getConditionValue() {
-        return condition;
+    int getPosition() {
+        return position;
     }
 
-    void setConditionValue(boolean condition) {
-        this.condition = condition;
+    boolean getConditionValue() {
+        return condition;
     }
 
     @Override

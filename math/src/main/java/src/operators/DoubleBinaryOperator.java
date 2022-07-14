@@ -1,4 +1,4 @@
-package src;
+package src.operators;
 
 
 import src.type.DoubleValue;
@@ -7,7 +7,7 @@ import src.type.Value;
 
 import java.util.function.BiFunction;
 
-public class DoubleBinaryOperator extends AbstractBinaryOperator{
+public class DoubleBinaryOperator extends AbstractBinaryOperator {
 
     private final BiFunction<Double, Double, Double> origin;
 

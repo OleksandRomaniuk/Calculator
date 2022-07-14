@@ -2,6 +2,9 @@ package src.util;
 
 import java.io.Serial;
 
+/**
+ *
+ */
 
 public class ExecutionException extends Exception {
 

@@ -1,5 +1,6 @@
 package src.execute;
 
+
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +26,7 @@ public class ProgramTransducer implements Transducer<ScriptContext, ExecutionExc
     public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
 
         Preconditions.checkNotNull(inputChain, outputChain);
-        if (logger.isInfoEnabled()) {
 
-            logger.info("Working with input chain -> {}", inputChain);
-
-            logger.info("OutputChain is null : {}", (outputChain));
-        }
         return executor.execute(inputChain, outputChain);
     }
 }

@@ -1,9 +1,9 @@
-package src.fsm;
+package src.datastructures;
 
 import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import src.AbstractBinaryOperator;
+import src.operators.AbstractBinaryOperator;
 import src.type.Value;
 
 import java.util.ArrayDeque;
@@ -38,7 +38,7 @@ public class ShuntingYard {
 
         while (!operatorStack.isEmpty() && operatorStack.peek().compareTo(operator) >= 0) { //
 
-            actionTopOperator();
+            applyTopOperator();
         }
 
         operatorStack.push(operator);
@@ -48,24 +48,32 @@ public class ShuntingYard {
 
         while (!operatorStack.isEmpty()) {
 
-            actionTopOperator();
+            applyTopOperator();
         }
 
         return operandStack.pop();
     }
 
 
-    private void actionTopOperator() {
-        var rightOperand = operandStack.pop();
+    private void applyTopOperator() {
+        Value rightOperand = operandStack.pop();
 
-        var leftOperand = operandStack.pop();
+        Value leftOperand = operandStack.pop();
 
-        var operator = operatorStack.pop();
+        AbstractBinaryOperator operator = operatorStack.pop();
 
-        var result = operator.apply(leftOperand, rightOperand);
+        Value result = operator.apply(leftOperand, rightOperand);
 
         operandStack.push(result);
     }
 
+    public Value peekOperand() {
+        assert operandStack.peek() != null;
+        return Preconditions.checkNotNull(operandStack.peek());
+    }
 
+    public AbstractBinaryOperator peekOperator() {
+        assert operatorStack.peek() != null;
+        return Preconditions.checkNotNull(operatorStack.peek());
+    }
 }

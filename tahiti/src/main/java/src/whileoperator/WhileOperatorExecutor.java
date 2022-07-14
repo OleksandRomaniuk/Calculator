@@ -40,7 +40,7 @@ public class WhileOperatorExecutor implements ScriptElementExecutor {
         Transducer<WhileOperatorContext, ExecutionException> relationTransducer =
                 new FunctionTransducer<>((whileOperatorContext, value) -> {
                     whileOperatorContext.setConditionValue(BooleanValueVisitor.read(value));
-                }, factory, ScriptElement.RELATIONAL_EXPRESSION);
+                }, factory, ScriptElement.LOGICAL_EXPRESSION);
 
         Transducer<WhileOperatorContext, ExecutionException> programTransducer =
                 (inputChain1, outputChain) -> {

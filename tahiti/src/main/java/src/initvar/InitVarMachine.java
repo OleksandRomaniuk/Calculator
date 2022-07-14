@@ -1,6 +1,5 @@
 package src.initvar;
 
-
 import src.ExceptionThrower;
 import src.FiniteStateMachine;
 import src.Transducer;

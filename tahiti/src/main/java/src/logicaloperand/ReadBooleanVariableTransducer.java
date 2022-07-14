@@ -1,5 +1,7 @@
-package src.booleanOperator;
+package src.logicaloperand;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import src.CharSequenceReader;
 import src.Transducer;
 import src.identifier.IdentifierMachine;
@@ -9,19 +11,24 @@ import src.type.Value;
 import src.util.ExecutionException;
 
 /**
- * BinaryOperatorTransducer is an implementation of  Transducer
- * that produce an AbstractBinaryOperator to ShuntingYard output
+ * {@code ReadBooleanVariableTransducer} is an implementation of {@link Transducer}
+ * that produce a boolean variable to {@link ScriptContext} output
+ * for {@link LogicalOperandMachine}.
  */
 
-public class BooleanOperatorTransducer implements Transducer<ScriptContext, ExecutionException> {
+class ReadBooleanVariableTransducer implements Transducer<ScriptContext, ExecutionException> {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReadBooleanVariableTransducer.class);
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {
-        var variableName = new StringBuilder();
+        StringBuilder variableName = new StringBuilder();
 
-        var nameMachine = IdentifierMachine.create(errorMessage -> {
+        IdentifierMachine<ExecutionException> nameMachine = IdentifierMachine.create(errorMessage -> {
             throw new ExecutionException(errorMessage);
         });
+
+        int position = inputChain.position();
 
         if (nameMachine.run(inputChain, variableName)) {
 
@@ -31,7 +38,10 @@ public class BooleanOperatorTransducer implements Transducer<ScriptContext, Exec
 
                 if (!BooleanValueVisitor.isBoolean(variable)) {
 
+                    if (logger.isInfoEnabled()) {
 
+                        logger.info("NOT A BOOLEAN VARIABLE INSIDE LOGICAL EXPRESSION");
+                    }
                     return false;
                 }
 

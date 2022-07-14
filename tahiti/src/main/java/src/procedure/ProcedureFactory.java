@@ -1,5 +1,7 @@
 package src.procedure;
 
+import com.google.common.base.Preconditions;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +17,17 @@ public class ProcedureFactory {
             }
         });
 
+        procedures.put("clear", (arguments, output) -> {
+            if (!output.isParseOnly()) {
+                output.memory().clearMemory();
+            }
+        });
 
     }
 
     public Procedure create(String procedureName) {
+
+        Preconditions.checkNotNull(procedureName);
 
         return procedures.get(procedureName);
     }

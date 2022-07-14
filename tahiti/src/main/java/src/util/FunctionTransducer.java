@@ -1,6 +1,5 @@
 package src.util;
 
-
 import src.CharSequenceReader;
 import src.Transducer;
 import src.runtime.WithContext;

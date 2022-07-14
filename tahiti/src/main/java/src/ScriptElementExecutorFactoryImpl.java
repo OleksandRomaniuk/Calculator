@@ -2,12 +2,18 @@ package src;
 
 import com.google.common.base.Preconditions;
 import src.executors.*;
+import src.expression.ScriptExpressionMachine;
 import src.fsm.brackets.BracketsMachine;
+import src.fsm.expression.ExpressionMachine;
 import src.fsm.function.FunctionMachine;
 import src.fsm.number.NumberStateMachine;
 import src.identifier.IdentifierMachine;
 import src.initvar.InitVarContext;
 import src.initvar.InitVarMachine;
+import src.logicaloperand.LogicalOperandMachine;
+import src.operators.BinaryOperatorFactory;
+import src.operators.DoubleBinaryOperatorFactory;
+import src.operators.LogicalBinaryOperatorFactory;
 import src.program.ProgramMachine;
 import src.type.Value;
 import src.util.*;
@@ -43,40 +49,75 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
             return false;
         });
 
+        BinaryOperatorFactory doubleOperatorFactory = new DoubleBinaryOperatorFactory();
 
+        executors.put(ScriptElement.NUMERIC_EXPRESSION, () ->
 
+                new DetachedShuntingYardExecutor<>(ExpressionMachine.create(
+                        (scriptContext, abstractBinaryOperator) -> {
+                            if (!scriptContext.isParseOnly()) {
+                                scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
+                            }
+                        }, doubleOperatorFactory,
+                        new ExecutorProgramElementTransducer(ScriptElement.OPERAND, this).named("Operand"),
+                        errorMessage -> {
+                            throw new ExecutionException(errorMessage);
+                        })));
+
+        BinaryOperatorFactory logicalOperatorFactory = new LogicalBinaryOperatorFactory();
+
+        executors.put(ScriptElement.LOGICAL_EXPRESSION, () ->
+                new NoSpecialActionExecutor<>(
+                        ExpressionMachine.create(
+                                (scriptContext, abstractBinaryOperator) -> {
+                                    if (!scriptContext.isParseOnly()) {
+                                        scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
+                                    }
+                                }, logicalOperatorFactory,
+                                new ExecutorProgramElementTransducer(ScriptElement.LOGICAL_EXPRESSION_OPERAND, this)
+                                        .named("Operand in logical expression"),
+                                errorMessage -> {
+                                    throw new ExecutionException(errorMessage);
+                                }
+                        )));
+
+        executors.put(ScriptElement.LOGICAL_EXPRESSION_OPERAND, () -> new NoSpecialActionExecutor<>(
+                LogicalOperandMachine.create(this, errorMessage -> {
+                    throw new ExecutionException(errorMessage);
+                })
+        ));
 
         executors.put(ScriptElement.RELATIONAL_EXPRESSION, () ->
                 new RelationalExpressionElementExecutor(this));
 
-        executors.put(ScriptElement.EXPRESSION, () -> new ActionExecutor<>(
-                FiniteStateMachine.oneOfMachine(
-                        errorMessage -> {
-                            throw new ExecutionException(errorMessage);
-                        },
-                        new ExecutorProgramElementTransducer(ScriptElement.RELATIONAL_EXPRESSION, this).named("relational expression"),
-                        new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, this).named("numeric expression"))));
+        executors.put(ScriptElement.EXPRESSION, () -> new NoSpecialActionExecutor<>(
+                ScriptExpressionMachine.create(this, errorMessage -> {
+                    throw new ExecutionException(errorMessage);
+                })
+        ));
 
-        executors.put(ScriptElement.OPERAND, () -> new ActionExecutor<>(
+        executors.put(ScriptElement.OPERAND, () -> new NoSpecialActionExecutor<>(
                 FiniteStateMachine.oneOfMachine(
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         },
-                        new ExecutorProgramElementTransducer(ScriptElement.NUMBER, this).named("Number"),
-                        new ExecutorProgramElementTransducer(ScriptElement.BRACKETS, this).named("Brackets"),
                         new ExecutorProgramElementTransducer(ScriptElement.FUNCTION, this).named("Function"),
+                        new ExecutorProgramElementTransducer(ScriptElement.BRACKETS, this).named("Brackets"),
+                        new ExecutorProgramElementTransducer(ScriptElement.NUMBER, this).named("Number"),
                         new ExecutorProgramElementTransducer(ScriptElement.READ_VARIABLE, this).named("Read variable"))));
 
-        executors.put(ScriptElement.BRACKETS, () -> new ActionExecutor<>(
-                BracketsMachine.create(new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, this),
+        executors.put(ScriptElement.BRACKETS, () -> new NoSpecialActionExecutor<>(
+                BracketsMachine.create(new ExecutorProgramElementTransducer(ScriptElement.NUMERIC_EXPRESSION, this)
+                                .named("Numeric Expression"),
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         })));
 
         executors.put(ScriptElement.FUNCTION, () -> new FunctionExecutor(
                 new FunctionFactoryExecutor<>(FunctionMachine.create(
-                        new FunctionTransducer<>(FunctionHolderWithContext::setArgument, this, ScriptElement.NUMERIC_EXPRESSION),
-                    FunctionHolderWithContext::setFunctionName,
+                        new FunctionTransducer<>(FunctionHolderWithContext::setArgument, this, ScriptElement.NUMERIC_EXPRESSION)
+                                .named("Function"),
+                        FunctionHolderWithContext::setFunctionName,
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         }
@@ -101,7 +142,6 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
                 throw new ExecutionException(errorMessage);
             });
 
-
             if (nameMachine.run(inputChain, variableName)) {
 
                 if (context.hasVariable(variableName.toString())) {
@@ -123,22 +163,22 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
         executors.put(ScriptElement.PROCEDURE, () -> new FunctionExecutor(
                 new ProcedureFactoryExecutor<>(FunctionMachine.create(
                         new FunctionTransducer<>(FunctionHolderWithContext::setArgument, this, ScriptElement.EXPRESSION),
-                       FunctionHolderWithContext::setFunctionName,
+                        FunctionHolderWithContext::setFunctionName,
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         }
                 ))));
 
-        executors.put(ScriptElement.STATEMENT, () -> new ActionExecutor<>(
+        executors.put(ScriptElement.STATEMENT, () -> new NoSpecialActionExecutor<>(
                 FiniteStateMachine.oneOfMachine(
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         },
-                        new ExecutorProgramElementTransducer(ScriptElement.INIT_VAR, this),
-                        new ExecutorProgramElementTransducer(ScriptElement.WHILE_OPERATOR, this),
-                        new ExecutorProgramElementTransducer(ScriptElement.PROCEDURE, this))));
+                        new ExecutorProgramElementTransducer(ScriptElement.INIT_VAR, this).named("Variable initialisation"),
+                        new ExecutorProgramElementTransducer(ScriptElement.WHILE_OPERATOR, this).named("While loop"),
+                        new ExecutorProgramElementTransducer(ScriptElement.PROCEDURE, this).named("Procedure"))));
 
-        executors.put(ScriptElement.PROGRAM, () -> new ActionExecutor<>(
+        executors.put(ScriptElement.PROGRAM, () -> new NoSpecialActionExecutor<>(
                 ProgramMachine.create(this, errorMessage -> {
                     throw new ExecutionException(errorMessage);
                 })

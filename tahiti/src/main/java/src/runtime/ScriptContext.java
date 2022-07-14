@@ -1,5 +1,9 @@
 package src.runtime;
 
+/**
+ * {@code ScriptContext} is a class that used as a memory for interpreting BazaScript program code.
+ */
+
 public class ScriptContext implements WithContext {
 
     private final SystemStack systemStack = new SystemStack();

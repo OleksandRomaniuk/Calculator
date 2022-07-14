@@ -1,6 +1,5 @@
 package src.execute;
 
-
 import src.ExceptionThrower;
 import src.FiniteStateMachine;
 import src.Transducer;
@@ -12,6 +11,10 @@ import src.util.ScriptElementExecutorFactory;
 
 import static src.execute.InterpreterState.*;
 
+/**
+ * {@code InterpreterMachine} is a realisation of {@link FiniteStateMachine} that used to
+ * launch ProgramMachine
+ */
 
 public final class InterpreterMachine extends FiniteStateMachine<InterpreterState, ScriptContext, ExecutionException> {
 

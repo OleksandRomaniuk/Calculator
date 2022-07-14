@@ -13,7 +13,8 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 
 /**
- * DetachedShuntingYardTransducer is a universal implementation of  Transducer
+ * {@code DetachedShuntingYardTransducer} is a universal implementation of {@link Transducer}
+ * that can be used for state machines which work based on new instances of {@link com.teamdev.implementations.datastructures.ShuntingYard}.
  */
 
 public class DetachedShuntingYardTransducer<O> implements Transducer<O, ResolvingException> {
@@ -43,4 +44,3 @@ public class DetachedShuntingYardTransducer<O> implements Transducer<O, Resolvin
         return resolveResult.isPresent();
     }
 }
-

@@ -5,11 +5,10 @@ import src.ExceptionThrower;
 import src.FiniteStateMachine;
 import src.Transducer;
 import src.TransitionMatrix;
-import src.fsm.ShuntingYard;
+import src.datastructures.ShuntingYard;
 import src.type.Value;
 
 import java.util.function.BiConsumer;
-
 
 /**
  * {@code BracketsMachine} is a realisation of {@link FiniteStateMachine}
@@ -17,18 +16,6 @@ import java.util.function.BiConsumer;
  */
 
 public final class BracketsMachine<O, E extends Exception> extends FiniteStateMachine<BracketsStates, O, E> {
-
-    private BracketsMachine(TransitionMatrix<BracketsStates> matrix, Transducer<O, E> transducer, ExceptionThrower<E> exceptionThrower) {
-        super(matrix, exceptionThrower, true);
-
-        BiConsumer<ShuntingYard, Value> consumer = ShuntingYard::pushOperand;
-
-        registerTransducer(BracketsStates.START, Transducer.illegalTransition());
-        registerTransducer(BracketsStates.OPENING_BRACKET, Transducer.checkAndPassChar('('));
-        registerTransducer(BracketsStates.EXPRESSION, transducer);
-        registerTransducer(BracketsStates.CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
-        registerTransducer(BracketsStates.FINISH, Transducer.autoTransition());
-    }
 
     public static <O, E extends Exception> BracketsMachine<O, E> create(Transducer<O, E> transducer, ExceptionThrower<E> exceptionThrower) {
 
@@ -44,5 +31,17 @@ public final class BracketsMachine<O, E extends Exception> extends FiniteStateMa
                 .build();
 
         return new BracketsMachine<>(matrix, transducer, exceptionThrower);
+    }
+
+    private BracketsMachine(TransitionMatrix<BracketsStates> matrix, Transducer<O, E> transducer, ExceptionThrower<E> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
+
+        BiConsumer<ShuntingYard, Value> consumer = ShuntingYard::pushOperand;
+
+        registerTransducer(BracketsStates.START, Transducer.illegalTransition());
+        registerTransducer(BracketsStates.OPENING_BRACKET, Transducer.checkAndPassChar('('));
+        registerTransducer(BracketsStates.EXPRESSION, transducer);
+        registerTransducer(BracketsStates.CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
+        registerTransducer(BracketsStates.FINISH, Transducer.autoTransition());
     }
 }

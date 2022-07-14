@@ -9,11 +9,11 @@ import src.util.ExecutionException;
 import src.util.ScriptElementExecutor;
 
 
-public class ShuntingYardExecutor<I> implements ScriptElementExecutor {
+public class DetachedShuntingYardExecutor<I> implements ScriptElementExecutor {
 
     private final FiniteStateMachine<I, ScriptContext, ExecutionException> machine;
 
-    public ShuntingYardExecutor(FiniteStateMachine<I, ScriptContext, ExecutionException> machine) {
+    public DetachedShuntingYardExecutor(FiniteStateMachine<I, ScriptContext, ExecutionException> machine) {
         this.machine = Preconditions.checkNotNull(machine);
     }
 
