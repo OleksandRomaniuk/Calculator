@@ -1,7 +1,7 @@
 package src.util;
 
 
-import fsm.CharSequenceReader;
+import src.CharSequenceReader;
 import src.runtime.ScriptContext;
 
 

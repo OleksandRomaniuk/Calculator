@@ -1,11 +1,11 @@
 package src.initvar;
 
 import com.google.common.base.Preconditions;
-import fsm.CharSequenceReader;
-import fsm.Transducer;
-import fsm.type.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import src.CharSequenceReader;
+import src.Transducer;
+import src.type.Value;
 import src.util.ExecutionException;
 import src.util.ScriptElementExecutor;
 

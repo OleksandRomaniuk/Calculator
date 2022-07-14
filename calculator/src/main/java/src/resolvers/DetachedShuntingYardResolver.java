@@ -1,12 +1,12 @@
 package src.resolvers;
 
 import com.google.common.base.Preconditions;
-import fsm.CharSequenceReader;
-import fsm.FiniteStateMachine;
-import fsm.type.Value;
+import src.CharSequenceReader;
+import src.FiniteStateMachine;
 import src.ResolvingException;
 import src.fsm.ShuntingYard;
 import src.math.MathElementResolver;
+import src.type.Value;
 
 import java.util.Optional;
 

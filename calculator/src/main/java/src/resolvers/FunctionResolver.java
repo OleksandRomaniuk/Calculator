@@ -1,17 +1,16 @@
 package src.resolvers;
 
 
-
-import fsm.CharSequenceReader;
+import src.CharSequenceReader;
 import src.ResolvingException;
-import src.fsm.function.FunctionHolder;
 import src.fsm.calculator.DetachedShuntingYardTransducer;
 import src.fsm.function.FunctionFactory;
+import src.fsm.function.FunctionHolder;
 import src.fsm.function.FunctionMachine;
 import src.math.MathElement;
 import src.math.MathElementResolver;
 import src.math.MathElementResolverFactory;
-import fsm.type.Value;
+import src.type.Value;
 
 import java.util.Optional;
 

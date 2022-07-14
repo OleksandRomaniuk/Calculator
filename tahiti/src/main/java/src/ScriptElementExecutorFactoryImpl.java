@@ -1,16 +1,15 @@
 package src;
 
 import com.google.common.base.Preconditions;
-import fsm.FiniteStateMachine;
-import fsm.identifier.IdentifierMachine;
-import fsm.type.Value;
 import src.executors.*;
 import src.fsm.brackets.BracketsMachine;
 import src.fsm.function.FunctionMachine;
 import src.fsm.number.NumberStateMachine;
+import src.identifier.IdentifierMachine;
 import src.initvar.InitVarContext;
 import src.initvar.InitVarMachine;
 import src.program.ProgramMachine;
+import src.type.Value;
 import src.util.*;
 import src.whileoperator.WhileOperatorExecutor;
 

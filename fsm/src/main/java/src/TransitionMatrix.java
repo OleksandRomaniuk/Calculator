@@ -1,8 +1,13 @@
-package fsm;
+package src;
 
 import java.util.Set;
 
-
+/**
+ * {@code src.TransitionMatrix} is an interface that can be used to
+ * build state-transition matrix for {@link FiniteStateMachine}.
+ *
+ * @param <S> states for {@link FiniteStateMachine}.
+ */
 
 public interface TransitionMatrix<S> {
 

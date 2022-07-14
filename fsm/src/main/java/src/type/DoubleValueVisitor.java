@@ -1,4 +1,4 @@
-package fsm.type;
+package src.type;
 
 public class DoubleValueVisitor implements ValueVisitor{
     private double doubleValue;

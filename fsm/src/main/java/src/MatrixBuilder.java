@@ -1,4 +1,4 @@
-package fsm;
+package src;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Multimap;

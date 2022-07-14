@@ -1,11 +1,10 @@
 package src;
 
 import com.google.common.base.Preconditions;
-import fsm.CharSequenceReader;
-import fsm.type.DoubleValueVisitor;
 import src.fsm.ShuntingYard;
 import src.fsm.calculator.CalculatorMachine;
 import src.math.MathElementResolverFactory;
+import src.type.DoubleValueVisitor;
 
 /**
  * An API for resolving of math expressions. Math expression may contain:

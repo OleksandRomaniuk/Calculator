@@ -1,4 +1,4 @@
-package fsm.type;
+package src.type;
 
 public interface ValueVisitor {
     void visit(DoubleValue value);

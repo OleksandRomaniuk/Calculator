@@ -1,24 +1,26 @@
-package fsm.type;
+package src.type;
 
-public class BooleanValue implements Value{
+public class DoubleValue implements Value{
 
-    private final boolean value;
+    private final double value;
 
-    public BooleanValue(boolean value) {
+    public DoubleValue(double value) {
         this.value = value;
     }
 
     @Override
     public void accept(ValueVisitor visitor) {
+
         visitor.visit(this);
+
     }
 
-    public boolean getBooleanValue() {
+    public double getValue() {
         return value;
     }
 
     @Override
     public String toString() {
-        return Boolean.toString(value);
+        return String.valueOf(value);
     }
 }

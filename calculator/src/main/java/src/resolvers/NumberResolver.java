@@ -1,11 +1,11 @@
 package src.resolvers;
 
 
-import fsm.CharSequenceReader;
+import src.CharSequenceReader;
 import src.ResolvingException;
 import src.fsm.number.NumberStateMachine;
 import src.math.MathElementResolver;
-import fsm.type.Value;
+import src.type.Value;
 
 import java.util.Optional;
 

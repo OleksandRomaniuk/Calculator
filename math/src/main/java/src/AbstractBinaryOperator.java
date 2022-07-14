@@ -1,8 +1,7 @@
 package src;
 
 import com.google.common.base.Preconditions;
-import fsm.type.Value;
-
+import src.type.Value;
 
 import java.util.function.BiFunction;
 import java.util.function.DoubleBinaryOperator;

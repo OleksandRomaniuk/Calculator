@@ -1,7 +1,7 @@
 package src.executors;
 
 import com.google.common.base.Preconditions;
-import fsm.CharSequenceReader;
+import src.CharSequenceReader;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;
 import src.util.ScriptElementExecutor;

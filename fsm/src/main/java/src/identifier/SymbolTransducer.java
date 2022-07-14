@@ -1,9 +1,8 @@
-package fsm.identifier;
+package src.identifier;
 
 import com.google.common.base.Preconditions;
-import fsm.CharSequenceReader;
-import fsm.Transducer;
-
+import src.CharSequenceReader;
+import src.Transducer;
 
 import java.util.function.Predicate;
 
@@ -33,7 +32,7 @@ public class SymbolTransducer<E extends Exception> implements Transducer<StringB
 
         Preconditions.checkNotNull(inputChain, outputChain);
 
-        var nextCharIsAvailable = inputChain.canRead();
+        boolean nextCharIsAvailable = inputChain.canRead();
 
         if (nextCharIsAvailable && condition.test(inputChain.read())) {
 

@@ -1,10 +1,10 @@
 package src.program;
 
 
-import fsm.ExceptionThrower;
-import fsm.FiniteStateMachine;
-import fsm.Transducer;
-import fsm.TransitionMatrix;
+import src.ExceptionThrower;
+import src.FiniteStateMachine;
+import src.Transducer;
+import src.TransitionMatrix;
 import src.runtime.ScriptContext;
 import src.util.ExecutionException;
 import src.util.ScriptElement;

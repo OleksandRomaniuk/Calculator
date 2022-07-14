@@ -1,18 +1,13 @@
 package src.fsm.expression;
 
 import com.google.common.base.Preconditions;
-import fsm.CharSequenceReader;
-import fsm.Transducer;
 import src.AbstractBinaryOperator;
 import src.BinaryOperatorFactory;
+import src.CharSequenceReader;
+import src.Transducer;
 
-
+import java.util.Optional;
 import java.util.function.BiConsumer;
-
-/**
- * BinaryOperatorTransducer is an implementation of  Transducer
- * that produce an AbstractBinaryOperator to ShuntingYard output
- */
 
 public class BinaryOperatorTransducer<O, E extends Exception> implements Transducer<O, E> {
 
@@ -34,7 +29,7 @@ public class BinaryOperatorTransducer<O, E extends Exception> implements Transdu
             return false;
         }
 
-        var operator = factory.create(inputChain.readOperator());
+        Optional<AbstractBinaryOperator> operator = factory.create(inputChain.readOperator());
 
         if (operator.isPresent()) {
 
@@ -44,7 +39,9 @@ public class BinaryOperatorTransducer<O, E extends Exception> implements Transdu
 
             return true;
         }
-        if(inputChain.previous() == '>' || inputChain.previous() == '<'){
+
+        if (inputChain.isOperator(inputChain.previous())) {
+
             inputChain.decrementPosition();
         }
         return false;
