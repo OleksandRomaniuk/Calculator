@@ -1,5 +1,9 @@
 package src.util;
 
+/**
+ * {@code ScriptElement} is an enumeration of program elements
+ * that can be used in {@link ScriptElementExecutorFactory}.
+ */
 
 
 public enum ScriptElement {
