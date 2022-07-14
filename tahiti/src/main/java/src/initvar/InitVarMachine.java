@@ -13,7 +13,7 @@ import src.util.ScriptElementExecutorFactory;
 import static src.initvar.InitVarStates.*;
 
 /**
- * InitVarMachine is a realisation of FiniteStateMachine that used to variable initialisation.
+ * {@code InitVarMachine} is a realisation of {@link FiniteStateMachine} that used to variable initialisation.
  */
 
 public final class InitVarMachine extends FiniteStateMachine<InitVarStates, InitVarContext, ExecutionException> {
@@ -29,13 +29,13 @@ public final class InitVarMachine extends FiniteStateMachine<InitVarStates, Init
         registerTransducer(NAME, new FunctionNameTransducer<>(InitVarContext::setVariableName,
                 errorMessage -> {
                     throw new ExecutionException(errorMessage);
-                }));
+                }).named("Function name"));
 
         registerTransducer(EXPRESSION, new VariableExpressionTransducer(factory.create(ScriptElement.EXPRESSION)));
 
         registerTransducer(FINISH, (inputChain, outputChain) -> {
 
-            if(outputChain.isParseonly()){
+            if (outputChain.isParseOnly()) {
                 return true;
             }
 
