@@ -11,8 +11,8 @@ import src.identifier.IdentifierMachine;
 import java.util.function.BiConsumer;
 
 /**
- * FunctionNameTransducer is an implementation of Transducer
- * that produce a name of function for FunctionHolder output.
+ * {@code FunctionNameTransducer} is an implementation of {@link Transducer}
+ * that produce a name of function for {@link com.teamdev.implementations.datastructures.FunctionHolder} output.
  */
 
 public class FunctionNameTransducer<O, E extends Exception> implements Transducer<O, E> {
@@ -33,9 +33,9 @@ public class FunctionNameTransducer<O, E extends Exception> implements Transduce
     @Override
     public boolean doTransition(CharSequenceReader inputChain, O outputChain) throws E {
 
-        var stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
 
-        var identifierMachine = IdentifierMachine.create(exceptionThrower);
+        IdentifierMachine<E> identifierMachine = IdentifierMachine.create(exceptionThrower);
 
         if (identifierMachine.run(inputChain, stringBuilder)){
 

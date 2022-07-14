@@ -2,7 +2,7 @@ package src.identifier;
 
 /**
  * {@code IdentifierState} is an enumeration of states
- * that used in {@link src.identifier.IdentifierMachine}.
+ * that used in {@link IdentifierMachine}.
  */
 
 public enum IdentifierStates {

@@ -1,6 +1,5 @@
 package src.program;
 
-
 import src.ExceptionThrower;
 import src.FiniteStateMachine;
 import src.Transducer;

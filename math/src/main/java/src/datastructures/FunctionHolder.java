@@ -1,4 +1,4 @@
-package src.fsm.function;
+package src.datastructures;
 
 import com.google.common.base.Preconditions;
 import src.type.Value;
@@ -6,8 +6,6 @@ import src.type.Value;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-
 
 public class FunctionHolder {
 

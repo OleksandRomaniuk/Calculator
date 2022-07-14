@@ -1,7 +1,12 @@
 package src.fsm.expression;
 
 
-import src.*;
+import src.ExceptionThrower;
+import src.FiniteStateMachine;
+import src.Transducer;
+import src.TransitionMatrix;
+import src.operators.AbstractBinaryOperator;
+import src.operators.BinaryOperatorFactory;
 
 import java.util.function.BiConsumer;
 
@@ -13,19 +18,6 @@ import java.util.function.BiConsumer;
  */
 
 public final class ExpressionMachine<O, E extends Exception> extends FiniteStateMachine<ExpressionStates, O, E> {
-
-    private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix,
-                              BiConsumer<O, AbstractBinaryOperator> binaryConsumer,
-                              BinaryOperatorFactory factory,
-                              Transducer<O, E> operandTransducer,
-                              ExceptionThrower<E> exceptionThrower) {
-        super(matrix, exceptionThrower, true);
-
-        registerTransducer(ExpressionStates.START, Transducer.illegalTransition());
-        registerTransducer(ExpressionStates.OPERAND, operandTransducer);
-        registerTransducer(ExpressionStates.BINARY_OPERATOR, new BinaryOperatorTransducer<>(factory, binaryConsumer));
-        registerTransducer(ExpressionStates.FINISH, Transducer.autoTransition());
-    }
 
     public static <O, E extends Exception> ExpressionMachine<O, E> create(BiConsumer<O, AbstractBinaryOperator> binaryConsumer,
                                                                           BinaryOperatorFactory factory,
@@ -43,11 +35,20 @@ public final class ExpressionMachine<O, E extends Exception> extends FiniteState
 
         return new ExpressionMachine<>(matrix, binaryConsumer, factory, operandTransducer, exceptionThrower);
     }
+
+    private ExpressionMachine(TransitionMatrix<ExpressionStates> matrix,
+                              BiConsumer<O, AbstractBinaryOperator> binaryConsumer,
+                              BinaryOperatorFactory factory,
+                              Transducer<O, E> operandTransducer,
+                              ExceptionThrower<E> exceptionThrower) {
+        super(matrix, exceptionThrower, true);
+
+        registerTransducer(ExpressionStates.START, Transducer.illegalTransition());
+        registerTransducer(ExpressionStates.OPERAND, operandTransducer);
+        registerTransducer(ExpressionStates.BINARY_OPERATOR, new BinaryOperatorTransducer<>(factory, binaryConsumer));
+        registerTransducer(ExpressionStates.FINISH, Transducer.autoTransition());
+    }
 }
-
-
-
-
 
 
 

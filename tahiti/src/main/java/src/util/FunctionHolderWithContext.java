@@ -1,4 +1,4 @@
-package src;
+package src.util;
 
 import com.google.common.base.Preconditions;
 import src.runtime.ScriptContext;

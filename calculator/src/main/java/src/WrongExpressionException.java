@@ -2,8 +2,6 @@ package src;
 
 import com.google.common.base.Preconditions;
 
-
-
 public class WrongExpressionException extends Exception {
 
     private final int errorPosition;

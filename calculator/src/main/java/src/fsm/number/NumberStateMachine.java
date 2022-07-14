@@ -19,9 +19,9 @@ import static src.fsm.number.NumberStates.*;
 public final class NumberStateMachine<E extends Exception> extends FiniteStateMachine<NumberStates, StringBuilder, E> {
 
     public static <E extends Exception> Optional<Value> execute(CharSequenceReader inputChain, ExceptionThrower<E> exceptionThrower) throws E {
-        var stringBuilder = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
 
-        var numberMachine = NumberStateMachine.create(exceptionThrower);
+        NumberStateMachine<E> numberMachine = NumberStateMachine.create(exceptionThrower);
 
         if (numberMachine.run(inputChain, stringBuilder)) {
 
@@ -34,7 +34,7 @@ public final class NumberStateMachine<E extends Exception> extends FiniteStateMa
     }
 
     public static <E extends Exception> NumberStateMachine<E> create(ExceptionThrower<E> exceptionThrower) {
-        var matrix = TransitionMatrix.<NumberStates>builder().
+        TransitionMatrix<NumberStates> matrix = TransitionMatrix.<NumberStates>builder().
                 withStartState(START)
                 .withFinishState(FINISH)
                 .allowTransition(START, NEGATIVE_SIGN, INTEGER_DIGIT)

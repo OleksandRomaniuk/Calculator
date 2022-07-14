@@ -1,13 +1,12 @@
 package src.executors;
 
-
-import src.*;
+import src.CharSequenceReader;
+import src.FiniteStateMachine;
 import src.fsm.expression.BinaryOperatorTransducer;
+import src.operators.BinaryOperatorFactory;
+import src.operators.RelationalBinaryOperatorFactory;
 import src.runtime.ScriptContext;
-import src.util.ExecutionException;
-import src.util.ScriptElement;
-import src.util.ScriptElementExecutor;
-import src.util.ScriptElementExecutorFactory;
+import src.util.*;
 
 import java.util.List;
 

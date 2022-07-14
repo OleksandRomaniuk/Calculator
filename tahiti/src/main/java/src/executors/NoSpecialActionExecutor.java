@@ -7,11 +7,11 @@ import src.runtime.ScriptContext;
 import src.util.ExecutionException;
 import src.util.ScriptElementExecutor;
 
-public class ActionExecutor<I> implements ScriptElementExecutor {
+public class NoSpecialActionExecutor<I> implements ScriptElementExecutor {
 
     private final FiniteStateMachine<I, ScriptContext, ExecutionException> machine;
 
-    public ActionExecutor(FiniteStateMachine<I, ScriptContext, ExecutionException> machine) {
+    public NoSpecialActionExecutor(FiniteStateMachine<I, ScriptContext, ExecutionException> machine) {
         this.machine = Preconditions.checkNotNull(machine);
     }
 

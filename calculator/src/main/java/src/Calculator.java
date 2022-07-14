@@ -1,10 +1,11 @@
 package src;
 
 import com.google.common.base.Preconditions;
-import src.fsm.ShuntingYard;
+import src.datastructures.ShuntingYard;
 import src.fsm.calculator.CalculatorMachine;
 import src.math.MathElementResolverFactory;
 import src.type.DoubleValueVisitor;
+
 
 /**
  * An API for resolving of math expressions. Math expression may contain:
@@ -19,17 +20,14 @@ import src.type.DoubleValueVisitor;
  * {@code
  * <p>
  * MathExpression expression = new MathExpression("2+2*3");
- * Calculator src.calculator = new Calculator();
- * Result result = src.calculator.calculate(expression);
+ * Calculator calculator = new Calculator();
+ * Result result = calculator.calculate(expression);
  * <p>
  * }
  *
  *
  * <p> Implementation details: uses a set of finite state machines in order to
  * define grammar of math expression, parse elements of expression and calculate the result.
- *
- * @author Oleksandr Romaniuk
- * @version 0.9 beta
  */
 
 public class Calculator {
@@ -38,12 +36,12 @@ public class Calculator {
 
         MathElementResolverFactory factory = new MathElementResolverFactoryImpl();
 
-        var numberStateMachine = CalculatorMachine.create(factory, errorMessage -> {
+        CalculatorMachine numberStateMachine = CalculatorMachine.create(factory, errorMessage -> {
             throw new ResolvingException(errorMessage);
         });
 
-        var inputChain = new CharSequenceReader(expression.getExpression());
-        var outputChain = new ShuntingYard();
+        CharSequenceReader inputChain = new CharSequenceReader(expression.getExpression());
+        ShuntingYard outputChain = new ShuntingYard();
 
         try {
             if (!numberStateMachine.run(inputChain, outputChain)) {
@@ -54,7 +52,10 @@ public class Calculator {
             raiseException(inputChain);
         }
 
-        return new CalculationResult(DoubleValueVisitor.read(outputChain.popResult()));
+        Double result = DoubleValueVisitor.read(outputChain.popResult());
+
+        return new CalculationResult(result);
+
     }
 
     private static void raiseException(CharSequenceReader inputChain) throws WrongExpressionException {

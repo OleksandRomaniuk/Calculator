@@ -1,4 +1,4 @@
-package src;
+package src.operators;
 
 
 import src.type.BooleanValue;
@@ -7,7 +7,7 @@ import src.type.Value;
 
 import java.util.function.BiFunction;
 
-public class RelationalBinaryOperator extends AbstractBinaryOperator{
+public class RelationalBinaryOperator extends AbstractBinaryOperator {
 
     private final BiFunction<Double, Double, Boolean> origin;
 

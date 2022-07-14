@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import src.CharSequenceReader;
 import src.FiniteStateMachine;
 import src.ResolvingException;
-import src.fsm.ShuntingYard;
+import src.datastructures.ShuntingYard;
 import src.math.MathElementResolver;
 import src.type.Value;
 
@@ -29,7 +29,7 @@ public class DetachedShuntingYardResolver<I> implements MathElementResolver {
     @Override
     public Optional<Value> resolve(CharSequenceReader inputChain) throws ResolvingException {
 
-        var nestingShuntingYardStack = new ShuntingYard();
+        ShuntingYard nestingShuntingYardStack = new ShuntingYard();
 
         if (machine.run(inputChain, nestingShuntingYardStack)) {
 
