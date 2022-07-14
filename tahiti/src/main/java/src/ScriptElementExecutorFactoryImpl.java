@@ -6,7 +6,6 @@ import fsm.identifier.IdentifierMachine;
 import fsm.type.Value;
 import src.executors.*;
 import src.fsm.brackets.BracketsMachine;
-import src.fsm.expression.ExpressionMachine;
 import src.fsm.function.FunctionMachine;
 import src.fsm.number.NumberStateMachine;
 import src.initvar.InitVarContext;
@@ -14,7 +13,6 @@ import src.initvar.InitVarMachine;
 import src.program.ProgramMachine;
 import src.util.*;
 import src.whileoperator.WhileOperatorExecutor;
-
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -34,7 +32,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
 
             if (execute.isPresent()) {
 
-                if(output.isParseonly()){
+                if (output.isParseOnly()) {
                     return true;
                 }
 
@@ -46,17 +44,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
             return false;
         });
 
-        executors.put(ScriptElement.NUMERIC_EXPRESSION, () ->
-                new ShuntingYardExecutor<>(ExpressionMachine.create(
-                        (scriptContext, abstractBinaryOperator) -> {
-                            if(!scriptContext.isParseonly()){
-                                scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
-                            }
-                        },
-                        new ExecutorProgramElementTransducer(ScriptElement.OPERAND, this),
-                        errorMessage -> {
-                            throw new ExecutionException(errorMessage);
-                        })));
+
 
 
         executors.put(ScriptElement.RELATIONAL_EXPRESSION, () ->
@@ -119,7 +107,7 @@ class ScriptElementExecutorFactoryImpl implements ScriptElementExecutorFactory {
 
                 if (context.hasVariable(variableName.toString())) {
 
-                    if(context.isParseonly()){
+                    if (context.isParseOnly()) {
                         return true;
                     }
 

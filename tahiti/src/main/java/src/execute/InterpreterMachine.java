@@ -12,6 +12,7 @@ import src.util.ScriptElementExecutorFactory;
 
 import static src.execute.InterpreterState.*;
 
+
 public final class InterpreterMachine extends FiniteStateMachine<InterpreterState, ScriptContext, ExecutionException> {
 
     private InterpreterMachine(TransitionMatrix<InterpreterState> matrix, ScriptElementExecutorFactory factory,
@@ -24,7 +25,7 @@ public final class InterpreterMachine extends FiniteStateMachine<InterpreterStat
     }
 
     public static InterpreterMachine create(ScriptElementExecutorFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
-        var matrix =
+        TransitionMatrix<InterpreterState> matrix =
                 TransitionMatrix.<InterpreterState>builder()
                         .withStartState(START)
                         .withFinishState(FINISH)

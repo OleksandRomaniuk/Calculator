@@ -3,14 +3,11 @@ package src;
 import com.google.common.base.Preconditions;
 import fsm.type.Value;
 import src.runtime.ScriptContext;
-import src.util.WithContext;
-
+import src.runtime.WithContext;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-
 
 
 public class FunctionHolderWithContext implements WithContext {
@@ -30,11 +27,11 @@ public class FunctionHolderWithContext implements WithContext {
     }
 
     @Override
-    public boolean isParseonly() {
-        return scriptContext.isParseonly();
+    public boolean isParseOnly() {
+        return scriptContext.isParseOnly();
     }
 
-    void setArgument(Value argument) {
+    public void setArgument(Value argument) {
 
         arguments.add(argument);
     }
@@ -43,7 +40,7 @@ public class FunctionHolderWithContext implements WithContext {
         return functionName;
     }
 
-    void setFunctionName(String name) {
+    public void setFunctionName(String name) {
 
         this.functionName = Preconditions.checkNotNull(name);
     }
