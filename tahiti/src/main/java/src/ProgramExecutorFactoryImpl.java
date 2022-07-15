@@ -11,6 +11,8 @@ import src.program.ProgramMachine;
 import src.programStructure.booleanOperand.BooleanOperandMachine;
 import src.programStructure.initvar.InitVarContext;
 import src.programStructure.initvar.InitVarMachine;
+import src.programStructure.ternary.TernaryOperatorContext;
+import src.programStructure.ternary.TernaryOperatorMachine;
 import src.programStructure.whileoperator.WhileOperatorExecutor;
 import src.type.Value;
 import src.util.*;
@@ -150,6 +152,16 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
             }
             return false;
 
+        });
+        executors.put(ProgramElement.TERNARY_OPERATOR, () -> (inputChain, output) -> {
+
+            TernaryOperatorMachine ternaryOperatorMachine = TernaryOperatorMachine.create(this, errorMessage -> {
+                throw new ExecutionException(errorMessage);
+            });
+
+            TernaryOperatorContext ternaryOperatorContext = new TernaryOperatorContext(output);
+
+            return ternaryOperatorMachine.run(inputChain, ternaryOperatorContext);
         });
 
         executors.put(ProgramElement.PROCEDURE, () -> new FunctionExecutor(

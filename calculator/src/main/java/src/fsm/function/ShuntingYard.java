@@ -44,6 +44,16 @@ public class ShuntingYard {
         operatorStack.push(operator);
     }
 
+    public Value result() {
+
+        while (!operatorStack.isEmpty()) {
+
+            applyTopOperator();
+        }
+
+        return operandStack.pop();
+    }
+
     public Value popResult() {
 
         while (!operatorStack.isEmpty()) {
