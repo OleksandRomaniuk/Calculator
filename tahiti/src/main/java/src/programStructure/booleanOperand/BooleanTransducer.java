@@ -8,7 +8,7 @@ import src.type.BooleanValueVisitor;
 import src.type.Value;
 import src.util.ExecutionException;
 
-class BooleanTransducer implements Transducer<ScriptContext, ExecutionException> {
+public class BooleanTransducer implements Transducer<ScriptContext, ExecutionException> {
 
     @Override
     public boolean doTransition(CharSequenceReader inputChain, ScriptContext outputChain) throws ExecutionException {

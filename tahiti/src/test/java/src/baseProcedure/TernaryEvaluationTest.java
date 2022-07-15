@@ -36,7 +36,7 @@ class TernaryEvaluationTest extends AbstractInterpreterEvaluationTest {
                 of("a = 6; b = a < 2  3 : 8; print(b);", 18,
                         "Ternary operator without symbol ? test has not throw exception"),
 
-                of("a = 6; b = a < 2 ? 3 : ; print(b);", 23,
+                of("a = 6; b = a < 2 ? 3 : ; print(b);", 17,
                         "Ternary operator without expression if condition false test has not throw exception"),
 
                 of("a = 6; b = a < 2 : 4; print(b);", 17,
