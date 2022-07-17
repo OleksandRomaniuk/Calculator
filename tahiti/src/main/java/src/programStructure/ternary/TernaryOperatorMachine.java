@@ -5,13 +5,15 @@ import src.ExceptionThrower;
 import src.FiniteStateMachine;
 import src.Transducer;
 import src.TransitionMatrix;
-import src.programStructure.booleanOperand.BooleanTransducer;
 import src.util.ExecutionException;
 import src.util.ProgramElement;
 import src.util.ProgramFactory;
 
 import static src.programStructure.ternary.TernaryStates.*;
 
+/**
+ * Realization of FiniteStateMachine for parsing ternary operator
+ */
 
 public final class TernaryOperatorMachine extends FiniteStateMachine<TernaryStates, TernaryOperatorContext, ExecutionException> {
 
@@ -23,7 +25,9 @@ public final class TernaryOperatorMachine extends FiniteStateMachine<TernaryStat
 
         registerTransducer(FINISH, Transducer.autoTransition());
 
-        registerTransducer(BOOLEAN_EXPRESSION, new BooleanTransducer(factory.create(ProgramElement.BOOLEAN_EXPRESSION)));
+        registerTransducer(BOOLEAN_EXPRESSION, new BooleanExpressionTransducer(factory.create(ProgramElement.BOOLEAN_EXPRESSION)));
+
+        registerTransducer(EXPRESSION, new TernaryOperatorTransducer(factory.create(ProgramElement.EXPRESSION)));
 
         registerTransducer(MARK, Transducer.<TernaryOperatorContext, ExecutionException>checkAndPassChar('?').and(
                 (inputChain, outputChain) -> {
@@ -31,13 +35,9 @@ public final class TernaryOperatorMachine extends FiniteStateMachine<TernaryStat
                         outputChain.getScriptContext().setParsingPermission(true);
 
                     }
-
                     return true;
                 }
         ));
-
-        registerTransducer(EXPRESSION, new (factory.create(ProgramElement.EXPRESSION)))
-
         registerTransducer(COLON, Transducer.<TernaryOperatorContext, ExecutionException>checkAndPassChar(':').and(
 
                 (inputChain, outputChain) -> {
@@ -51,6 +51,7 @@ public final class TernaryOperatorMachine extends FiniteStateMachine<TernaryStat
                 }
         ));
     }
+
 
     public static TernaryOperatorMachine create(ProgramFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
         TransitionMatrix<TernaryStates> matrix = TransitionMatrix.<TernaryStates>builder()
