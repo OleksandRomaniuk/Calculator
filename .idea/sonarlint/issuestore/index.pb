@@ -1,8 +1,6 @@
 
 i
 9calculator/src/test/java/src/fsm/BracketsMachineTest.java,1\1\11dcd065d13747f0ab9b37047c613d620044bea0
-]
--fsm/src/main/java/fsm/CharSequenceReader.java,6\8\687e0d98a42d3779900582b0a1778b4c6e8d23fe
 m
 =calculator/src/main/java/src/fsm/brackets/BracketsStates.java,6\e\6e5bc432428cec2ec5973ced2034315d32744b09
 h
@@ -11,21 +9,3 @@ i
 9calculator/src/main/java/src/fsm/number/NumberStates.java,7\7\77401c2ce5ad790b06dcf7ec9cd695b910d4741c
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-\
-,fsm/src/main/java/fsm/type/BooleanValue.java,5\b\5b58bfeee4f97beb6919079bf306a99acd7197c5
-c
-3fsm/src/main/java/fsm/type/BooleanValueVisitor.java,d\3\d392af6937ef2027482e96cc3b54f7cb7528a3fb
-[
-+fsm/src/main/java/fsm/type/DoubleValue.java,0\a\0ae9146edc2a89e920de0a0f9da1aee2e750bd4d
-U
-%fsm/src/main/java/fsm/Transducer.java,5\2\52ca232a3f5e18bb88ae35ba1dc1c77287f4734b
-[
-+fsm/src/main/java/fsm/ExceptionThrower.java,1\7\17d253429fc420c97707eab6a9345d72d1732049
-U
-%fsm/src/main/java/fsm/type/Value.java,5\0\50cc5d441aeb652f70498b4c918983cff01a96a5
-\
-,fsm/src/main/java/fsm/type/ValueVisitor.java,a\5\a58e8778f83fa09d453e7528271332a75fb506d5
-X
-(fsm/src/main/java/fsm/MatrixBuilder.java,2\0\20bdd57bfc7ca96f9bc7e7b9e5eb999f833e04ed
-]
--fsm/src/main/java/fsm/FiniteStateMachine.java,2\c\2c1a42fb20c440f2f89c035bffccf8ea776a69d5

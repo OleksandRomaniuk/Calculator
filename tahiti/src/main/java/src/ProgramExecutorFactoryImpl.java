@@ -2,7 +2,7 @@ package src;
 
 import com.google.common.base.Preconditions;
 import src.executors.*;
-import src.expression.ScriptExpressionMachine;
+import src.expression.ProgramExpressionMachine;
 import src.fsm.brackets.BracketsMachine;
 import src.fsm.expression.ExpressionMachine;
 import src.fsm.function.FunctionMachine;
@@ -89,7 +89,7 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
                 new RelationalExpressionElementExecutor(this));
 
         executors.put(ProgramElement.EXPRESSION, () -> new NoSpecialActionExecutor<>(
-                ScriptExpressionMachine.create(this, errorMessage -> {
+                ProgramExpressionMachine.create(this, errorMessage -> {
                     throw new ExecutionException(errorMessage);
                 })
         ));
