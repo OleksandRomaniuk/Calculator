@@ -11,6 +11,8 @@ import src.program.ProgramMachine;
 import src.programStructure.booleanOperand.BooleanOperandMachine;
 import src.programStructure.initvar.InitVarContext;
 import src.programStructure.initvar.InitVarMachine;
+import src.programStructure.switchoperator.SwitchContext;
+import src.programStructure.switchoperator.SwitchOperatorMachine;
 import src.programStructure.ternary.TernaryOperatorContext;
 import src.programStructure.ternary.TernaryOperatorMachine;
 import src.programStructure.whileoperator.WhileOperatorExecutor;
@@ -173,13 +175,24 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
             return false;
 
         });
-        executors.put(ProgramElement.TERNARY_EXPRESSION, () -> (inputChain, output) -> {
+        executors.put(ProgramElement.SWITCH_OPERATOR, () -> (inputChain, output) -> {
 
-            TernaryOperatorMachine ternaryOperatorMachine = TernaryOperatorMachine.create(this, errorMessage -> {
+            SwitchOperatorMachine switchOperatorMachine = SwitchOperatorMachine.create(this, errorMessage -> {
                 throw new ExecutionException(errorMessage);
             });
 
-            TernaryOperatorContext ternaryOperatorContext = new TernaryOperatorContext(output);
+            SwitchContext switchContext = new SwitchContext(output);
+
+            return switchOperatorMachine.run(inputChain, switchContext);
+        });
+
+        executors.put(ProgramElement.TERNARY_EXPRESSION, () -> (inputChain, output) -> {
+
+            var ternaryOperatorMachine = TernaryOperatorMachine.create(this, errorMessage -> {
+                throw new ExecutionException(errorMessage);
+            });
+
+            var ternaryOperatorContext = new TernaryOperatorContext(output);
 
             return ternaryOperatorMachine.run(inputChain, ternaryOperatorContext);
         });
@@ -198,9 +211,11 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         },
-                        new ExecutorProgramElementTransducer(ProgramElement.INIT_VAR, this).named("Variable initialisation"),
                         new ExecutorProgramElementTransducer(ProgramElement.WHILE_OPERATOR, this).named("While loop"),
+                        new ExecutorProgramElementTransducer(ProgramElement.SWITCH_OPERATOR, this),
+                        new ExecutorProgramElementTransducer(ProgramElement.INIT_VAR, this).named("Variable initialisation"),
                         new ExecutorProgramElementTransducer(ProgramElement.PROCEDURE, this).named("Procedure"))));
+
 
         executors.put(ProgramElement.PROGRAM, () -> new NoSpecialActionExecutor<>(
                 ProgramMachine.create(this, errorMessage -> {

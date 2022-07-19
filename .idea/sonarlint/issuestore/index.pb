@@ -19,11 +19,5 @@ u
 Etahiti/src/main/java/src/programStructure/initvar/InitVarMachine.java,f\2\f2e03d3b7e2f363c8a9dc19c26c25eb8e5e508a2
 b
 2fsm/src/main/java/src/type/DoubleValueVisitor.java,f\9\f90db7c06a684f8e2fe53e23a3ecac402ee7d997
-[
-+tahiti/src/main/java/src/ProgramResult.java,4\0\40d0fc7a8035d07c1b55138f7291c91e2a3628d8
-a
-1tahiti/src/main/java/src/util/ProgramElement.java,d\e\dea7aa87fc9d30ad0da93986c299a6cc5b5b9572
-[
-+fsm/src/main/java/src/type/DoubleValue.java,b\8\b85e5d6dc7b88aace12496520f1374e15242bd8a
 c
 3tahiti/src/main/java/src/runtime/ScriptContext.java,a\7\a7de2cd7bc859ed5b1b3f494bee40eedb64aae5d
