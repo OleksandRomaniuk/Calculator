@@ -8,6 +8,9 @@ import src.util.ProgramElement;
 import src.util.ProgramElementExecutor;
 import src.util.ProgramFactory;
 
+/**
+ * Transducer for comparing value in switch operator
+ */
 
 class ComparedValueTransducer implements Transducer<SwitchContext, ExecutionException> {
 

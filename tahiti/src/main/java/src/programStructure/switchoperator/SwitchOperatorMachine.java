@@ -22,9 +22,13 @@ public final class SwitchOperatorMachine extends FiniteStateMachine<SwitchStates
 
         registerTransducer(SWITCH, new KeywordTransducer<>("switch"));
 
-        registerTransducer(VARIABLE, new SwitchVariableTransducer(factory));
-
         registerTransducer(CASE, new KeywordTransducer<>("case"));
+
+        registerTransducer(DEFAULT, new KeywordTransducer<>("default"));
+
+        registerTransducer(LIST, new SwitchStatementListTransducer(factory));
+
+        registerTransducer(VARIABLE, new SwitchVariableTransducer(factory));
 
         registerTransducer(OPTION, new OptionTransducer(factory));
 
@@ -35,9 +39,6 @@ public final class SwitchOperatorMachine extends FiniteStateMachine<SwitchStates
         registerTransducer(CLOSING_BRACKETS, Transducer.<SwitchContext, ExecutionException>checkAndPassChar('}')
                 .and(new PermissionTransducer<>(false)));
 
-        registerTransducer(LIST, new SwitchStatementListTransducer(factory));
-
-        registerTransducer(DEFAULT, new KeywordTransducer<>("default"));
     }
 
     public static SwitchOperatorMachine create(ProgramFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
