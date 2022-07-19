@@ -8,6 +8,9 @@ import src.util.ExecutionException;
 
 import java.util.List;
 
+/**
+ * Simple class for analyzing special  keyword in switch operator
+ */
 
 public class KeywordTransducer<O extends WithContext> implements Transducer<O, ExecutionException> {
 
