@@ -23,4 +23,15 @@ public class DoubleValue implements Value{
     public String toString() {
         return String.valueOf(value);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DoubleValue that = (DoubleValue) o;
+
+        return Double.compare(that.value, value) == 0;
+    }
 }
