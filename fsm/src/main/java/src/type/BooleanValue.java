@@ -21,4 +21,15 @@ public class BooleanValue implements Value{
     public String toString() {
         return Boolean.toString(value);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BooleanValue that = (BooleanValue) o;
+
+        return value == that.value;
+    }
 }
