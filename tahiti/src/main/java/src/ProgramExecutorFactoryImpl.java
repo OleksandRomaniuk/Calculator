@@ -9,6 +9,7 @@ import src.fsm.number.NumberStateMachine;
 import src.identifier.IdentifierMachine;
 import src.program.ProgramMachine;
 import src.programStructure.booleanOperand.BooleanOperandMachine;
+import src.programStructure.forloop.ForLoopExecutor;
 import src.programStructure.initvar.InitVarContext;
 import src.programStructure.initvar.InitVarMachine;
 import src.programStructure.ternary.TernaryOperatorContext;
@@ -198,6 +199,7 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         },
+                        new ExecutorProgramElementTransducer(ProgramElement.FOR_LOOP, this).named("For loop"),
                         new ExecutorProgramElementTransducer(ProgramElement.INIT_VAR, this).named("Variable initialisation"),
                         new ExecutorProgramElementTransducer(ProgramElement.WHILE_OPERATOR, this).named("While loop"),
                         new ExecutorProgramElementTransducer(ProgramElement.PROCEDURE, this).named("Procedure"))));
@@ -207,6 +209,7 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
                     throw new ExecutionException(errorMessage);
                 })
         ));
+        executors.put(ProgramElement.FOR_LOOP, () -> new ForLoopExecutor(this));
 
         executors.put(ProgramElement.WHILE_OPERATOR, () -> new WhileOperatorExecutor(this));
     }
