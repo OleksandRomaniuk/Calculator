@@ -11,9 +11,11 @@ import src.program.ProgramMachine;
 import src.programStructure.booleanOperand.BooleanOperandMachine;
 import src.programStructure.initvar.InitVarContext;
 import src.programStructure.initvar.InitVarMachine;
+import src.programStructure.string.StringOperandTransducer;
 import src.programStructure.ternary.TernaryOperatorContext;
 import src.programStructure.ternary.TernaryOperatorMachine;
 import src.programStructure.whileoperator.WhileOperatorExecutor;
+import src.runtime.ScriptContext;
 import src.type.DoubleValueVisitor;
 import src.type.Value;
 import src.util.*;
@@ -21,6 +23,7 @@ import src.util.*;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 class ProgramExecutorFactoryImpl implements ProgramFactory {
 
@@ -79,7 +82,9 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
                         exceptionThrower,
                         new ExecutorProgramElementTransducer(ProgramElement.BOOLEAN_EXPRESSION, this).named("Boolean operator"),
                         new ExecutorProgramElementTransducer(ProgramElement.TERNARY_EXPRESSION, this).named("Ternary operator"),
-                        new ExecutorProgramElementTransducer(ProgramElement.NUMERIC_EXPRESSION, this).named("Numeric expression")
+                        new ExecutorProgramElementTransducer(ProgramElement.NUMERIC_EXPRESSION, this).named("Numeric expression"),
+                        new ExecutorProgramElementTransducer(ProgramElement.STRING_EXPRESSION, this).named("String expression")
+
                 )));
         BinaryOperatorFactory logicalOperatorFactory = new BooleanBinaryOperatorFactory();
 
@@ -150,11 +155,9 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
 
         executors.put(ProgramElement.READ_VARIABLE, () -> (inputChain, context) -> {
 
-            StringBuilder variableName = new StringBuilder();
+            var variableName = new StringBuilder();
 
-            IdentifierMachine<ExecutionException> nameMachine = IdentifierMachine.create(errorMessage -> {
-                throw new ExecutionException(errorMessage);
-            });
+            var nameMachine = IdentifierMachine.create(exceptionThrower, Character::isLetter);
 
             if (nameMachine.run(inputChain, variableName)) {
 
@@ -170,8 +173,8 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
                     return true;
                 } else throw new ExecutionException("Not existing variable in memory " + variableName);
             }
-            return false;
 
+            return false;
         });
         executors.put(ProgramElement.TERNARY_EXPRESSION, () -> (inputChain, output) -> {
 
@@ -208,7 +211,22 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
                 })
         ));
 
+
         executors.put(ProgramElement.WHILE_OPERATOR, () -> new WhileOperatorExecutor(this));
+
+        BinaryOperatorFactory stringBiOperatorFactory = new StringBinaryOperatorFactory();
+
+        BiConsumer<ScriptContext, AbstractBinaryOperator> operatorConsumer = (scriptContext, abstractBinaryOperator) -> {
+            if (!scriptContext.isParseOnly()) {
+                scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
+            }
+        };
+        executors.put(ProgramElement.STRING_EXPRESSION, () -> new NoSpecialActionExecutor<>(
+                ExpressionMachine.create(
+                        operatorConsumer, stringBiOperatorFactory,
+                        new StringOperandTransducer(this), exceptionThrower
+                )
+        ));
     }
 
     @Override
