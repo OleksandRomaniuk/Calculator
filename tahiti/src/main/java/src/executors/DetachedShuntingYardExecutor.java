@@ -37,7 +37,11 @@ public class DetachedShuntingYardExecutor<I> implements ProgramElementExecutor {
 
             return true;
         }
+        if (!output.isParseOnly()) {
+            output.systemStack().close();
+        }
 
         return false;
     }
+
 }

@@ -22,6 +22,7 @@ public final class ExpressionMachine<O, E extends Exception> extends FiniteState
         TransitionMatrix<ExpressionStates> matrix = TransitionMatrix.<ExpressionStates>builder()
                 .withStartState(ExpressionStates.START)
                 .withFinishState(ExpressionStates.FINISH)
+                .withTemporaryState(ExpressionStates.START, ExpressionStates.BINARY_OPERATOR)
                 .allowTransition(ExpressionStates.START, ExpressionStates.OPERAND)
                 .allowTransition(ExpressionStates.OPERAND, ExpressionStates.BINARY_OPERATOR, ExpressionStates.FINISH)
                 .allowTransition(ExpressionStates.BINARY_OPERATOR, ExpressionStates.OPERAND)
