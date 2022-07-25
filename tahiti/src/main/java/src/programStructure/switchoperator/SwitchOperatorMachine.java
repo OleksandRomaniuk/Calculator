@@ -1,6 +1,9 @@
 package src.programStructure.switchoperator;
 
-
+/**
+ * Implementation of {@link FiniteStateMachine} which is intended to process
+ * switch operator in my language.
+ */
 import src.ExceptionThrower;
 import src.FiniteStateMachine;
 import src.Transducer;

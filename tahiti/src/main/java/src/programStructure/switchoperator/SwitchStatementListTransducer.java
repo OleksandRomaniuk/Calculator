@@ -9,7 +9,10 @@ import src.util.ProgramFactory;
 
 import java.util.List;
 
-
+/**
+ * Implementation of {@link FiniteStateMachine} which is intended to process
+ * switch operator in my language.
+ */
 class SwitchStatementListTransducer implements Transducer<SwitchContext, ExecutionException> {
 
     private final ProgramFactory factory;
