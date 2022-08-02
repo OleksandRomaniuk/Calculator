@@ -37,4 +37,9 @@ public class BooleanValueVisitor implements ValueVisitor{
 
         return true;
     }
+
+    @Override
+    public void visit(StringValue value) {
+        throw new IllegalArgumentException("Type mismatch: expected boolean but String provided");
+    }
 }

@@ -12,7 +12,7 @@ import java.util.function.BiConsumer;
 
 /**
  * {@code FunctionNameTransducer} is an implementation of {@link Transducer}
- * that produce a name of function for {@link com.teamdev.implementations.datastructures.FunctionHolder} output.
+ * that produce a name of function for {@link FunctionHolder} output.
  */
 
 public class FunctionNameTransducer<O, E extends Exception> implements Transducer<O, E> {
@@ -35,7 +35,7 @@ public class FunctionNameTransducer<O, E extends Exception> implements Transduce
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        IdentifierMachine<E> identifierMachine = IdentifierMachine.create(exceptionThrower);
+        IdentifierMachine<E> identifierMachine = IdentifierMachine.create(exceptionThrower, Character::isLetter);
 
         if (identifierMachine.run(inputChain, stringBuilder)){
 

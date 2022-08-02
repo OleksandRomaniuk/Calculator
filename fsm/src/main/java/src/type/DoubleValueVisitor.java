@@ -49,4 +49,13 @@ public class DoubleValueVisitor implements ValueVisitor {
     private double getDoubleValue() {
         return doubleValue;
     }
+
+    @Override
+    public void visit(StringValue value) {
+        if (throwExceptionPermission) {
+            throw new IllegalArgumentException("Type mismatch: expected double but String provided");
+        }
+
+        isDouble = false;
+    }
 }
