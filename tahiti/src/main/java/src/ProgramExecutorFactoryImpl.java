@@ -174,16 +174,27 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
                     return true;
                 } else throw new ExecutionException("Not existing variable in memory " + variableName);
             }
-
             return false;
-        });
-        executors.put(ProgramElement.TERNARY_EXPRESSION, () -> (inputChain, output) -> {
 
-            TernaryOperatorMachine ternaryOperatorMachine = TernaryOperatorMachine.create(this, errorMessage -> {
+        });
+        executors.put(ProgramElement.SWITCH_OPERATOR, () -> (inputChain, output) -> {
+
+            SwitchOperatorMachine switchOperatorMachine = SwitchOperatorMachine.create(this, errorMessage -> {
                 throw new ExecutionException(errorMessage);
             });
 
-            TernaryOperatorContext ternaryOperatorContext = new TernaryOperatorContext(output);
+            SwitchContext switchContext = new SwitchContext(output);
+
+            return switchOperatorMachine.run(inputChain, switchContext);
+        });
+
+        executors.put(ProgramElement.TERNARY_EXPRESSION, () -> (inputChain, output) -> {
+
+            var ternaryOperatorMachine = TernaryOperatorMachine.create(this, errorMessage -> {
+                throw new ExecutionException(errorMessage);
+            });
+
+            var ternaryOperatorContext = new TernaryOperatorContext(output);
 
             return ternaryOperatorMachine.run(inputChain, ternaryOperatorContext);
         });
@@ -202,7 +213,6 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         },
-                        new ExecutorProgramElementTransducer(ProgramElement.FOR_LOOP, this).named("For loop"),
                         new ExecutorProgramElementTransducer(ProgramElement.INIT_VAR, this).named("Variable initialisation"),
                         new ExecutorProgramElementTransducer(ProgramElement.WHILE_OPERATOR, this).named("While loop"),
                         new ExecutorProgramElementTransducer(ProgramElement.PROCEDURE, this).named("Procedure"))));

@@ -24,6 +24,6 @@ public enum ProgramElement {
     TERNARY_EXPRESSION,
     STRING_EXPRESSION
     TERNARY_EXPRESSION,
-    FOR_LOOP;
-
+    FOR_LOOP,
+    SWITCH_OPERATOR;
 }
