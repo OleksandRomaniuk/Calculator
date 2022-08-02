@@ -9,9 +9,13 @@ import src.fsm.number.NumberStateMachine;
 import src.identifier.IdentifierMachine;
 import src.program.ProgramMachine;
 import src.programStructure.booleanOperand.BooleanOperandMachine;
+import src.programStructure.forloop.ForLoopExecutor;
 import src.programStructure.initvar.InitVarContext;
 import src.programStructure.initvar.InitVarMachine;
+import src.programStructure.ternary.TernaryOperatorContext;
+import src.programStructure.ternary.TernaryOperatorMachine;
 import src.programStructure.whileoperator.WhileOperatorExecutor;
+import src.type.DoubleValueVisitor;
 import src.type.Value;
 import src.util.*;
 
@@ -45,21 +49,39 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
             return false;
         });
 
-        BinaryOperatorFactory doubleOperatorFactory = new DoubleBinaryOperatorFactory();
+        BinaryOperatorFactory doubleBiOperatorFactory = new DoubleBinaryOperatorFactory();
+
+        ExceptionThrower<ExecutionException> exceptionThrower = errorMessage -> {
+            throw new ExecutionException(errorMessage);
+        };
+
 
         executors.put(ProgramElement.NUMERIC_EXPRESSION, () ->
-
                 new DetachedShuntingYardExecutor<>(ExpressionMachine.create(
                         (scriptContext, abstractBinaryOperator) -> {
                             if (!scriptContext.isParseOnly()) {
                                 scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
                             }
-                        }, doubleOperatorFactory,
-                        new ExecutorProgramElementTransducer(ProgramElement.OPERAND, this).named("Operand"),
-                        errorMessage -> {
-                            throw new ExecutionException(errorMessage);
-                        })));
+                        }, doubleBiOperatorFactory,
+                        new ExecutorProgramElementTransducer(ProgramElement.OPERAND, this).named("Operand").and(
+                                (inputChain, outputChain) ->
+                                        DoubleValueVisitor.isDouble(outputChain.systemStack().current().peekOperand())
+                        ),
+                        exceptionThrower)
+                )
+        );
 
+        executors.put(ProgramElement.RELATIONAL_EXPRESSION, () ->
+                new RelationalExpressionElementExecutor(this)
+        );
+
+        executors.put(ProgramElement.EXPRESSION, () -> new NoSpecialActionExecutor<>(
+                FiniteStateMachine.oneOfMachine(
+                        exceptionThrower,
+                        new ExecutorProgramElementTransducer(ProgramElement.BOOLEAN_EXPRESSION, this).named("Boolean operator"),
+                        new ExecutorProgramElementTransducer(ProgramElement.TERNARY_EXPRESSION, this).named("Ternary operator"),
+                        new ExecutorProgramElementTransducer(ProgramElement.NUMERIC_EXPRESSION, this).named("Numeric expression")
+                )));
         BinaryOperatorFactory logicalOperatorFactory = new BooleanBinaryOperatorFactory();
 
 
@@ -86,6 +108,7 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
 
         executors.put(ProgramElement.RELATIONAL_EXPRESSION, () ->
                 new RelationalExpressionElementExecutor(this));
+
 
 
         executors.put(ProgramElement.OPERAND, () -> new NoSpecialActionExecutor<>(
@@ -151,6 +174,16 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
             return false;
 
         });
+        executors.put(ProgramElement.TERNARY_EXPRESSION, () -> (inputChain, output) -> {
+
+            TernaryOperatorMachine ternaryOperatorMachine = TernaryOperatorMachine.create(this, errorMessage -> {
+                throw new ExecutionException(errorMessage);
+            });
+
+            TernaryOperatorContext ternaryOperatorContext = new TernaryOperatorContext(output);
+
+            return ternaryOperatorMachine.run(inputChain, ternaryOperatorContext);
+        });
 
         executors.put(ProgramElement.PROCEDURE, () -> new FunctionExecutor(
                 new ProcedureFactoryExecutor<>(FunctionMachine.create(
@@ -166,6 +199,7 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
                         errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         },
+                        new ExecutorProgramElementTransducer(ProgramElement.FOR_LOOP, this).named("For loop"),
                         new ExecutorProgramElementTransducer(ProgramElement.INIT_VAR, this).named("Variable initialisation"),
                         new ExecutorProgramElementTransducer(ProgramElement.WHILE_OPERATOR, this).named("While loop"),
                         new ExecutorProgramElementTransducer(ProgramElement.PROCEDURE, this).named("Procedure"))));
@@ -175,6 +209,7 @@ class ProgramExecutorFactoryImpl implements ProgramFactory {
                     throw new ExecutionException(errorMessage);
                 })
         ));
+        executors.put(ProgramElement.FOR_LOOP, () -> new ForLoopExecutor(this));
 
         executors.put(ProgramElement.WHILE_OPERATOR, () -> new WhileOperatorExecutor(this));
     }

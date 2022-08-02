@@ -6,7 +6,7 @@ package src;
 
 public class ProgramResult {
 
-    private String value;
+    private final String value;
 
     ProgramResult(String value) {
         this.value = value;
