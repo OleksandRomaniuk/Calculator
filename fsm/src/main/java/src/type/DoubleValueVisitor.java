@@ -1,10 +1,16 @@
 package src.type;
 
+import java.util.Optional;
+
+/**
+ * Implementation of {@link ValueVisitor} that
+ * define opportunity of read and use double value.
+ */
+
 public class DoubleValueVisitor implements ValueVisitor {
 
     private final boolean throwExceptionPermission;
     private Double doubleValue;
-    private boolean isDouble;
 
     private DoubleValueVisitor(boolean throwExceptionPermission) {
         this.throwExceptionPermission = throwExceptionPermission;
@@ -18,36 +24,29 @@ public class DoubleValueVisitor implements ValueVisitor {
         return doubleVisitor.getDoubleValue();
     }
 
-    public static Boolean isDouble(Value value) {
+    public static boolean isDouble(Value value) {
 
         DoubleValueVisitor visitor = new DoubleValueVisitor(false);
 
         value.accept(visitor);
 
-        return visitor.isDouble;
+        Double result = visitor.getDoubleValue();
 
+        return Optional.ofNullable(result).isPresent();
     }
 
     @Override
     public void visit(DoubleValue value) {
 
         doubleValue = value.getValue();
-
-        isDouble = true;
     }
 
     @Override
     public void visit(BooleanValue value) {
 
         if (throwExceptionPermission) {
-            throw new IllegalArgumentException("Type mismatch");
+            throw new IllegalArgumentException("Type mismatch: expected double but boolean provided");
         }
-
-        isDouble = false;
-    }
-
-    private double getDoubleValue() {
-        return doubleValue;
     }
 
     @Override
@@ -55,7 +54,9 @@ public class DoubleValueVisitor implements ValueVisitor {
         if (throwExceptionPermission) {
             throw new IllegalArgumentException("Type mismatch: expected double but String provided");
         }
+    }
 
-        isDouble = false;
+    private Double getDoubleValue() {
+        return doubleValue;
     }
 }

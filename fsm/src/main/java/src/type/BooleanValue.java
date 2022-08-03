@@ -1,6 +1,10 @@
 package src.type;
 
-public class BooleanValue implements Value{
+/**
+ * Implementation of {@link Value} that define boolean type
+ */
+
+public class BooleanValue implements Value {
 
     private final boolean value;
 
@@ -13,7 +17,7 @@ public class BooleanValue implements Value{
         visitor.visit(this);
     }
 
-    public boolean getBooleanValue() {
+    boolean getBooleanValue() {
         return value;
     }
 

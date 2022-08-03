@@ -1,7 +1,7 @@
 package src.program;
 
 /**
- * {@code ProgramStates} is an enumeration of states that used in {@link ProgramMachine}.
+ * List of possible states in {@link ProgramMachine}.
  */
 
 enum ProgramStates {

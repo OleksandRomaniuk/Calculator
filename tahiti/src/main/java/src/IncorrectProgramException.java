@@ -4,7 +4,9 @@ import com.google.common.base.Preconditions;
 
 import java.io.Serial;
 
-
+/**
+ * Throws that {@link Tahiti} need to execute.
+ */
 
 public class IncorrectProgramException extends Exception {
 

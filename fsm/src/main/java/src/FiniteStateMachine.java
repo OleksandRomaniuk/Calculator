@@ -75,9 +75,9 @@ public class FiniteStateMachine<S, O, E extends Exception> {
     public static <O, E extends Exception>
     FiniteStateMachine<Object, O, E> chainMachine(ExceptionThrower<E> exceptionThrower,
                                                   List<Transducer<O, E>> temporaryTransducers,
-                                                  List<Transducer<O, E>> transducers){
+                                                  List<Transducer<O, E>> transducers) {
 
-        Map <Object, Transducer<O, E>> registers =  new LinkedHashMap<>() ;
+        Map<Object, Transducer<O, E>> registers = new LinkedHashMap<>();
 
 
         Object startState = new Object() {
@@ -119,11 +119,11 @@ public class FiniteStateMachine<S, O, E extends Exception> {
             }
             temp = transducerState;
             i++;
-            if( i == count ){
+            if (i == count) {
                 builder.allowTransition(transducerState, finishState);
             }
 
-            if (temporaryTransducers.contains(transducer)){
+            if (temporaryTransducers.contains(transducer)) {
                 builder.withTemporaryState(transducerState);
             }
             registers.put(transducerState, transducer);
@@ -148,9 +148,6 @@ public class FiniteStateMachine<S, O, E extends Exception> {
         this.allowedSkippingWhitespaces = allowedSkippingWhitespaces;
     }
 
-//    public src.FiniteStateMachine() {
-//    }
-
     protected FiniteStateMachine(TransitionMatrix<S> matrix, ExceptionThrower<E> eExceptionThrower) {
 
         this(matrix, eExceptionThrower, false);
@@ -158,7 +155,7 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
     public boolean run(CharSequenceReader inputChain, O outputChain) throws E {
 
-//        int startPosition = inputChain.position();
+        int startPosition = inputChain.position();
 
         if (logger.isInfoEnabled()) {
 
@@ -173,11 +170,6 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
             if (nextState.isEmpty()) {
 
-                if (matrix.getStartState().equals(currentState)) {
-
-                    return false;
-                }
-
                 if (matrix.isTemporaryState(currentState)) {
 
                     if (logger.isInfoEnabled()) {
@@ -185,12 +177,12 @@ public class FiniteStateMachine<S, O, E extends Exception> {
                         logger.info("Rejected temporary state -> {}", currentState);
                     }
 
-                    inputChain.restorePosition();
+                    inputChain.setPosition(startPosition);
 
-                    if (logger.isInfoEnabled()) {
+                    return false;
+                }
 
-                        logger.info("Restore position to : {} on index {}", currentState, inputChain.position());
-                    }
+                if (matrix.getStartState().equals(currentState)) {
 
                     return false;
                 }
@@ -215,15 +207,6 @@ public class FiniteStateMachine<S, O, E extends Exception> {
 
             Transducer<O, E> transducer = transducers.get(potentialState);
 
-            if (matrix.isTemporaryState(potentialState)) {
-                inputChain.savePosition();
-
-                if (logger.isInfoEnabled()) {
-
-                    logger.info("Save position on : {} on index {}", potentialState, inputChain.position());
-                }
-            }
-
             if (transducer.doTransition(inputChain, outputChain)) {
 
                 if (logger.isInfoEnabled()) {
@@ -232,16 +215,6 @@ public class FiniteStateMachine<S, O, E extends Exception> {
                 }
 
                 return Optional.of(potentialState);
-            }
-
-            if (matrix.isTemporaryState(potentialState)) {
-
-                inputChain.restorePosition();
-
-                if (logger.isInfoEnabled()) {
-
-                    logger.info("RESTORE POSITION : {} on index {}", potentialState, inputChain.position());
-                }
             }
         }
         return Optional.empty();

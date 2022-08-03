@@ -1,7 +1,7 @@
 package src.util;
 
 import com.google.common.base.Preconditions;
-import src.runtime.ScriptContext;
+import src.runtime.ProgramContext;
 import src.runtime.WithContext;
 import src.type.Value;
 
@@ -9,29 +9,37 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Simple holder to store data and make an instance of {@link src.calucator.fsm.function.Function}.
+ */
+
 
 public class FunctionHolderWithContext implements WithContext {
 
-    private final ScriptContext scriptContext;
+    private final ProgramContext programContext;
+
     private final List<Value> arguments;
+
     private String functionName;
 
-    public FunctionHolderWithContext(ScriptContext scriptContext) {
-        this.scriptContext = Preconditions.checkNotNull(scriptContext);
+    public FunctionHolderWithContext(ProgramContext programContext) {
+
+        this.programContext = Preconditions.checkNotNull(programContext);
+
         arguments = new ArrayList<>();
     }
 
     @Override
-    public ScriptContext getScriptContext() {
-        return scriptContext;
+    public ProgramContext getScriptContext() {
+        return programContext;
     }
 
     @Override
     public boolean isParseOnly() {
-        return scriptContext.isParseOnly();
+        return programContext.isParseOnly();
     }
 
-    public void setArgument(Value argument) {
+    public void addArgument(Value argument) {
 
         arguments.add(argument);
     }

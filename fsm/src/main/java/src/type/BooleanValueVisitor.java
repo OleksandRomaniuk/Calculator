@@ -1,26 +1,22 @@
 package src.type;
 
-public class BooleanValueVisitor implements ValueVisitor{
+import java.util.Optional;
 
-    private boolean booleanValue;
+/**
+ * Implementation of {@link ValueVisitor} that define opportunity of read and use boolean value.
+ */
 
-    @Override
-    public void visit(DoubleValue value) {
-        throw new IllegalArgumentException("Type mismatch: expected boolean but double provided");
-    }
+public class BooleanValueVisitor implements ValueVisitor {
 
-    @Override
-    public void visit(BooleanValue value) {
+    private final boolean throwExceptionPermission;
+    private Boolean booleanValue;
 
-        booleanValue = value.getBooleanValue();
-    }
-
-    public boolean getBooleanValue(){
-        return booleanValue;
+    private BooleanValueVisitor(boolean throwExceptionPermission) {
+        this.throwExceptionPermission = throwExceptionPermission;
     }
 
     public static Boolean read(Value value) {
-        BooleanValueVisitor booleanValueVisitor = new BooleanValueVisitor();
+        BooleanValueVisitor booleanValueVisitor = new BooleanValueVisitor(true);
 
         value.accept(booleanValueVisitor);
 
@@ -29,17 +25,35 @@ public class BooleanValueVisitor implements ValueVisitor{
 
     public static Boolean isBoolean(Value value) {
 
-        try {
-            read(value);
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
+        BooleanValueVisitor visitor = new BooleanValueVisitor(false);
 
-        return true;
+        value.accept(visitor);
+
+        return Optional.ofNullable(visitor.getBooleanValue()).isPresent();
+
+    }
+
+    @Override
+    public void visit(DoubleValue value) {
+        if (throwExceptionPermission) {
+            throw new IllegalArgumentException("Type mismatch: expected boolean but double provided");
+        }
+    }
+
+    @Override
+    public void visit(BooleanValue value) {
+
+        booleanValue = value.getBooleanValue();
     }
 
     @Override
     public void visit(StringValue value) {
-        throw new IllegalArgumentException("Type mismatch: expected boolean but String provided");
+        if (throwExceptionPermission) {
+            throw new IllegalArgumentException("Type mismatch: expected boolean but string provided");
+        }
+    }
+
+    private Boolean getBooleanValue() {
+        return booleanValue;
     }
 }
