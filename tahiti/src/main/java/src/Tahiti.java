@@ -1,14 +1,20 @@
 package src;
 
 import com.google.common.base.Preconditions;
-import src.execute.InterpreterMachine;
-import src.runtime.ScriptContext;
-import src.util.ExecutionException;
-import src.util.ProgramFactory;
+import src.interpreter.InterpreterMachine;
+import src.runtime.ProgramContext;
+import src.tahiti.*;
 
+
+/**
+ * An API for interpreting programs on Tahiti language.
+ */
 
 public class Tahiti {
 
+    private static void raiseException(CharSequenceReader inputChain) throws IncorrectProgramException {
+        throw new IncorrectProgramException("Syntax error", inputChain.position());
+    }
 
     public ProgramResult interpret(InputProgram code) throws IncorrectProgramException {
 
@@ -16,27 +22,23 @@ public class Tahiti {
 
         CharSequenceReader inputChain = new CharSequenceReader(code.getValue());
 
-        ScriptContext scriptContext = new ScriptContext();
+        ProgramContext programContext = new ProgramContext();
 
-        ProgramFactory factory = new ProgramExecutorFactoryImpl();
+        ProgramFactory factory = new ProgramFactoryImpl();
 
         InterpreterMachine interpreterMachine = InterpreterMachine.create(Preconditions.checkNotNull(factory), errorMessage -> {
             throw new ExecutionException(errorMessage);
         });
 
         try {
-            if (!interpreterMachine.run(inputChain, scriptContext)) {
+            if (!interpreterMachine.run(inputChain, programContext)) {
 
-                programExeption(inputChain);
+                raiseException(inputChain);
             }
         } catch (IncorrectProgramException | ExecutionException e) {
-            programExeption(inputChain);
+            raiseException(inputChain);
         }
 
-        return new ProgramResult(scriptContext.getOutput().content());
+        return new ProgramResult(programContext.getOutput().content());
     }
-    private static void programExeption(CharSequenceReader inputChain) throws IncorrectProgramException {
-        throw new IncorrectProgramException("Syntax error", inputChain.position());
-    }
-
 }

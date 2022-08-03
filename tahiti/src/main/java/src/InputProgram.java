@@ -1,5 +1,9 @@
 package src;
 
+/**
+ * Input of our program
+ */
+
 public class InputProgram {
 
     private final String value;

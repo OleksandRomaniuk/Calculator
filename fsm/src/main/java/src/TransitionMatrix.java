@@ -3,9 +3,7 @@ package src;
 import java.util.Set;
 
 /**
- * {@code src.TransitionMatrix} is an interface that can be used to
- * build state-transition matrix for {@link FiniteStateMachine}.
- * @param <S> states for {@link FiniteStateMachine}.
+ * Interface that can be used to build state-transition matrix
  */
 
 public interface TransitionMatrix<S> {

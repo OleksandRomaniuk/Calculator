@@ -1,12 +1,13 @@
 package src.runtime;
 
 /**
- * WithContext is a functional interface
+ * {@code WithContext} is a functional interface that can be used for
+ * implementations of output chain that needs access to {@link ProgramContext}.
  */
 
 public interface WithContext {
 
-    ScriptContext getScriptContext();
+    ProgramContext getScriptContext();
 
     boolean isParseOnly();
 }

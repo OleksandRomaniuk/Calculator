@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 /**
- * Output is a class that used as a place for printing result
+ * Class for outputting data.
  */
 
 public class Output {
@@ -15,10 +15,6 @@ public class Output {
     private final OutputStream outputStream = new ByteArrayOutputStream();
 
     private final PrintStream printStream = new PrintStream(outputStream);
-
-    public PrintStream output() {
-        return printStream;
-    }
 
     public String content() {
 

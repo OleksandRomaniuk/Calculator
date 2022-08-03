@@ -1,9 +1,8 @@
 package src;
 
 /**
- * {@code ProgramResult} is an interpretation result of BazaScript program.
+ * Interpretation result of our program.
  */
-
 public class ProgramResult {
 
     private final String value;

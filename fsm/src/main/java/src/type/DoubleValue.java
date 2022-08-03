@@ -1,10 +1,14 @@
 package src.type;
 
-public class DoubleValue implements Value{
+/**
+ * Implementation of {@link Value} that define double type
+ */
 
-    private final double value;
+public class DoubleValue implements Value {
 
-    public DoubleValue(double value) {
+    private final Double value;
+
+    public DoubleValue(Double value) {
         this.value = value;
     }
 

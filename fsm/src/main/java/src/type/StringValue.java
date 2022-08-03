@@ -1,7 +1,7 @@
 package src.type;
 
 /**
- * Implementation of {@link Value} to define string type
+ * Implementation of {@link Value} that define string type
  */
 
 public class StringValue implements Value {

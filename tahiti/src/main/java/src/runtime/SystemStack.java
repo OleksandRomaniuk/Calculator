@@ -1,13 +1,15 @@
 package src.runtime;
 
 import com.google.common.base.Preconditions;
-import src.fsm.function.ShuntingYard;
+import src.calucator.fsm.function.ShuntingYard;
+
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+
 /**
- * SystemStack is a stack to store results of calculations and value of variables.
+ * Сlass for saving stack , results of calculations and value of variables.
  */
 
 public class SystemStack {
@@ -32,5 +34,4 @@ public class SystemStack {
 
         return stacks.pop();
     }
-
 }
