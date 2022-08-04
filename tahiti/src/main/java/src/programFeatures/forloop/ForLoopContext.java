@@ -10,7 +10,7 @@ import src.runtime.WithContext;
  * It stores condition statement position and statement for updating variable position of for loop.
  */
 
-class ForLoopOutputChain implements WithContext {
+class ForLoopContext implements WithContext {
 
     private final ProgramContext programContext;
 
@@ -22,7 +22,7 @@ class ForLoopOutputChain implements WithContext {
 
     private int updateVariablePosition;
 
-    ForLoopOutputChain(ProgramContext programContext) {
+    ForLoopContext(ProgramContext programContext) {
         this.programContext = Preconditions.checkNotNull(programContext);
     }
 

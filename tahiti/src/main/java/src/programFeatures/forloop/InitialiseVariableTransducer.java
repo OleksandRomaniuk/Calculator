@@ -10,7 +10,7 @@ import src.tahiti.*;
  * Implementation of {@link Transducer} that create and execute {@link ProgramElementExecutor} for variable initialisation.
  */
 
-class InitialiseVariableTransducer implements Transducer<ForLoopOutputChain, ExecutionException> {
+class InitialiseVariableTransducer implements Transducer<ForLoopContext, ExecutionException> {
 
     private final ProgramFactory factory;
 
@@ -19,7 +19,7 @@ class InitialiseVariableTransducer implements Transducer<ForLoopOutputChain, Exe
     }
 
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ForLoopOutputChain outputChain) throws ExecutionException {
+    public boolean doTransition(CharSequenceReader inputChain, ForLoopContext outputChain) throws ExecutionException {
 
         outputChain.setInitialParsingStatus(outputChain.isParseOnly());
 

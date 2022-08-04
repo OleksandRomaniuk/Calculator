@@ -12,7 +12,7 @@ import static src.programFeatures.forloop.ForLoopMachineStates.*;
  * Implementation of {@link FiniteStateMachine} which is intended to process the for loop.
  */
 
-final class ForLoopMachine extends FiniteStateMachine<ForLoopMachineStates, ForLoopOutputChain, ExecutionException> {
+final class ForLoopMachine extends FiniteStateMachine<ForLoopMachineStates, ForLoopContext, ExecutionException> {
 
 
 
@@ -21,7 +21,7 @@ final class ForLoopMachine extends FiniteStateMachine<ForLoopMachineStates, ForL
 
         registerTransducer(START, Transducer.illegalTransition());
 
-        registerTransducer(FINISH, Transducer.<ForLoopOutputChain, ExecutionException>autoTransition()
+        registerTransducer(FINISH, Transducer.<ForLoopContext, ExecutionException>autoTransition()
                 .and((inputChain, outputChain) -> {
 
                     outputChain.prohibitParseOnly();
@@ -34,9 +34,9 @@ final class ForLoopMachine extends FiniteStateMachine<ForLoopMachineStates, ForL
 
         registerTransducer(OPENING_BRACKET, Transducer.checkAndPassChar('('));
 
-        registerTransducer(INITIALISE_VARIABLE_STATEMENT, new InitialiseVariableTransducer(factory));
+        registerTransducer(INITIALISE_VARIABLE, new InitialiseVariableTransducer(factory));
 
-        registerTransducer(FIRST_SEPARATOR, Transducer.<ForLoopOutputChain, ExecutionException>checkAndPassChar(';')
+        registerTransducer(SEPARATOR, Transducer.<ForLoopContext, ExecutionException>checkAndPassChar(';')
                 .and((inputChain, outputChain) -> {
 
                     outputChain.setConditionPosition(inputChain.position());
@@ -47,15 +47,15 @@ final class ForLoopMachine extends FiniteStateMachine<ForLoopMachineStates, ForL
 
         registerTransducer(CONDITION_STATEMENT, new ConditionStatementTransducer(factory));
 
-        registerTransducer(SECOND_SEPARATOR, Transducer.<ForLoopOutputChain, ExecutionException>checkAndPassChar(';'));
+        registerTransducer(SEPARATOR_SECOND, Transducer.<ForLoopContext, ExecutionException>checkAndPassChar(';'));
 
-        registerTransducer(PARSE_UPDATE_VARIABLE_STATEMENT, new ParseUpdateVariableStatementTransducer(factory));
+        registerTransducer(PARSE_STATEMENT, new ParseUpdateVariableStatementTransducer(factory));
 
-        registerTransducer(UPDATE_VARIABLE_STATEMENT, new UpdateVariableTransducer(factory));
+        registerTransducer(UPDATE_VARIABLE, new UpdateVariableTransducer(factory));
 
         registerTransducer(CLOSING_BRACKET, Transducer.checkAndPassChar(')'));
 
-        registerTransducer(LIST_OF_STATEMENTS, new CodeBlockTransducer<ForLoopOutputChain>(factory)
+        registerTransducer(BLOCK_STATEMENTS, new CodeBlockTransducer<ForLoopContext>(factory)
                 .and((inputChain, outputChain) -> {
 
                     if (!outputChain.isParseOnly()) {
@@ -80,27 +80,27 @@ final class ForLoopMachine extends FiniteStateMachine<ForLoopMachineStates, ForL
 
                         .allowTransition(FOR_KEYWORD, OPENING_BRACKET)
 
-                        .allowTransition(OPENING_BRACKET, INITIALISE_VARIABLE_STATEMENT)
+                        .allowTransition(OPENING_BRACKET, INITIALISE_VARIABLE)
 
-                        .allowTransition(INITIALISE_VARIABLE_STATEMENT, FIRST_SEPARATOR)
+                        .allowTransition(INITIALISE_VARIABLE, SEPARATOR)
 
-                        .allowTransition(FIRST_SEPARATOR, CONDITION_STATEMENT)
+                        .allowTransition(SEPARATOR, CONDITION_STATEMENT)
 
-                        .allowTransition(CONDITION_STATEMENT, SECOND_SEPARATOR)
+                        .allowTransition(CONDITION_STATEMENT, SEPARATOR_SECOND)
 
-                        .allowTransition(SECOND_SEPARATOR, PARSE_UPDATE_VARIABLE_STATEMENT)
+                        .allowTransition(SEPARATOR_SECOND, PARSE_STATEMENT)
 
-                        .allowTransition(PARSE_UPDATE_VARIABLE_STATEMENT, CLOSING_BRACKET)
+                        .allowTransition(PARSE_STATEMENT, CLOSING_BRACKET)
 
-                        .allowTransition(CLOSING_BRACKET, LIST_OF_STATEMENTS)
+                        .allowTransition(CLOSING_BRACKET, BLOCK_STATEMENTS)
 
-                        .allowTransition(CONDITION_STATEMENT, LIST_OF_STATEMENTS)
+                        .allowTransition(CONDITION_STATEMENT, BLOCK_STATEMENTS)
 
-                        .allowTransition(LIST_OF_STATEMENTS, UPDATE_VARIABLE_STATEMENT)
+                        .allowTransition(BLOCK_STATEMENTS, UPDATE_VARIABLE)
 
-                        .allowTransition(UPDATE_VARIABLE_STATEMENT, CONDITION_STATEMENT)
+                        .allowTransition(UPDATE_VARIABLE, CONDITION_STATEMENT)
 
-                        .allowTransition(LIST_OF_STATEMENTS, FINISH)
+                        .allowTransition(BLOCK_STATEMENTS, FINISH)
 
                         .build();
 

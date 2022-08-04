@@ -12,10 +12,10 @@ import src.type.Value;
 
 
 /**
- * Implementation of {@link Transducer} that produce value of loop condition to {@link ForLoopOutputChain}.
+ * Implementation of {@link Transducer} that produce value of loop condition to {@link ForLoopContext}.
  */
 
-class ConditionStatementTransducer implements Transducer<ForLoopOutputChain, ExecutionException> {
+class ConditionStatementTransducer implements Transducer<ForLoopContext, ExecutionException> {
 
     private final ProgramFactory factory;
 
@@ -25,7 +25,7 @@ class ConditionStatementTransducer implements Transducer<ForLoopOutputChain, Exe
     }
 
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ForLoopOutputChain outputChain) throws ExecutionException {
+    public boolean doTransition(CharSequenceReader inputChain, ForLoopContext outputChain) throws ExecutionException {
 
         ProgramElementExecutor relationalExecutor = factory.create(ProgramElement.BOOLEAN_EXPRESSION);
 

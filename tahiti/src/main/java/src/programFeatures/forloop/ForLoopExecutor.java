@@ -25,8 +25,8 @@ public class ForLoopExecutor implements ProgramElementExecutor {
             throw new ExecutionException(errorMessage);
         });
 
-        ForLoopOutputChain forLoopOutputChain = new ForLoopOutputChain(output);
+        ForLoopContext forLoopContext = new ForLoopContext(output);
 
-        return forLoopMachine.run(inputChain, forLoopOutputChain);
+        return forLoopMachine.run(inputChain, forLoopContext);
     }
 }

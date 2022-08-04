@@ -44,11 +44,11 @@ public class FunctionHolderWithContext implements WithContext {
         arguments.add(argument);
     }
 
-    public String getFunctionName() {
+    public String FunctionName() {
         return functionName;
     }
 
-    public void setFunctionName(String name) {
+    public void FunctionName(String name) {
 
         this.functionName = Preconditions.checkNotNull(name);
     }

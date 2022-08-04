@@ -36,9 +36,7 @@ public class DetachedShuntingYardExecutor<I> implements ProgramElementExecutor {
                 return true;
             }
 
-            Value peekResult = output.systemStack().close().result();
-
-            output.systemStack().current().pushOperand(peekResult);
+            output.systemStack().current().pushOperand(output.systemStack().close().result());
 
             return true;
         }

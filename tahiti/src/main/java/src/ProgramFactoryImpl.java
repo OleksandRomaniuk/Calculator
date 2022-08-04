@@ -13,7 +13,7 @@ import src.calucator.fsm.expression.ExpressionMachine;
 import src.calucator.fsm.function.FunctionMachine;
 import src.programFeatures.forloop.ForLoopExecutor;
 import src.programFeatures.varopertor.InitVarExecutor;
-import src.programFeatures.booleanexpression.BooleanOperandMachine;
+import src.programFeatures.booleanexpression.BooleanExpressionMachine;
 import src.program.ProgramMachine;
 import src.programFeatures.booleanexpression.RelationalElementExecutor;
 import src.programFeatures.procedure.ProcedureExecutor;
@@ -22,7 +22,7 @@ import src.programFeatures.ternary.TernaryOperatorExecutor;
 import src.programFeatures.variable.ProduceVariableExecutor;
 import src.programFeatures.variable.ReadVariableExecutor;
 import src.programFeatures.whileoperator.WhileOperatorExecutor;
-import src.programFeatures.string.StringOperandTransducer;
+import src.programFeatures.string.StringExpressionTransducer;
 import src.util.DetachedShuntingYardExecutor;
 import src.util.FunctionHolderWithContext;
 import src.util.ProgramElementTransducer;
@@ -59,7 +59,7 @@ class ProgramFactoryImpl implements ProgramFactory {
                 new FunctionExecutor<>(FunctionMachine.create(
                         Transducer.checkAndPassChar('('),
 
-                        FunctionHolderWithContext::setFunctionName,
+                        FunctionHolderWithContext::FunctionName,
 
                         new ExpressionTransducer<>(FunctionHolderWithContext::addArgument,
                                 this,
@@ -121,7 +121,7 @@ class ProgramFactoryImpl implements ProgramFactory {
                                 scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
                             }
                         }, new StringBinaryOperatorFactory(),
-                        new StringOperandTransducer(this), errorMessage -> {
+                        new StringExpressionTransducer(this), errorMessage -> {
                             throw new ExecutionException(errorMessage);
                         }
                 )
@@ -144,7 +144,7 @@ class ProgramFactoryImpl implements ProgramFactory {
                         )));
 
         executors.put(ProgramElement.BOOLEAN_OPERAND, () -> new MachineExecutor<>(
-                BooleanOperandMachine.create(this, errorMessage -> {
+                BooleanExpressionMachine.create(this, errorMessage -> {
                     throw new ExecutionException(errorMessage);
                 })
         ));
@@ -154,7 +154,7 @@ class ProgramFactoryImpl implements ProgramFactory {
                 new ProcedureExecutor<>(FunctionMachine.create(
                         Transducer.checkAndPassChar('('),
 
-                        FunctionHolderWithContext::setFunctionName,
+                        FunctionHolderWithContext::FunctionName,
 
                         new ExpressionTransducer<>(FunctionHolderWithContext::addArgument,
                                 this,

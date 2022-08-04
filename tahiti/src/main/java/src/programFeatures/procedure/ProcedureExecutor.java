@@ -32,7 +32,7 @@ public class ProcedureExecutor<I> implements ProgramElementExecutor {
 
         if (machine.run(inputChain, functionHolder)) {
 
-                procedureFactory.create(functionHolder.getFunctionName())
+                procedureFactory.create(functionHolder.FunctionName())
                         .execute(functionHolder.getArguments(), functionHolder.getScriptContext());
 
             return true;

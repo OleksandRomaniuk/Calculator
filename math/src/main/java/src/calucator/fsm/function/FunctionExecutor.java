@@ -36,7 +36,7 @@ public class FunctionExecutor<I> implements ProgramElementExecutor {
             if (!output.isParseOnly()) {
 
                 var evaluateFunctionResult = functionFactory.
-                        create(functionHolder.getFunctionName()).evaluate(functionHolder.getArguments());
+                        create(functionHolder.FunctionName()).evaluate(functionHolder.getArguments());
 
                 output.systemStack().current().pushOperand(evaluateFunctionResult);
             }
