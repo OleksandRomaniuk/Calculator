@@ -4,8 +4,8 @@ import com.google.common.base.Preconditions;
 
 import src.calucator.fsm.function.FunctionExecutor;
 import src.calucator.fsm.number.NumberParsingExecutor;
+import src.operators.BooleanBinaryOperatorFactory;
 import src.operators.DoubleBinaryOperatorFactory;
-import src.operators.LogicalBinaryOperatorFactory;
 import src.operators.StringBinaryOperatorFactory;
 import src.program.MachineExecutor;
 import src.calucator.fsm.brackets.BracketsMachine;
@@ -135,7 +135,7 @@ class ProgramFactoryImpl implements ProgramFactory {
                                         scriptContext.systemStack().current().pushOperator(abstractBinaryOperator);
                                     }
                                 },
-                                new LogicalBinaryOperatorFactory(),
+                                new BooleanBinaryOperatorFactory(),
                                 new ProgramElementTransducer(ProgramElement.BOOLEAN_OPERAND, this)
                                         .named("Operand in logical expression"),
                                 errorMessage -> {

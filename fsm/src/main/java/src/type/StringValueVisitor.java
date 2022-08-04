@@ -1,8 +1,7 @@
 package src.type;
 
 /**
- * Implementation of {@link ValueVisitor} that
- * implement opportunity of read and use string value.
+ * Implementation of {@link ValueVisitor} to read and use string value.
  */
 
 public class StringValueVisitor implements ValueVisitor {
