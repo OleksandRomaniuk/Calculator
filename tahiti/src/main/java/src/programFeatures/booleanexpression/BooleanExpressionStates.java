@@ -1,10 +1,10 @@
 package src.programFeatures.booleanexpression;
 
 /**
- * List of possible states in {@link BooleanOperandMachine}.
+ * List of possible states in {@link BooleanExpressionMachine}.
  */
 
-enum BooleanOperandStates {
+enum BooleanExpressionStates {
     START,
     FINISH,
     RELATIONAL_EXPRESSION,
