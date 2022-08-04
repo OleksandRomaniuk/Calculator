@@ -12,7 +12,7 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
- * {@code FunctionFactory} is a realization of factory pattern
+ * Realization of factory pattern
  * that create an instance of {@link Function} by name.
  */
 

@@ -13,8 +13,7 @@ import static src.calucator.fsm.function.FunctionStates.*;
 
 
 /**
- * {@code FunctionMachine} is a realisation of {@link FiniteStateMachine}
- * for parsing a function.
+ * Realisation of {@link FiniteStateMachine} for parsing a function.
  */
 
 public final class FunctionMachine<O, E extends Exception> extends FiniteStateMachine<FunctionStates, O, E> {

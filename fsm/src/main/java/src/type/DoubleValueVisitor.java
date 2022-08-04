@@ -3,8 +3,7 @@ package src.type;
 import java.util.Optional;
 
 /**
- * Implementation of {@link ValueVisitor} that
- * define opportunity of read and use double value.
+ * Implementation of {@link ValueVisitor} to read and use double value.
  */
 
 public class DoubleValueVisitor implements ValueVisitor {
