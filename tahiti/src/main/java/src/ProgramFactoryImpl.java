@@ -2,7 +2,7 @@ package src;
 
 import com.google.common.base.Preconditions;
 
-import src.calucator.fsm.function.FunctionExecutor;
+import src.util.FunctionExecutor;
 import src.calucator.fsm.number.NumberParsingExecutor;
 import src.operators.BooleanBinaryOperatorFactory;
 import src.operators.DoubleBinaryOperatorFactory;
@@ -26,7 +26,7 @@ import src.programFeatures.string.StringExpressionTransducer;
 import src.util.DetachedShuntingYardExecutor;
 import src.util.FunctionHolderWithContext;
 import src.util.ProgramElementTransducer;
-import src.calucator.fsm.expression.ExpressionTransducer;
+import src.util.ExpressionTransducer;
 import src.tahiti.*;
 
 import java.util.EnumMap;

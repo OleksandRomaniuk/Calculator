@@ -1,4 +1,4 @@
-package src.calucator.fsm;
+package src.calucator;
 
 public class ResolvingException extends Exception{
 

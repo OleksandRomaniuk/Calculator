@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import src.CharSequenceReader;
 import src.FiniteStateMachine;
 import src.runtime.ProgramContext;
-import src.type.Value;
 import src.tahiti.ExecutionException;
 import src.tahiti.ProgramElementExecutor;
 

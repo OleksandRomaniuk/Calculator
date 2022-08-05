@@ -3,7 +3,6 @@ package src.programFeatures.varopertor;
 import com.google.common.base.Preconditions;
 
 import src.CharSequenceReader;
-import src.ExceptionThrower;
 import src.runtime.ProgramContext;
 import src.tahiti.ExecutionException;
 import src.tahiti.ProgramElementExecutor;

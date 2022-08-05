@@ -1,6 +1,7 @@
 package src.calucator.fsm.expression;
 
 import com.google.common.base.Preconditions;
+import src.calucator.fsm.expression.OperatorReader;
 import src.operators.AbstractBinaryOperator;
 import src.operators.BinaryOperatorFactory;
 import src.CharSequenceReader;
