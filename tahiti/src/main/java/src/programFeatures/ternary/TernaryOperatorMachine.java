@@ -3,9 +3,6 @@ package src.programFeatures.ternary;
 import src.*;
 import src.tahiti.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import static src.programFeatures.ternary.TernaryStates.*;
 
 

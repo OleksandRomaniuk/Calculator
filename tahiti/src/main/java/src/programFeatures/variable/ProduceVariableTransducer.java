@@ -5,7 +5,6 @@ import src.Transducer;
 import src.identifier.IdentifierMachine;
 import src.util.ProduceVariableContext;
 import src.type.DoubleValueVisitor;
-import src.type.Value;
 import src.tahiti.*;
 
 /**

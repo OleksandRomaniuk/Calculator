@@ -47,7 +47,7 @@ final class ForLoopMachine extends FiniteStateMachine<ForLoopMachineStates, ForL
 
         registerTransducer(CONDITION_STATEMENT, new ConditionStatementTransducer(factory));
 
-        registerTransducer(SEPARATOR_SECOND, Transducer.<ForLoopContext, ExecutionException>checkAndPassChar(';'));
+        registerTransducer(SEPARATOR_SECOND, Transducer.checkAndPassChar(';'));
 
         registerTransducer(PARSE_STATEMENT, new ParseUpdateVariableStatementTransducer(factory));
 

@@ -1,7 +1,6 @@
 package src.programFeatures.string;
 
 import src.CharSequenceReader;
-import src.ExceptionThrower;
 import src.FiniteStateMachine;
 import src.Transducer;
 import src.runtime.ProgramContext;
