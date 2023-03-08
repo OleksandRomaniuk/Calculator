@@ -1,10 +1,11 @@
 package src.calculator.impl.fsm.function;
 
-import src.calculator.impl.fsm.Transducer;
+
 import src.calculator.impl.fsm.function.name.IdentifierMachine;
 import src.calculator.impl.fsm.util.Input;
 import src.calculator.impl.fsm.util.FunctionHolder;
 import src.calculator.impl.fsm.util.ResolvingException;
+import src.fsm.Transducer;
 
 /**
  *

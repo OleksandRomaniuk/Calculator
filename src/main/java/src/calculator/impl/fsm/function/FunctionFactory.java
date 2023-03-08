@@ -50,9 +50,8 @@ public class FunctionFactory {
             avg = avg/ arguments.size();
             return avg;
         });
-        functions.put("pi", arguments -> {
-            return Math.PI;
-        });
+        functions.put("pi", arguments -> Math.PI);
+
         functions.put("sum", arguments -> {
             double avg=0;
 
