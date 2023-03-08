@@ -5,7 +5,7 @@ import src.runtime.ProgramContext;
 import src.util.ProgramElementTransducer;
 import src.tahiti.*;
 
-import static src.programFeatures.booleanexpression.BooleanOperandStates.*;
+import static src.programFeatures.booleanexpression.BooleanExpressionStates.*;
 
 
 /**
@@ -13,10 +13,10 @@ import static src.programFeatures.booleanexpression.BooleanOperandStates.*;
  * that used for parsing and executing boolean expressions.
  */
 
-public final class BooleanOperandMachine extends FiniteStateMachine<BooleanOperandStates, ProgramContext, ExecutionException> {
+public final class BooleanExpressionMachine extends FiniteStateMachine<BooleanExpressionStates, ProgramContext, ExecutionException> {
 
-    private BooleanOperandMachine(TransitionMatrix<BooleanOperandStates> matrix, ExceptionThrower<ExecutionException> exceptionThrower,
-                                  ProgramFactory factory) {
+    private BooleanExpressionMachine(TransitionMatrix<BooleanExpressionStates> matrix, ExceptionThrower<ExecutionException> exceptionThrower,
+                                     ProgramFactory factory) {
         super(matrix, exceptionThrower, true);
 
         registerTransducer(START, Transducer.illegalTransition());
@@ -25,10 +25,10 @@ public final class BooleanOperandMachine extends FiniteStateMachine<BooleanOpera
         registerTransducer(RELATIONAL_EXPRESSION, new ProgramElementTransducer(ProgramElement.RELATIONAL_EXPRESSION, factory));
     }
 
-    public static BooleanOperandMachine create(ProgramFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
+    public static BooleanExpressionMachine create(ProgramFactory factory, ExceptionThrower<ExecutionException> exceptionThrower) {
 
-        TransitionMatrix<BooleanOperandStates> matrix =
-                TransitionMatrix.<BooleanOperandStates>builder()
+        TransitionMatrix<BooleanExpressionStates> matrix =
+                TransitionMatrix.<BooleanExpressionStates>builder()
                         .withStartState(START)
                         .withFinishState(FINISH)
 
@@ -40,6 +40,6 @@ public final class BooleanOperandMachine extends FiniteStateMachine<BooleanOpera
 
                         .build();
 
-        return new BooleanOperandMachine(matrix, exceptionThrower, factory);
+        return new BooleanExpressionMachine(matrix, exceptionThrower, factory);
     }
 }

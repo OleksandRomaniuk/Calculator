@@ -12,11 +12,11 @@ import src.tahiti.*;
  * Implementation of {@link Transducer} for possible operands in string expression.
  */
 
-public class StringOperandTransducer implements Transducer<ProgramContext, ExecutionException> {
+public class StringExpressionTransducer implements Transducer<ProgramContext, ExecutionException> {
 
     private final ProgramFactory factory;
 
-    public StringOperandTransducer(ProgramFactory factory) {
+    public StringExpressionTransducer(ProgramFactory factory) {
         this.factory = factory;
     }
 

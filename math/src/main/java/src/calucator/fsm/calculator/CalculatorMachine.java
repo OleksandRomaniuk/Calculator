@@ -2,11 +2,12 @@ package src.calucator.fsm.calculator;
 
 
 import src.*;
-import src.calucator.fsm.ResolvingException;
+import src.calucator.ResolvingException;
 import src.calucator.fsm.function.ShuntingYard;
 import src.calucator.math.MathElement;
 import src.calucator.math.MathElementResolverFactory;
 import src.type.Value;
+import src.calucator.DetachedShuntingYardTransducer;
 
 import java.util.function.BiConsumer;
 

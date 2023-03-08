@@ -1,9 +1,9 @@
-package src.calucator.fsm.calculator;
+package src.calucator;
 
 import com.google.common.base.Preconditions;
 import src.CharSequenceReader;
 import src.Transducer;
-import src.calucator.fsm.ResolvingException;
+
 import src.calucator.math.MathElement;
 import src.calucator.math.MathElementResolverFactory;
 import src.type.Value;

@@ -24,7 +24,6 @@ public class KeywordTransducer<O extends WithContext> implements Transducer<O, E
     @Override
     public boolean doTransition(CharSequenceReader inputChain, O outputChain) throws ExecutionException {
 
-        var startPosition = inputChain.position();
 
         List<Transducer<O, ExecutionException>> keyword = Transducer.keyword(this.keyword);
 
@@ -33,7 +32,7 @@ public class KeywordTransducer<O extends WithContext> implements Transducer<O, E
 
             if (!transducer.doTransition(inputChain, outputChain)) {
 
-                inputChain.setPosition(startPosition);
+                inputChain.setPosition(inputChain.position());
 
                 return false;
             }

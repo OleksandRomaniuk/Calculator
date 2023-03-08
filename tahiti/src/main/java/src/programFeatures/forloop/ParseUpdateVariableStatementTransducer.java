@@ -11,7 +11,7 @@ import src.tahiti.*;
  * or statement that must update variable in for loop.
  */
 
-class ParseUpdateVariableStatementTransducer implements Transducer<ForLoopOutputChain, ExecutionException> {
+class ParseUpdateVariableStatementTransducer implements Transducer<ForLoopContext, ExecutionException> {
 
     private final ProgramFactory factory;
 
@@ -20,7 +20,7 @@ class ParseUpdateVariableStatementTransducer implements Transducer<ForLoopOutput
     }
 
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ForLoopOutputChain outputChain) throws ExecutionException {
+    public boolean doTransition(CharSequenceReader inputChain, ForLoopContext outputChain) throws ExecutionException {
 
         outputChain.setParseOnly();
 

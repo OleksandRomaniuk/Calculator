@@ -2,10 +2,8 @@ package src.programFeatures.variable;
 
 
 import src.CharSequenceReader;
-import src.ExceptionThrower;
 import src.identifier.IdentifierMachine;
 import src.runtime.ProgramContext;
-import src.type.Value;
 import src.tahiti.ExecutionException;
 import src.tahiti.ProgramElementExecutor;
 

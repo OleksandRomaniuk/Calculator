@@ -10,7 +10,7 @@ import src.tahiti.*;
  * for statement that must update variable in for loop.
  */
 
-class UpdateVariableTransducer implements Transducer<ForLoopOutputChain, ExecutionException> {
+class UpdateVariableTransducer implements Transducer<ForLoopContext, ExecutionException> {
 
     private final ProgramFactory factory;
 
@@ -19,11 +19,9 @@ class UpdateVariableTransducer implements Transducer<ForLoopOutputChain, Executi
     }
 
     @Override
-    public boolean doTransition(CharSequenceReader inputChain, ForLoopOutputChain outputChain) throws ExecutionException {
+    public boolean doTransition(CharSequenceReader inputChain, ForLoopContext outputChain) throws ExecutionException {
 
-        ProgramElementExecutor updateVariableExecutor = factory.create(ProgramElement.STATEMENT);
-
-        if (updateVariableExecutor.execute(inputChain, outputChain.getScriptContext())) {
+        if (factory.create(ProgramElement.STATEMENT).execute(inputChain, outputChain.getScriptContext())) {
 
             if (outputChain.isParseOnly()) {
 

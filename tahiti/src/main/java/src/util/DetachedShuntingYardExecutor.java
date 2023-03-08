@@ -4,7 +4,6 @@ import com.google.common.base.Preconditions;
 import src.CharSequenceReader;
 import src.FiniteStateMachine;
 import src.runtime.ProgramContext;
-import src.type.Value;
 import src.tahiti.ExecutionException;
 import src.tahiti.ProgramElementExecutor;
 
@@ -36,9 +35,7 @@ public class DetachedShuntingYardExecutor<I> implements ProgramElementExecutor {
                 return true;
             }
 
-            Value peekResult = output.systemStack().close().result();
-
-            output.systemStack().current().pushOperand(peekResult);
+            output.systemStack().current().pushOperand(output.systemStack().close().result());
 
             return true;
         }
